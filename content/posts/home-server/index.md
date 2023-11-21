@@ -4,12 +4,12 @@ slug: home-server
 description: 基于 PVE 安装的 OpenWrt 路由器系统
 date: 2023-11-20T21:19:58+08:00
 draft: true
-image:
-math: false
-hidden: false
-categories: 
+# image:
+# math: false
+# hidden: false
+categories:
     - 家庭网络改造
-tags: 
+tags:
     - home
     - nas
 ---
@@ -89,7 +89,7 @@ dmesg | grep -e DMAR -e IOMMU
 
 ### 3.1. OpenWrt 镜像选择
 
-OpenWrt 官方提供了构建好的镜像，可以直接用来安装。也可以选择一些第三方的镜像，通常这类镜像已经内置了很多常用的软件包，可以减少后续的配置工作。这里使用的是 https://github.com/stupidloud/nanopi-openwrt/releases 。 
+OpenWrt 官方提供了构建好的镜像，可以直接用来安装。也可以选择一些第三方的镜像，通常这类镜像已经内置了很多常用的软件包，可以减少后续的配置工作。这里使用的是 https://github.com/stupidloud/nanopi-openwrt/releases 。
 
 ### 3.2. OpenWrt 安装
 
