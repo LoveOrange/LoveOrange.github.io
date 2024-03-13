@@ -91,7 +91,7 @@ public class JarArtifactDTO extends ArtifactDTO {
 
 public class DockerArtifactDTO extends ArtifactDTO {
     private String tag;
-    
+
     @Override
     public ArtifactType getType() {
         return ArtifactType.DOCKER;
@@ -176,14 +176,14 @@ public interface ArtifactFactory<T extends ArtifactDTO> {
 
     /**
      * 获取工厂对应的制品类型，用于抽象工厂的选择
-     * 
+     *
      * @return 制品类型
      */
     ArtifactType getArtifactType();
 
     /**
      * 根据 DTO 类型创建对应的制品
-     * 
+     *
      * @param dto 创建制品 DTO
      * @return 制品
      */
@@ -191,7 +191,7 @@ public interface ArtifactFactory<T extends ArtifactDTO> {
 
     /**
      * 获取制品的特殊属性
-     * 
+     *
      * @param dto 创建制品 DTO
      * @return 特殊属性
      */
@@ -199,7 +199,7 @@ public interface ArtifactFactory<T extends ArtifactDTO> {
 
     /**
      * 创建制品
-     * 
+     *
      * @param dto 创建制品 DTO
      * @return 制品
      */
@@ -279,7 +279,7 @@ public class ArtifactFactoryRegistry {
 
     /**
      * 构造函数，使用 Spring 自动注入所有的工厂列表
-     * 
+     *
      * @param factories 工厂列表
      */
     @Autowired
@@ -290,7 +290,7 @@ public class ArtifactFactoryRegistry {
 
     /**
      * 根据 DTO 类型创建对应的制品
-     * 
+     *
      * @param dto 创建制品 DTO
      * @return 制品
      */
