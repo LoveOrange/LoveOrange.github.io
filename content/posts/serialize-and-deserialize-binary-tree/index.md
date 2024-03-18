@@ -1,5 +1,5 @@
 ---
-title: "297. 二叉树的序列化与反序列化"
+title: "LeetCode 297. 二叉树的序列化与反序列化"
 slug: serialize-and-deserialize-binary-tree
 description:
 date: 2024-03-13T21:02:09+08:00
