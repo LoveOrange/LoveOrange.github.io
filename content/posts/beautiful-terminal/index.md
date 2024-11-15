@@ -3,14 +3,12 @@ title: 'Zsh 极简终端美化'
 slug: index
 description:
 date: 2024-11-15T10:15:41+08:00
-draft: true
-image:
+draft: false
+image: image.png
 math: false
 hidden: false
 categories:
     - dev tools
-tags:
-    -
 ---
 
 ## 1. 引言
