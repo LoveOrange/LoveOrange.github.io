@@ -1,6 +1,6 @@
 ---
 title: "NAS 影音下载系统配置"
-slug: index
+slug: nas-auto-download-media
 description: 使用 Sonarr，Radarr，Jackett，qBittorrent，Plex 等软件实现媒体资源的自动下载和管理
 date: 2023-12-09T23:16:35+08:00
 draft: false
@@ -76,7 +76,7 @@ qBittorrent 作为下载器，不主动依赖与其他的服务，因此作为�
 
 启动服务后，还可以进行一些额外的配置
 
-1. 为了提升下载速度，可以在配置中添加 Tracker 服务器，我使用的是 XIU2 提供的 [TrackerListCollection](https://github.com/XIU2/TrackersListCollection) 
+1. 为了提升下载速度，可以在配置中添加 Tracker 服务器，我使用的是 XIU2 提供的 [TrackerListCollection](https://github.com/XIU2/TrackersListCollection)
 2. 根据网络设施的情况，可以在配置中开启 DHT、PEX、LSD 等功能，提升下载速度
 3. 根据网络的使用时间，可以在配置中设置下载速度限制，避免影响其他网络使用者的体验
 

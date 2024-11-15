@@ -1,6 +1,6 @@
 ---
 title: 'Springboot Dynamic Schedule'
-slug: index
+slug: spring-dynamic-schedule
 description:
 date: 2024-02-23T14:13:36+08:00
 draft: true
