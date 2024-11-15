@@ -20,6 +20,3 @@ disqusShortname = "hugo-theme-stack"
   anchor = "Center"
   quality = 75
   resampleFilter = "Lanczos"
-
-[markup.goldmark.renderer]
-  unsafe = true  # 允许 HTML 标签
