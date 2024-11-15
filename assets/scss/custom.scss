@@ -1,3 +1,28 @@
 /*
     You can add your own custom styles here.
 */
+
+.article-content {
+    img:not(.full-width) {
+        max-width: 80% !important;
+        margin: 0 auto;
+        display: block;
+
+        // 可选：添加一些过渡效果
+        transition: all 0.3s ease;
+
+        // 可选：添加悬停效果
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+}
+
+// 如果上面还不起作用，可以尝试更高的优先级
+// body .main .article-content {
+//     img:not(.full-width) {
+//         max-width: 70% !important;
+//         margin: 0 auto;
+//         display: block;
+//     }
+// }

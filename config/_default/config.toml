@@ -15,3 +15,11 @@ hasCJKLanguage = false
 
 # Change it to your Disqus shortname before using
 disqusShortname = "hugo-theme-stack"
+
+[imaging]
+  anchor = "Center"
+  quality = 75
+  resampleFilter = "Lanczos"
+
+[markup.goldmark.renderer]
+  unsafe = true  # 允许 HTML 标签
