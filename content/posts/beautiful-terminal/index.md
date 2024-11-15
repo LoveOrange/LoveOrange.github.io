@@ -1,6 +1,6 @@
 ---
 title: 'Zsh 极简终端美化'
-slug: index
+slug: beautiful-terminal
 description:
 date: 2024-11-15T10:15:41+08:00
 draft: false
