@@ -3,7 +3,7 @@ title: 'OCBC - 年轻人的第一张海外银行卡'
 slug: ocbc
 description: 新加坡华侨银行（OCBC） 可能是我了解到的申请门槛最低的一张海外银行卡了，搭配 Wise 可以轻松实现盈透证券（IBKR）的出金与入金，可以作为买卖港股、美股、布局海外资产的起点。
 date: 2024-12-02T13:57:45+08:00
-draft: true
+draft: false
 image:
 math: false
 hidden: false
