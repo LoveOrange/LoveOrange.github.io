@@ -55,7 +55,7 @@ Wise 是一个汇款工具，相比国际银行之间的转账，Wise 提供了�
 
 有了 Wise 后，我从 OCBC 向 IBKR 的入金路径就变成了：
 
-OCBC -> Wise -> IBKR
+**OCBC -> Wise -> IBKR**
 
 1. OCBC -> Wise：使用 PayNow 扫码付款，可以在几秒内到账
 2. Wise -> IBKR：在 IBKR 中可以选择使用 Wise 入金。关联 Wise 账户后，即可将 Wise 的余额快速转入 IBKR
