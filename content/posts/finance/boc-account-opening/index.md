@@ -4,7 +4,7 @@ slug: boc-account-opening
 description: 香港开户第二篇，中银香港开户指南
 date: 2025-03-05T20:06:01+08:00
 draft: false
-image: victoria_harbor.jpg
+image: victoria_harbour.jpg
 math: false
 hidden: false
 categories:
