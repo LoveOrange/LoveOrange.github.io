@@ -4,7 +4,7 @@ slug: building-a-second-brain
 description: 如何合理的划分工作与生活的时间，更加高效的工作，轻松的生活，是困扰每一个现代打工人的问题。这里推荐一本让我重新掌控生活节奏的书──《构建第二大脑》。
 date: 2025-04-03T20:06:01+08:00
 draft: true
-image: victoria_harbour.jpg
+# image: victoria_harbour.jpg
 math: false
 hidden: false
 categories:
