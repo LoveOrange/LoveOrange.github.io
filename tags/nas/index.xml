@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nas on Linsama's Blog</title><link>https://loveorange.github.io/tags/nas/</link><description>Recent content in Nas on Linsama's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 09 Dec 2023 23:16:35 +0800</lastBuildDate><atom:link href="https://loveorange.github.io/tags/nas/index.xml" rel="self" type="application/rss+xml"/><item><title>NAS 影音下载系统配置</title><link>https://loveorange.github.io/posts/nas/nas-auto-download-media/</link><pubDate>Sat, 09 Dec 2023 23:16:35 +0800</pubDate><guid>https://loveorange.github.io/posts/nas/nas-auto-download-media/</guid><description>&lt;h2 id="背景"&gt;背景
+&lt;/h2&gt;&lt;p&gt;为了保证各个年龄段祖国花朵的健康成长，我们在国内的流媒体平台上看到的影视资源都是经过美化的，都有着不亚于新闻联播的祥和画面。然，纵使风景这边独好，有的时候我们依然要带着批判的眼光，去看、去听、去感受外面世界的险恶与残酷，以便解救西方世界的人名群众于水火，实现人类大同的理想&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;额咳咳，扯远了。总之，大部分人搭建 NAS 的初衷，可能都是更方便的管理影视剧资源。对于喜欢看动漫的人，可能还希望可以每周同步下载最新的番剧，因此，在这里介绍一套基于 Sonarr 等软件的影音资源管理系统，主要实现了以下功能：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;自动下载最新的番剧、电影、电视剧等资源&lt;/li&gt;
+&lt;li&gt;影视资源的分类管理&lt;/li&gt;
+&lt;li&gt;搜刮资源信息&lt;/li&gt;
+&lt;li&gt;多端播放&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="整体架构"&gt;整体架构
+&lt;/h2&gt;&lt;h3 id="平台信息"&gt;平台信息
+&lt;/h3&gt;&lt;p&gt;本人使用的是 Unraid 系统，因此接下来都以 Unraid 为例。所有的服务都是使用 Docker 容器的方式运行，对于支持 Docker 的系统，都可以参考本文的配置进行相应的修改。&lt;/p&gt;
+&lt;h3 id="系统组成"&gt;系统组成
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Sonarr：番剧下载管理，支持动漫、电视剧的搜索和下载&lt;/li&gt;
+&lt;li&gt;Radarr：电影下载管理，支持电影的搜索和下载&lt;/li&gt;
+&lt;li&gt;Overseerr：媒体请求管理，更现代化的 Web 界面&lt;/li&gt;
+&lt;li&gt;Jackett：资源搜刮，提供各种资源站点的搜索接口，Sonarr、Radarr 通过它来搜索资源&lt;/li&gt;
+&lt;li&gt;（可选）FlareSolverr：解决 Cloudflare 验证问题，提高 Jackett 的资源搜刮成功率&lt;/li&gt;
+&lt;li&gt;qBittorrent：下载器&lt;/li&gt;
+&lt;li&gt;Plex：媒体服务器&lt;/li&gt;
+&lt;li&gt;（可选）JProxy：Sonarr、Radarr 与 Jackett 之间的代理，优化资源匹配结果&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="安装配置"&gt;安装配置
+&lt;/h2&gt;&lt;h3 id="安装-docker"&gt;安装 Docker
+&lt;/h3&gt;&lt;p&gt;Unraid 系统默认已经安装了 Docker。如果是其他系统或平台，可参考各自的官方文档进行安装，或者参考 &lt;a class="link" href="https://docs.docker.com/engine/install/" target="_blank" rel="noopener"
+&gt;Docker 官方文档&lt;/a&gt; 进行手动安装。&lt;/p&gt;
+&lt;h3 id="目录准备"&gt;目录准备
+&lt;/h3&gt;&lt;p&gt;为了实现各个服务之间的交互和数据共享，需要提前对可能使用的目录进行规划。以 Unraid 为例，使用到的目录如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;/mnt/user/appdata：Docker 容器的配置文件目录，各服务涉及到服务本身的配置，统一扔在这里&lt;/li&gt;
+&lt;li&gt;/mnt/user/media/movies：电影媒体库目录
+&lt;ul&gt;
+&lt;li&gt;Radarr 使用此目录作为&lt;strong&gt;电影&lt;/strong&gt;媒体库目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;/mnt/user/media/tv：电视剧媒体库目录
+&lt;ul&gt;
+&lt;li&gt;Sonarr 使用此目录作为&lt;strong&gt;影视剧&lt;/strong&gt;媒体库目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;/mnt/user/media/anime：动漫媒体库目录
+&lt;ul&gt;
+&lt;li&gt;Sonarr 使用此目录作为&lt;strong&gt;动漫&lt;/strong&gt;媒体库目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;/mnt/user/media/downloads：下载目录
+&lt;ul&gt;
+&lt;li&gt;qBittorrent 使用此目录作为下载目录&lt;/li&gt;
+&lt;li&gt;Sonarr、Radarr 从此目录读取数据，并移动到相应的媒体库目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果创建 Docker 服务时以上目录没有自动创建，可以提前手工创建。&lt;/p&gt;
+&lt;h3 id="qbittorrent"&gt;qBittorrent
+&lt;/h3&gt;&lt;p&gt;qBittorrent 作为下载器，不主动依赖与其他的服务，因此作为我们安装的起始。安装时，需要注意以下几点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如上述的目录规划，容器的 &lt;code&gt;/downloads&lt;/code&gt; 目录需要映射到 &lt;code&gt;/mnt/user/media/downloads&lt;/code&gt; 目录&lt;/li&gt;
+&lt;li&gt;默认的端口可以不做修改，为了保证 P2P 下载效果，6881 端口需要在路由器侧配置端口转发&lt;/li&gt;
+&lt;li&gt;默认的用户名为 &lt;code&gt;admin&lt;/code&gt;，密码为 &lt;code&gt;adminadmin&lt;/code&gt;，安装完成后，建议修改密码&lt;/li&gt;
+&lt;li&gt;如果 qBittorrent 版本在 4.6.1.0 以上，默认密码不再是 &lt;code&gt;adminadmin&lt;/code&gt;，而是一个随机生成的密码，在容器启动过程中会打印出来，需要注意保存&lt;/li&gt;
+&lt;li&gt;强烈建议修改默认的用户名和密码，避免被他人利用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;启动服务后，还可以进行一些额外的配置&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;为了提升下载速度，可以在配置中添加 Tracker 服务器，我使用的是 XIU2 提供的 &lt;a class="link" href="https://github.com/XIU2/TrackersListCollection" target="_blank" rel="noopener"
+&gt;TrackerListCollection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;根据网络设施的情况，可以在配置中开启 DHT、PEX、LSD 等功能，提升下载速度&lt;/li&gt;
+&lt;li&gt;根据网络的使用时间，可以在配置中设置下载速度限制，避免影响其他网络使用者的体验&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="jackett"&gt;Jackett
+&lt;/h3&gt;&lt;p&gt;Jackett 作为资源搜刮服务，负责搜索在 Sonarr 和 Radarr 上添加的媒体信息。由于需要在 Sonarr 和 Radarr 中配置 Jackett 的 API，因此可以优先安装 Jackett。&lt;/p&gt;
+&lt;p&gt;安装时，将 &lt;code&gt;/downloads&lt;/code&gt; 目录映射到 &lt;code&gt;/mnt/user/media/downloads&lt;/code&gt; 即可，其余可使用默认配置。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/nas/nas-auto-download-media/jackett.png"
+width="1917"
+height="889"
+srcset="https://loveorange.github.io/posts/nas/nas-auto-download-media/jackett_hu_a2f0f60d0fd8655a.png 480w, https://loveorange.github.io/posts/nas/nas-auto-download-media/jackett_hu_88e2b67a040988cf.png 1024w"
+loading="lazy"
+alt="Jackett 页面"
+class="gallery-image"
+data-flex-grow="215"
+data-flex-basis="517px"
+&gt;&lt;/p&gt;
+&lt;p&gt;打开 Jackett 页面后，由三部分内容需要重点关注：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;API Key&lt;/strong&gt;：Jackett 的 API Key，后续需要在 Sonarr 和 Radarr 中配置&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Torznab Feed&lt;/strong&gt;：Jackett 的搜索接口，后续需要在 Sonarr 和 Radarr 中配置&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Add Indexer&lt;/strong&gt;：Jackett 支持的资源站点，可以根据自己的需求添加&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="可选flaresolverr"&gt;（可选）FlareSolverr
+&lt;/h3&gt;&lt;p&gt;部分资源站使用 Cloudflare 进行验证，Jackett 无法直接在此类站点上搜索资源，此时就需要使用 FlareSolverr 是解决 Cloudflare 验证问题。&lt;/p&gt;
+&lt;p&gt;安装过程比较简单，使用默认配置即可。安装完成后，需要在 Jackett 中配置 &lt;code&gt;FlareSolverr API URL&lt;/code&gt; 为 FlareSolverr 的地址。&lt;/p&gt;
+&lt;h3 id="sonarr-和-radarr"&gt;Sonarr 和 Radarr
+&lt;/h3&gt;&lt;p&gt;Sonarr 和 Radarr 的配置过程基本一致，因此一起进行说明。&lt;/p&gt;
+&lt;p&gt;安装过程重点需要注意路径映射：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sonarr
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/downloads&lt;/code&gt;：Sonarr 的下载目录，映射到 &lt;code&gt;/mnt/user/media/downloads&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media&lt;/code&gt;：Sonarr 的总媒体库目录，映射到 &lt;code&gt;/mnt/user/media&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/tv&lt;/code&gt;：Sonarr 的影视剧媒体库目录，映射到 &lt;code&gt;/mnt/user/media/tv&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Radarr
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/downloads&lt;/code&gt;：Radarr 的下载目录，映射到 &lt;code&gt;/mnt/user/media/downloads&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/movies&lt;/code&gt;：Radarr 的电影媒体库目录，映射到 &lt;code&gt;/mnt/user/media/movies&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;服务启动后，需要为 Sonarr 和 Radarr 配置搜刮器（Indexer）和下载器（Download Client），这里以 Sonarr 为例。&lt;/p&gt;
+&lt;h4 id="配置搜刮器"&gt;配置搜刮器
+&lt;/h4&gt;&lt;p&gt;Sonarr 支持多种搜刮器，包括 RSS、Torznab、Usenet 等，这里以 Torznab 为例。&lt;/p&gt;
+&lt;p&gt;在 Settings -&amp;gt; Indexers 中，点击 &lt;code&gt;+&lt;/code&gt; 添加一个新的搜刮器，选择 Torznab，输入以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Name：搜刮器名称，随意&lt;/li&gt;
+&lt;li&gt;Enable RSS Sync：是否启用 RSS 搜刮&lt;/li&gt;
+&lt;li&gt;Enable Search：是否启用搜索搜刮&lt;/li&gt;
+&lt;li&gt;URL：Jackett 的 Torznab Feed，格式为 &lt;code&gt;http://&amp;lt;Jackett IP&amp;gt;:9117/api/v2.0/indexers/&amp;lt;Jackett API Key&amp;gt;/results/torznab/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;API Key：Jackett 的 API Key&lt;/li&gt;
+&lt;li&gt;Categories：搜刮的资源类型，可以根据自己的需求进行配置&lt;/li&gt;
+&lt;li&gt;Anime Categories：动漫的资源类型，可以根据自己的需求进行配置&lt;/li&gt;
+&lt;li&gt;Tags：标签，可选。如果需要在 Sonarr 中对不同的搜刮器进行区分，可以在这里配置标签&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;配置完成后，点击 &lt;code&gt;Test&lt;/code&gt; 按钮，测试搜刮器是否配置成功。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-indexer.png"
+width="1441"
+height="1679"
+srcset="https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-indexer_hu_e484d6094505dd06.png 480w, https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-indexer_hu_9c90bc4d74663363.png 1024w"
+loading="lazy"
+alt="Sonarr 搜刮器配置"
+class="gallery-image"
+data-flex-grow="85"
+data-flex-basis="205px"
+&gt;&lt;/p&gt;
+&lt;h4 id="配置下载器"&gt;配置下载器
+&lt;/h4&gt;&lt;p&gt;Sonarr 支持多种下载器，包括 Transmission、qBittorrent、Usenet 等，这里以我们安装好的 qBittorrent 为例。&lt;/p&gt;
+&lt;p&gt;在 Settings -&amp;gt; Download Client 中，点击 &lt;code&gt;+&lt;/code&gt; 添加一个新的下载器，选择 qBittorrent，输入以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Name：下载器名称，随意&lt;/li&gt;
+&lt;li&gt;Enable：是否启用&lt;/li&gt;
+&lt;li&gt;Host：qBittorrent 的 IP 地址&lt;/li&gt;
+&lt;li&gt;Port：qBittorrent 的端口，如果是在本机上，可以直接使用 &lt;code&gt;8080&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Username：qBittorrent 的用户名，如果没有修改过，可以使用 &lt;code&gt;admin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Password：qBittorrent 的密码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;配置完成后，点击 &lt;code&gt;Test&lt;/code&gt; 按钮，测试下载器是否配置成功。&lt;/p&gt;
+&lt;p&gt;Radarr 的下载器配置与 Sonarr 类似，这里不再赘述。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-download-client.png"
+width="1441"
+height="1723"
+srcset="https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-download-client_hu_cd7974dfef69cc8a.png 480w, https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-download-client_hu_423223e8b4a25b6.png 1024w"
+loading="lazy"
+alt="Sonarr 下载器配置"
+class="gallery-image"
+data-flex-grow="83"
+data-flex-basis="200px"
+&gt;&lt;/p&gt;
+&lt;h4 id="配置媒体库"&gt;配置媒体库
+&lt;/h4&gt;&lt;p&gt;我们想要管理影视剧、动漫、电影这三类资源，因此可以在 Sonarr 中配置三个媒体库，分别对应不同的目录。&lt;/p&gt;
+&lt;p&gt;在 Settings -&amp;gt; Media Management 中，修改 Root Folder 的值，点击 Add Root Folder 添加一个新的媒体库，输入以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/media/tv&lt;/code&gt;：影视剧媒体库目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media/anime&lt;/code&gt;：动漫媒体库目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media/movies&lt;/code&gt;：电影媒体库目录（&lt;strong&gt;注：此项在 Radarr 中配置&lt;/strong&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="配置-language-profile"&gt;配置 Language Profile
+&lt;/h4&gt;&lt;p&gt;为了保证下载到的资源是中文的，还需要在 Sonarr 中配置 Language Profile。&lt;/p&gt;
+&lt;p&gt;在 Settings -&amp;gt; Profiles 中，点击 &lt;code&gt;+&lt;/code&gt; 添加一个新的 Language Profile，输入以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Name：自定义名称，如 Chinese&lt;/li&gt;
+&lt;li&gt;Language：勾选 Chinese 即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果有其他语言的需求，可以根据自己的需求进行配置。&lt;/p&gt;
+&lt;h4 id="使用说明"&gt;使用说明
+&lt;/h4&gt;&lt;p&gt;至此，Sonarr 和 Radarr 的基本配置已经完成，可以开始添加媒体信息了。&lt;/p&gt;
+&lt;p&gt;点击顶部搜索栏，直接输入剧集名字添加即可，Sonarr 和 Radarr 会自动搜索资源并下载。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-usage.png"
+width="3729"
+height="1915"
+srcset="https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-usage_hu_de066abd0b493eee.png 480w, https://loveorange.github.io/posts/nas/nas-auto-download-media/sonarr-usage_hu_66a2709658aacdb5.png 1024w"
+loading="lazy"
+alt="Sonarr 使用"
+class="gallery-image"
+data-flex-grow="194"
+data-flex-basis="467px"
+&gt;&lt;/p&gt;
+&lt;h3 id="plex-media-server"&gt;Plex Media Server
+&lt;/h3&gt;&lt;p&gt;Plex Media Server 作为媒体服务器，负责将下载好的资源进行分类管理，并提供多端播放的功能。&lt;/p&gt;
+&lt;p&gt;安装过程中，需要配置如下路径映射：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;/transcode&lt;/code&gt;：Plex 的转码目录，映射到 &lt;code&gt;/mnt/user/appdata/plex/transcode&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media&lt;/code&gt;：Plex 的媒体库目录，映射到 &lt;code&gt;/mnt/user/media&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Plex 默认的端口为 &lt;code&gt;32400&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;为了实现影视资源的分类管理，我们需要配置如下三个资料库：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Movies：电影媒体库
+&lt;ol&gt;
+&lt;li&gt;添加资料库时，选择 &lt;code&gt;电影&lt;/code&gt; 类型&lt;/li&gt;
+&lt;li&gt;添加文件夹，找到 &lt;code&gt;/media/movies&lt;/code&gt; 目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;TV：电视剧媒体库
+&lt;ol&gt;
+&lt;li&gt;添加资料库时，选择 &lt;code&gt;电视节目&lt;/code&gt; 类型&lt;/li&gt;
+&lt;li&gt;添加文件夹，找到 &lt;code&gt;/media/tv&lt;/code&gt; 目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Anime：动漫媒体库
+&lt;ol&gt;
+&lt;li&gt;添加资料库时，选择 &lt;code&gt;电视节目&lt;/code&gt; 类型&lt;/li&gt;
+&lt;li&gt;添加文件夹，找到 &lt;code&gt;/media/anime&lt;/code&gt; 目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;完成后，Plex 会自动扫描目录，将媒体信息添加到资料库中。&lt;/p&gt;
+&lt;p&gt;Plex 会自动抓取媒体信息，包括海报、简介等，如果抓取的信息不满意，可以手动修改。至此，一个漂亮的海报墙就展示在了我们的面前。&lt;/p&gt;
+&lt;h3 id="可选jproxy"&gt;（可选）JProxy
+&lt;/h3&gt;&lt;p&gt;这里要简单说一下 Sonarr 和 Radarr 的运行原理。Sonarr 和 Radarr 会使用本地影视剧的名字，到搜刮器中搜索资源，如果搜刮器中有匹配的资源，就会将资源添加到下载器中进行下载。然后，有时剧集的名字包含一些特殊字符，或者翻译名字和原名不一致，甚至资源站中发布的名字与原名有误，这些都会导致 Sonarr 和 Radarr 搜刮不到资源。Sonarr 和 Radarr 也不支持别名的功能，导致很多时候，明明在资源站中存在的资源，却无法被 Sonarr 和 Radarr 搜刮到。&lt;/p&gt;
+&lt;p&gt;为了提升搜刮的成功率，我们可以使用 JProxy 作为 Sonarr 和 Radarr 与 Jackett 之间的代理，JProxy 会对 Sonarr 和 Radarr 发送的请求进行处理，将特殊字符进行转义，然后再发送给 Jackett 进行搜索。&lt;/p&gt;
+&lt;p&gt;在 JProxy 的 &lt;a class="link" href="https://github.com/LuckyPuppy514/jproxy" target="_blank" rel="noopener"
+&gt;Github&lt;/a&gt; 仓库中，有其详细的使用说明，这里不做赘述。&lt;/p&gt;
+&lt;p&gt;由于 Unraid 的镜像仓库中没有 JProxy 的镜像，因此需要手动启动，在这里贴作者给出启动命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run --name jproxy &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --restart unless-stopped &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -e &lt;span class="nv"&gt;PUID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1000&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -e &lt;span class="nv"&gt;PGID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1000&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -e &lt;span class="nv"&gt;TZ&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Asia/Shanghai &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -e &lt;span class="nv"&gt;JAVA_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;-Xms512m -Xmx512m&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -p 8117:8117 &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -v /docker/jproxy/database:/app/database &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -d luckypuppy514/jproxy:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;亲测使用 JProxy 后，搜刮的成功率确实有明显提升，强烈建议使用，并去作者的仓库中进行 star。&lt;/p&gt;
+&lt;h3 id="可选overseerr"&gt;（可选）Overseerr
+&lt;/h3&gt;&lt;p&gt;有了 Sonarr 和 Radarr 后，可以方便的下载影视剧信息，但是对于不同类型的资源，需要在两个平台分别进行管理。为了解决这个问题，可以通过 Overseerr 来统一管理。&lt;/p&gt;
+&lt;p&gt;PS：Overseerr 也提供了更现代化的 Web 界面，颜值党不可错过。&lt;/p&gt;
+&lt;p&gt;配置上没有什么需要注意的。&lt;/p&gt;
+&lt;p&gt;安装好后，使用 Plex 登录，在 Settings -&amp;gt; Media Servers 中，添加 Sonarr 和 Radarr 的 API 即可。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/nas/nas-auto-download-media/Overseerr.png"
+width="3729"
+height="1915"
+srcset="https://loveorange.github.io/posts/nas/nas-auto-download-media/Overseerr_hu_4f8c6bb4639a36ce.png 480w, https://loveorange.github.io/posts/nas/nas-auto-download-media/Overseerr_hu_70095a2e0532656a.png 1024w"
+loading="lazy"
+alt="Overseerr Dashboard"
+class="gallery-image"
+data-flex-grow="194"
+data-flex-basis="467px"
+&gt;&lt;/p&gt;
+&lt;h2 id="总结"&gt;总结
+&lt;/h2&gt;&lt;p&gt;至此，我们的影音下载系统就搭建完成了。然而由于 BT 下载本身的特殊性，并非所有的资源都可以下载到，想要拥有完善的资源库，依然需要付出足够的努力。&lt;/p&gt;
+&lt;p&gt;同时，此系统中还有一些问题尚待解决，比如：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如何实现自动下载字幕&lt;/li&gt;
+&lt;li&gt;如何下载同一个字幕组的资源&lt;/li&gt;
+&lt;li&gt;能否借助 AI 的能力，实现更高级的功能：
+&lt;ol&gt;
+&lt;li&gt;高清化视频&lt;/li&gt;
+&lt;li&gt;自动生成字幕&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这些问题就留给后续的更新中去解决了。&lt;/p&gt;
+&lt;h2 id="额外的吐槽"&gt;额外的吐槽
+&lt;/h2&gt;&lt;p&gt;折腾 NAS 确实是很有趣的事情，然而看到 NAS 里面几个 TB 的资源，很多下载了后却从未打开，仿佛跟书架上那些买了但是没看的书、Steam 库里下都没下过的游戏一起，谴责着对资源的浪费，以及没有足够多个人时间的悲哀。&lt;/p&gt;</description></item></channel></rss>
