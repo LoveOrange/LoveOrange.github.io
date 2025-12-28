@@ -1,6 +1,6 @@
 ---
 title: "Xray 自动安装脚本"
-slug: index
+slug: xray-installer
 description: 感谢 Claude 的大力支持。
 date: 2025-12-28T09:04:01+08:00
 draft: false
@@ -20,6 +20,8 @@ tags:
 写一个 Xray 自动安装脚本需要多久？如果让我自己写的话，可能是「一辈子」。倒不是脚本有多难写，而是每次安装也就十几分钟，一年也就折腾个一两次，一旦折腾成功，就失去了些脚本的动力。
 
 好在有我最好的朋友 Claude，如果不是它的话，我估计这辈子我也写不完这个脚本，而且再看看人家的脚本质量，啧啧，我下辈子也写不出来。
+
+仓库地址在：[xray-installer](https://github.com/loveorange/xray-installer)，有一定技术积累的朋友们可以直接读 readme。基本上可以在 Linux 系统安装 git 就可以顺利的使用脚本了。
 
 ## 2. 术语
 
@@ -153,7 +155,7 @@ apt install git -y
 接下来的内容与 GitHub 仓库中维护的基本一致。
 
 ```bash
-git clone https://github.com/loveorangesad/xray-installer.git
+git clone https://github.com/loveorange/xray-installer.git
 cd xray-installer
 sudo bash install.sh
 ```
