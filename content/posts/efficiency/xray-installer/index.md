@@ -3,7 +3,7 @@ title: "Xray 自动安装脚本"
 slug: index
 description: 感谢 Claude 的大力支持。
 date: 2025-12-28T09:04:01+08:00
-draft: true
+draft: false
 image: xray-install-head.png
 math: false
 hidden: false

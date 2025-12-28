@@ -3,7 +3,7 @@ title: '【剧评】短剧开始了'
 slug: lifes-punchline
 description: 也许我们都曾有过，或者正处于这样的场景：在某一个瞬间，我们站在了人生的岔路口上，面临着艰难的选择，是沿着当前的道路继续前进，还是开始一段新的旅程？《短剧开始了》讲的就是这样一个故事，告别，然后重新启程。
 date: 2025-06-09T13:31:18+08:00
-draft: true
+draft: false
 image:
 math: false
 hidden: false
