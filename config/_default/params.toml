@@ -19,7 +19,7 @@ subtitle = "Nice to meet you 😊"
 [sidebar.avatar]
 enabled = true
 local = true
-src = "img/notion-avatar.png"
+src = "img/avatar-db.png"
 
 [article]
 math = false
