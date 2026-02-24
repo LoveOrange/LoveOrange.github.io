@@ -1,24 +1,24 @@
 /* Typography Hierarchy Fixes */
 
-/* 1. Single Page Post Title: Should be the absolute largest text (36px) */
+/* 1. Single Page Post Title: Should be the absolute largest text (32px) */
 .main__title {
-    font-size: 2.25rem;
+    font-size: 2rem;
 }
 
-/* 2. List Page Post Title: Should be larger than excerpt headings (28px) */
+/* 2. List Page Post Title: (24px) */
 .list__title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
 }
 
 /* 3. Article Content Headings: Scale them down to fit under the main title */
 .content h2 {
-    font-size: 1.5rem; /* 24px */
+    font-size: 1.35rem; /* ~22px */
 }
 .content h3 {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.2rem; /* ~19px */
 }
 .content h4 {
-    font-size: 1.125rem; /* 18px */
+    font-size: 1.1rem; /* ~17px */
 }
 
 /* 4. Summaries (Excerpts) on List Pages: Downsize any leaked markdown headings so they feel like normal text */
@@ -28,7 +28,7 @@
 .list__excerpt h4,
 .list__excerpt h5,
 .list__excerpt h6 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin: 0.5rem 0;
     line-height: 1.4;
 }
