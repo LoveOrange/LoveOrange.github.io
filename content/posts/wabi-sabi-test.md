@@ -1,7 +1,7 @@
 ---
 title: "Wabi-Sabi Theme Logic"
 date: 2026-02-16T12:00:00+08:00
-draft: false
+draft: true
 categories:
     - "Test"
 tags:
