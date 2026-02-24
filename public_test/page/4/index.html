@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+	<meta name="generator" content="Hugo 0.155.3"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62448&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linsama&#39;s Blog</title>
+    <meta name="description" content="">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+    
+</head>
+
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+    <div class="logo">
+        <a href="http://localhost:62448/">Linsama&#39;s Blog</a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/archives/">Archives</a></li>
+            
+            <li><a href="/search/">Search</a></li>
+            
+            <li><a href="/links/">Links</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+      <div class="main-container ">
+        <main class="content">
+          
+<div class="post-list">
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/leetcode/serialize-and-deserialize-binary-tree/">LeetCode 297. 二叉树的序列化与反序列化</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Mar 13, 2024</span>
+            
+                <span class="category">in <a href="/categories/leetcode">leetcode</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="1-题目介绍">1. 题目介绍</h2>
+<p>原题链接：<a href="https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/">297. 二叉树的序列化与反序列化</a>，难度：<strong>Hard</strong>。</p>
+<blockquote>
+<p>序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。</p>
+<p>请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。</p>
+<p><strong>提示:</strong>  输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅  <a href="https://support.leetcode.cn/hc/kb/article/1567641/">LeetCode 序列化二叉树的格式</a>。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。</p>
+</blockquote>
+<p>作为计算机领域常用的技术，序列化与反序列化的方式有很多，如何更快的序列化，如何减少序列化后的体积，一直是很多人追求的目标。</p>
+<p>本题只列举了一个场景，即二叉树的序列化与反序列化，实际中遇到更多的场景可能是将一个自定义结构的对象进行序列化，常见的如 RESTful 接口等，通常被序列化为 JSON 或者 XML 的格式。</p>
+<p>这道题让我想起了之前公司的需求，对一整棵 Maven 依赖树进行序列化，然后存放在了 S3 上做 snapshot。不过实际环境里用到的方式要更粗暴一些，直接用的 ProtoBuf 将整棵树的对象序列化了&hellip;&hellip;</p>
+<h2 id="2-问题分析">2. 问题分析</h2>
+<p>简化一下，问题可以变为将一棵二叉树使用字符串的形式表示，第一反应应该就是前、中、后序表达式了。</p>
+<p>联想到了构造二叉树的三兄弟：</p>
+<ol>
+<li><a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">105. 从前序与中序遍历序列构造二叉树</a></li>
+<li><a href="https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/">106. 从中序与后序遍历序列构造二叉树</a></li>
+<li><a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">889. 根据前序和后序遍历构造二叉树</a></li>
+</ol>
+<p>对于这三道题目来说，知道任何两种遍历的方式后，可以反序列化成完整的二叉树。</p>
+<p>那么对于这道题，是否也需要序列化成两种不同的序列，才能够反序列化成二叉树吗？其实不然。对于构造二叉树三兄弟来说，很重要的一点是找到左右子树的节点数量，进而找到叶子节点。但是对于本题，序列化的方式我们可以自己控制，我们可以自行在节点后添加 <code>null</code> 节点，来标识当前结点没有左子节点或右子节点。</p>
+<p>因此我们可以尝试使用先序遍历的方式，对于序列化的过程：</p>
+<ol>
+<li>每遍历一个节点，则在序列化的字符串末尾添加 <code>{node.val},</code></li>
+<li>如果节点为空，则添加 <code>N,</code>，具体的值可以根据喜好自行控制。等短的字符会节约空间</li>
+</ol>
+<p>对于反序列化的过程：</p>
+<ol>
+<li>获取所有的节点值，通过截取分隔符 <code>,</code> 获得</li>
+<li>如果节点值为 <code>N</code>，表示当前结点为空</li>
+<li>按照先序遍历的顺序，先构造跟结点，再依次构造左子节点和右子节点</li>
+<li>一点优化，使用 <code>List&lt;Integer&gt;</code> 保存所有的节点值，每遍历一个节点就删除一个节点，可以避免记录当前遍历的顺序。而且在使用先序遍历的情况下，List 中的第一个值就是当前节点的值</li>
+</ol>
+<h2 id="3-代码实现">3. 代码实现</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Definition for a binary tree node.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * public class TreeNode {
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *     int val;
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *     TreeNode left;
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *     TreeNode right;
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *     TreeNode(int x) { val = x; }
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * }
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Codec</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Encodes a tree to a single string.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">doSerialize</span><span class="p">(</span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">doSerialize</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">str</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&#34;N,&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">str</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">str</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">val</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;,&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doSerialize</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doSerialize</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">str</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Decodes your encoded data to tree.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">TreeNode</span><span class="w"> </span><span class="nf">deserialize</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">strs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&#34;,&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">doDeserialize</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="n">strs</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">TreeNode</span><span class="w"> </span><span class="nf">doDeserialize</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nodes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s">&#34;N&#34;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">nodes</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">0</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">nodes</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeNode</span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">nodes</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">0</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">nodes</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doDeserialize</span><span class="p">(</span><span class="n">nodes</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doDeserialize</span><span class="p">(</span><span class="n">nodes</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Your Codec object will be instantiated and called as such:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Codec ser = new Codec();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Codec deser = new Codec();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// TreeNode ans = deser.deserialize(ser.serialize(root));</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-相关题目">4. 相关题目</h2>
+<ol>
+<li><a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">105. 从前序与中序遍历序列构造二叉树</a></li>
+<li><a href="https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/">106. 从中序与后序遍历序列构造二叉树</a></li>
+<li><a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">889. 根据前序和后序遍历构造二叉树</a></li>
+</ol>
+<h2 id="5-一点额外的吐槽">5. 一点额外的吐槽</h2>
+<p>这种解法的优势在于易于理解，但是运行的效率并不高，LeetCode 执行用时 61ms。看了一眼最快的解法，只能说很是离谱了。</p>
+        </div>
+        <a href="/posts/leetcode/serialize-and-deserialize-binary-tree/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/leetcode/sliding-window-maximum/">LeetCode 239. 滑动窗口最大值</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Mar 13, 2024</span>
+            
+                <span class="category">in <a href="/categories/leetcode">leetcode</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="1-题目介绍">1. 题目介绍</h2>
+<p>原题链接：<a href="https://leetcode.cn/problems/sliding-window-maximum/">239. 滑动窗口最大值</a>，难度：<strong>Hard</strong>。</p>
+<blockquote>
+<p>给你一个整数数组  <code>nums</code>，有一个大小为  <code>k</code>  的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的  <code>k</code>  个数字。滑动窗口每次只向右移动一位。</p>
+<p>返回  <em>滑动窗口中的最大值</em> 。</p>
+</blockquote>
+<h2 id="2-问题分析">2. 问题分析</h2>
+<p>因为滑动窗口的长度为 <code>k</code>，所以最终返回的结果是一个长度为 <code>nums.length - k + 1</code> 的数组。如果这是大学期末考试题的话，写到这里至少应该能得两分。</p>
+<p>接下来想办法获取每 <code>k</code> 个长度内的最大值。假设我们已经维护了 <code>[i, i + k)</code> 个数字的数组 <code>arr</code>，并且按照从大到小的顺序排序了。那么当索引移动到 <code>i + 1</code> 时，我们需要做的就是将数组 <code>arr</code> 中，按照从大到小的顺序，移除不在索引 <code>[i + 1， i + k + 1)</code> 的数字，那么此时数组的头部元素即是当前段的最大值。</p>
+<p>考虑到数组中的数字允许重复，如果在 <code>[i, i + k)</code> 段中，有两个最大值，那么我们优先考虑使用后面的索引，因为它更有可能在下一段中也是最大值。因此在数组 <code>arr</code> 中，除了要维护 <code>[i, i + k)</code> 的值外，还需要将它们对应的索引也维护起来，并且按照值大小、索引位置进行排序。</p>
+<p>为了简化排序流程，可以考虑使用「优先队列」的数据结构。初始化如下的优先队列，队列的每一个元素是一个数组，值为 <code>{ nums[i], i }</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">((</span><span class="n">ar1</span><span class="p">,</span><span class="w"> </span><span class="n">ar2</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ar1</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ar2</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">ar2</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ar1</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ar2</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ar1</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-代码实现">3. 代码实现</h2>
+<p>最终代码如下所示：</p>
+        </div>
+        <a href="/posts/leetcode/sliding-window-maximum/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/leetcode/lc-76-minimum-window-substring/">Leetcode 76. 最小覆盖子串</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Mar 12, 2024</span>
+            
+                <span class="category">in <a href="/categories/leetcode">leetcode</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="1-题目介绍">1. 题目介绍</h2>
+<p>原题链接：<a href="https://leetcode-cn.com/problems/minimum-window-substring/">76. 最小覆盖子串</a></p>
+<p>题目的描述很简单：</p>
+<blockquote>
+<p>给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 &quot;&quot; 。</p>
+</blockquote>
+<p>最小覆盖子串是很经典的面试题了，也是我 17 年面试微软的原题。</p>
+<h2 id="2-问题分析">2. 问题分析</h2>
+<p>这是一个典型的滑动窗口问题，让我们来一步一步分析这道题。</p>
+<p>题目中要求找到字符串 <code>s</code> 中涵盖字符串 <code>t</code> 的所有字符，那么首先需要统计字符串 <code>t</code> 中有多少字符，可以使用一个 <code>Map&lt;Character, Integer&gt; map</code> 来存储 <code>t</code> 中的字符以及出现的次数。</p>
+<p>接下来就是滑动窗口的思路，设定滑动窗口的两端 <code>left</code> 和 <code>right</code>，使用 <code>Map&lt;Character, Integer&gt; window</code> 记录滑动窗口中的字符数量。</p>
+<p>首先不断地向前移动右边界 <code>right</code>，直到 <code>left</code> 和 <code>right</code> 中的字符完全包含了 <code>map</code> 中的字符。</p>
+<p>确定好右边界后，收缩左边界，同样地向前移动 <code>left</code>，直到 <code>left</code> 与 <code>right</code> 中的字符不再完全包含 <code>map</code> 中的字符，则左边界收缩结束。</p>
+<p>可以使用 <code>start</code> 和 <code>end</code> 记录能够完全覆盖 <code>map</code> 中的字符时，<code>left</code> 与 <code>right</code> 的值。</p>
+        </div>
+        <a href="/posts/leetcode/lc-76-minimum-window-substring/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/spring-dynamic-schedule/">Springboot Dynamic Schedule</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Feb 23, 2024</span>
+            
+                <span class="category">in <a href="/categories/spring-boot">spring-boot</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="1-引言">1. 引言</h2>
+<h3 id="11-需求">1.1. 需求</h3>
+<ul>
+<li>介绍遇到的需求</li>
+</ul>
+<h2 id="2-实现">2. 实现</h2>
+<h3 id="21-配置-schedule-config">2.1. 配置 Schedule Config</h3>
+        </div>
+        <a href="/posts/spring-dynamic-schedule/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/springboot-factory-pattern/">在 Spring Boot 中使用抽象工厂和工厂方法模式</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Feb 20, 2024</span>
+            
+                <span class="category">in <a href="/categories/spring-boot">spring-boot</a> <a href="/categories/design-pattern">design-pattern</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="1-引言">1. 引言</h2>
+<h3 id="11-需求">1.1. 需求</h3>
+<p>最近在开发一个基于 Spring Boot 框架的制品管理平台，使用了<strong>领域驱动设计</strong>的思想进行了业务模型的设计。</p>
+<p>开发过程中遇到了一个常见的需求：<strong>创建不同类型的制品（Artifact）</strong>。需求概括如下：</p>
+<ol>
+<li>不同的构建任务会生成不同类型的制品，如 Jar 包、Dockers 镜像等；</li>
+<li>所有类型的制品具备一些公共的属性，如名称、描述、创建时间等；</li>
+<li>不同类型的制品存在一些独有的属性，如存储位置、是否关联图片等；</li>
+<li>制品的独有属性用于创建后，触发下游的其他任务。</li>
+</ol>
+<p>对于 CRUD Boys 来说，是一个十分常见的需求，最简单的实现方式就是使用贫血模型。</p>
+<h3 id="12-贫血模型">1.2. 贫血模型</h3>
+<p>贫血模型由 Martin Fowler 在 2003 年提出，是一种将数据和行为分离的设计模式。</p>
+<p>在贫血模型中，Controller 层接受不同类型制品的创建请求（DTO），Service 层负责将请求映射为持久化对象（PO），DAO 层负责将持久化对象存储到数据库中。</p>
+<p>对于大多数 CRUD 请求来说，贫血模型可以说是一套“万能公式”，支撑起了无数的 Java 服务。但是，贫血模型也有着一些明显的缺点：</p>
+<ol>
+<li>模型不能反馈业务逻辑，开发人员无法深入地理解业务；</li>
+<li>大部分的 CRUD 逻辑存在相似性，代码复用性较差；</li>
+<li>一旦新增了业务逻辑，此处为制品类型，需要新增接口和表结构，维护成本较高。</li>
+<li>现有流程增加业务逻辑时，需要修改所有的流程，重复工作量较大。</li>
+</ol>
+<h3 id="13-基于可复用性的设计">1.3. 基于可复用性的设计</h3>
+<p>**DRY 原则（Don&rsquo;t Repeat Yourself）**是软件工程中的一条重要原则，它要求系统减少重复，提高代码的可复用性。</p>
+<p>为了做到这一点，首先需要的是对已有的需求进行更高层次的抽象，既要将相似的业务逻辑进行整合，也要让每种类型能够管理自己的特殊属性。其次，适当的引入设计模型也可以简化代码的复杂度，提高代码的可维护性。</p>
+<h2 id="2-需求分析">2. 需求分析</h2>
+<h3 id="21-需求建模">2.1. 需求建模</h3>
+<p>让我们回顾一下需求，找到其中的共性和差异性：</p>
+<ol>
+<li>共性
+<ol>
+<li>所有类型的制品都有名称、描述、创建时间等属性；</li>
+<li>制品可以使用相同的逻辑进行处理、存储；</li>
+<li>制品的独有属性都是用于触发下游任务。</li>
+</ol>
+</li>
+<li>差异性
+<ol>
+<li>不同类型的制品有着不同的特殊属性。</li>
+</ol>
+</li>
+</ol>
+<p>因此，我们首先对创建请求进行抽象，对于 Jar 包和 Docker 镜像类制品，可以创建如下 DTO 类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ArtifactDTO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">createTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">JAR</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">DOCKER</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JarArtifactDTO</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">groupId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">artifactId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">version</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ArtifactType</span><span class="p">.</span><span class="na">JAR</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DockerArtifactDTO</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ArtifactType</span><span class="p">.</span><span class="na">DOCKER</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>DTO 对象如下图所示：</p>
+        </div>
+        <a href="/posts/springboot-factory-pattern/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+
+    
+<a href="/page/3/" class="page-link">&larr; Newer Posts</a>
+
+
+<a href="/page/5/" class="page-link">Older Posts &rarr;</a>
+
+
+</div>
+
+        </main>
+
+        
+        <aside class="sidebar">
+    <div class="widget">
+        <h3 class="widget-title">About</h3>
+        <div class="widget-content">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Recent Posts</h3>
+        <ul class="recent-posts">
+            
+            <li><a href="/backup/hello-world/">Hello World</a></li>
+            
+            <li><a href="/posts/wabi-sabi-test/">Wabi-Sabi Theme Logic</a></li>
+            
+            <li><a href="/posts/how-to-change-google-play-location/">如何修改 Google Play 的所属国家</a></li>
+            
+            <li><a href="/posts/efficiency/xray-installer/">Xray 自动安装脚本</a></li>
+            
+            <li><a href="/posts/ai/index/">How to Use Claude</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Categories</h3>
+        <ul class="categories-list">
+            
+            <li><a href="/categories/design-pattern">design-pattern</a> (1)</li>
+            
+            <li><a href="/categories/dev-tools">dev tools</a> (2)</li>
+            
+            <li><a href="/categories/digital-nomad">digital nomad</a> (1)</li>
+            
+            <li><a href="/categories/efficiency">efficiency</a> (3)</li>
+            
+            <li><a href="/categories/example-category">example category</a> (1)</li>
+            
+            <li><a href="/categories/finance">finance</a> (2)</li>
+            
+            <li><a href="/categories/leetcode">leetcode</a> (5)</li>
+            
+            <li><a href="/categories/life">life</a> (1)</li>
+            
+            <li><a href="/categories/nas">nas</a> (1)</li>
+            
+            <li><a href="/categories/network">network</a> (1)</li>
+            
+            <li><a href="/categories/reviews">reviews</a> (1)</li>
+            
+            <li><a href="/categories/sales">sales</a> (1)</li>
+            
+            <li><a href="/categories/spring-boot">spring-boot</a> (2)</li>
+            
+            <li><a href="/categories/syntax">syntax</a> (1)</li>
+            
+            <li><a href="/categories/test">test</a> (1)</li>
+            
+            <li><a href="/categories/themes">themes</a> (1)</li>
+            
+            <li><a href="/categories/thoughts">thoughts</a> (1)</li>
+            
+            <li><a href="/categories/%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%94%B9%E9%80%A0">家庭网络改造</a> (1)</li>
+            
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Tags</h3>
+        <div class="tag-cloud">
+            
+            <a href="/tags/bank">bank</a>
+            
+            <a href="/tags/book">book</a>
+            
+            <a href="/tags/card">card</a>
+            
+            <a href="/tags/css">css</a>
+            
+            <a href="/tags/design-pattern">design-pattern</a>
+            
+            <a href="/tags/dev-tools">dev tools</a>
+            
+            <a href="/tags/digital-nomad">digital nomad</a>
+            
+            <a href="/tags/efficiency">efficiency</a>
+            
+            <a href="/tags/example-tag">example tag</a>
+            
+            <a href="/tags/finance">finance</a>
+            
+            <a href="/tags/google-one">google one</a>
+            
+            <a href="/tags/home">home</a>
+            
+            <a href="/tags/html">html</a>
+            
+            <a href="/tags/leetcode">leetcode</a>
+            
+            <a href="/tags/life">life</a>
+            
+            <a href="/tags/markdown">markdown</a>
+            
+            <a href="/tags/math">math</a>
+            
+            <a href="/tags/nas">nas</a>
+            
+            <a href="/tags/network">network</a>
+            
+            <a href="/tags/oa">oa</a>
+            
+            <a href="/tags/priority-queue">priority-queue</a>
+            
+            <a href="/tags/reviews">reviews</a>
+            
+            <a href="/tags/sliding-window">sliding-window</a>
+            
+            <a href="/tags/spring-boot">spring-boot</a>
+            
+            <a href="/tags/themes">themes</a>
+            
+            <a href="/tags/thoughts">thoughts</a>
+            
+            <a href="/tags/tv-series">tv series</a>
+            
+            <a href="/tags/wabi-sabi">wabi-sabi</a>
+            
+        </div>
+    </div>
+</aside>
+
+        
+      </div>
+
+      <footer class="site-footer">
+    <p>&copy; 2026 Linsama&#39;s Blog. All rights reserved.</p>
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="#">Wabi-Sabi</a></p>
+</footer>
+
+    </div>
+  </body>
+</html>

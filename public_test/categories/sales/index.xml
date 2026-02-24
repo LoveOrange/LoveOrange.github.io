@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sales on Linsama&#39;s Blog</title>
+    <link>http://localhost:62448/categories/sales/</link>
+    <description>Recent content in Sales on Linsama&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 Jan 2026 17:05:40 +0800</lastBuildDate>
+    <atom:link href="http://localhost:62448/categories/sales/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何修改 Google Play 的所属国家</title>
+      <link>http://localhost:62448/posts/how-to-change-google-play-location/</link>
+      <pubDate>Sun, 25 Jan 2026 17:05:40 +0800</pubDate>
+      <guid>http://localhost:62448/posts/how-to-change-google-play-location/</guid>
+      <description>&lt;h2 id=&#34;1-google-one-优惠&#34;&gt;1. Google One 优惠&lt;/h2&gt;&#xA;&lt;p&gt;年末发现了 Google One 的优惠活动，$99 可以购买原价 $239 的 AI Pro 一年会员，不但能使用 Google AI 的全家桶，还能与最多五个家庭成员共享，如果恰好有六个人凑齐赛博家庭，那么每人每月只需要 10 块钱。Google 的活动堪称慈善行为了。&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;可惜，截止到发文时间，这个活动貌似没有了&amp;hellip;&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;能买到这个优惠的朋友，基本上都已经解决了访问 Google 的网络问题。成为赛博家人的唯一限制，就是 &lt;strong&gt;家庭成员必须在同一个国家或者地区&lt;/strong&gt;，否则无法加入家庭。&lt;/p&gt;&#xA;&lt;h2 id=&#34;2-google-one-家庭成员地区限制&#34;&gt;2. Google One 家庭成员地区限制&lt;/h2&gt;&#xA;&lt;p&gt;Google 的账号体系下，不同场景对于国家与地区的检测是不一样的。&lt;/p&gt;&#xA;&lt;p&gt;对于 Google One 家庭共享，主要检测 Google Play 的国家与地区。&lt;/p&gt;&#xA;&lt;p&gt;这里我主要介绍一下在网页上怎么操作（因为我手上没有安卓设备）。另外，特别需要注意的是，Google 家庭组检测的是你 &lt;strong&gt;Google Play&lt;/strong&gt; 的地区，而不是你 Google 账号的地区。&lt;/p&gt;&#xA;&lt;h3 id=&#34;21-查看当前的-google-play-地区&#34;&gt;2.1. 查看当前的 Google Play 地区&lt;/h3&gt;&#xA;&lt;p&gt;想看自己当前的地区，随便打开一个 Google Play 页面（比如 &lt;a href=&#34;https://play.google.com/store/paymentmethods&#34;&gt;付款和订阅&lt;/a&gt;），拉到最底下就看到了。比如我的就显示是「美国」。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;google-play-location.png&#34; alt=&#34;Google Play 地区查看&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;22-修改-google-play-地区&#34;&gt;2.2. 修改 Google Play 地区&lt;/h3&gt;&#xA;&lt;p&gt;Google Play 的地区是跟着付款方式走的。所以，想改地区，就得添加一个新地区的付款方式。比如我要修改到「美国」，那么新添加的付款方式里，地址就要选择美国的地址（建议使用地址生成器选择免税州的地址）。&lt;/p&gt;&#xA;&lt;p&gt;添加完新的付款方式后，再去看 Google Play 页面底部，地区应该就变成新的了。&lt;/p&gt;&#xA;&lt;h3 id=&#34;23-可选关闭付款方式&#34;&gt;2.3. （可选）关闭付款方式&lt;/h3&gt;&#xA;&lt;p&gt;如果加了新的付款方式还不行，可以试试把旧的付款方式关掉。关闭之后，Google Play 就会自动改用剩下那个付款方式的地区了。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

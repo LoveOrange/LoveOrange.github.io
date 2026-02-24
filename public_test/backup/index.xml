@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Backups on Linsama&#39;s Blog</title>
+    <link>http://localhost:62448/backup/</link>
+    <description>Recent content in Backups on Linsama&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:62448/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello World</title>
+      <link>http://localhost:62448/backup/hello-world/</link>
+      <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:62448/backup/hello-world/</guid>
+      <description>&lt;p&gt;Welcome to Hugo theme Stack. This is your first post. Edit or delete it, then start writing!&lt;/p&gt;&#xA;&lt;p&gt;For more information about this theme, check the documentation: &lt;a href=&#34;https://stack.jimmycai.com/&#34;&gt;https://stack.jimmycai.com/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Want a site like this? Check out &lt;a href=&#34;https://github.com/CaiJimmy/hugo-theme-stack-starter&#34;&gt;hugo-theme-stack-stater&lt;/a&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@pawel_czerwinski&#34;&gt;Pawel Czerwinski&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Markdown Syntax Guide</title>
+      <link>http://localhost:62448/backup/markdown-syntax/</link>
+      <pubDate>Thu, 07 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:62448/backup/markdown-syntax/</guid>
+      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Image gallery</title>
+      <link>http://localhost:62448/backup/image-gallery/</link>
+      <pubDate>Sat, 26 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:62448/backup/image-gallery/</guid>
+      <description>&lt;p&gt;Hugo theme Stack supports the creation of interactive image galleries using Markdown. It&amp;rsquo;s powered by &lt;a href=&#34;https://photoswipe.com/&#34;&gt;PhotoSwipe&lt;/a&gt; and its syntax was inspired by &lt;a href=&#34;https://typlog.com/&#34;&gt;Typlog&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;To use this feature, the image must be in the same directory as the Markdown file, as it uses Hugo&amp;rsquo;s page bundle feature to read the dimensions of the image. &lt;strong&gt;External images are not supported.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;syntax&#34;&gt;Syntax&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;&#xA;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;![&lt;span class=&#34;nt&#34;&gt;Image 1&lt;/span&gt;](&lt;span class=&#34;na&#34;&gt;1.jpg&lt;/span&gt;) ![&lt;span class=&#34;nt&#34;&gt;Image 2&lt;/span&gt;](&lt;span class=&#34;na&#34;&gt;2.jpg&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;h2 id=&#34;result&#34;&gt;Result&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;1.jpg&#34; alt=&#34;Image 1&#34;&gt; &lt;img src=&#34;2.jpg&#34; alt=&#34;Image 2&#34;&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@mymind&#34;&gt;mymind&lt;/a&gt; and &lt;a href=&#34;https://unsplash.com/@lukechesser&#34;&gt;Luke Chesser&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Shortcodes</title>
+      <link>http://localhost:62448/backup/shortcodes/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:62448/backup/shortcodes/</guid>
+      <description>&lt;p&gt;For more details, check out the &lt;a href=&#34;https://stack.jimmycai.com/writing/shortcodes&#34;&gt;documentation&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h2 id=&#34;bilibili-video&#34;&gt;Bilibili video&lt;/h2&gt;&#xA;&lt;div class=&#34;bilibili-video&#34;&gt;&#xA;    &lt;p&gt;Bilibili Video Placeholder (ID: BV1d4411N7zD)&lt;/p&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;h2 id=&#34;tencent-video&#34;&gt;Tencent video&lt;/h2&gt;&#xA;&lt;div class=&#34;tencent-video&#34;&gt;&#xA;    &lt;p&gt;Tencent Video Placeholder (ID: g0014r3khdw)&lt;/p&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;h2 id=&#34;youtube-video&#34;&gt;YouTube video&lt;/h2&gt;&#xA;&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;&#xA;      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/0qwALOOvUik?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;&#xA;    &lt;/div&gt;&#xA;&#xA;&lt;h2 id=&#34;generic-video-file&#34;&gt;Generic video file&lt;/h2&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;    &lt;source src=&#34;https://www.w3schools.com/tags/movie.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;    Your browser does not support the video tag.&#xA;&lt;/video&gt;&#xA;&#xA;&lt;h2 id=&#34;gist&#34;&gt;Gist&lt;/h2&gt;&#xA;&lt;script src=&#34;https://gist.github.com/CaiJimmy/e2751a943de10b2a5b3a8a6c2120cb86.js&#34;&gt;&lt;/script&gt;&#xA;&#xA;&lt;h2 id=&#34;gitlab&#34;&gt;GitLab&lt;/h2&gt;&#xA;&lt;div class=&#34;gitlab-snippet&#34;&gt;&#xA;    &lt;p&gt;GitLab Snippet Placeholder (ID: 2589724)&lt;/p&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;h2 id=&#34;quote&#34;&gt;Quote&lt;/h2&gt;&#xA;&lt;blockquote&gt;&#xA;    &#xA;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&#xA;&#xA;    &lt;footer&gt;&#xA;        &lt;cite&gt;— &lt;a href=&#34;https://en.wikipedia.org/wiki/Book&#34; target=&#34;_blank&#34;&gt;A famous person&lt;/a&gt;&lt;/cite&gt;&#xA;    &lt;/footer&gt;&#xA;&lt;/blockquote&gt;&#xA;&#xA;&lt;hr&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@codioful&#34;&gt;Codioful&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/photos/WDSN62Qdxuk&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Math Typesetting</title>
+      <link>http://localhost:62448/backup/math-typesetting/</link>
+      <pubDate>Thu, 24 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:62448/backup/math-typesetting/</guid>
+      <description>&lt;p&gt;Stack has built-in support for math typesetting using &lt;a href=&#34;https://katex.org/&#34;&gt;KaTeX&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;It&amp;rsquo;s not enabled by default side-wide,&lt;/strong&gt; but you can enable it for individual posts by adding &lt;code&gt;math: true&lt;/code&gt; to the front matter. Or you can enable it side-wide by adding &lt;code&gt;math = true&lt;/code&gt; to the &lt;code&gt;params.article&lt;/code&gt; section in &lt;code&gt;config.toml&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;h2 id=&#34;inline-math&#34;&gt;Inline math&lt;/h2&gt;&#xA;&lt;p&gt;This is an inline mathematical expression: $\varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887…$&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;&#xA;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$\varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887…$&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;h2 id=&#34;block-math&#34;&gt;Block math&lt;/h2&gt;&#xA;&lt;p&gt;$$&#xA;\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }&#xA;$$&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

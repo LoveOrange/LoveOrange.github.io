@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62448&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAS 影音下载系统配置 | Linsama&#39;s Blog</title>
+    <meta name="description" content="使用 Sonarr，Radarr，Jackett，qBittorrent，Plex 等软件实现媒体资源的自动下载和管理">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+    
+</head>
+
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+    <div class="logo">
+        <a href="http://localhost:62448/">Linsama&#39;s Blog</a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/archives/">Archives</a></li>
+            
+            <li><a href="/search/">Search</a></li>
+            
+            <li><a href="/links/">Links</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+      <div class="main-container single-column">
+        <main class="content">
+          
+<article class="post-single">
+    <header class="post-header">
+        <h1 class="post-title">NAS 影音下载系统配置</h1>
+        <div class="post-meta">
+            <span>Dec 9, 2023</span>
+            
+                <span class="category">in <a href="/categories/nas">NAS</a> </span>
+            
+            <span> | 515 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        <h2 id="背景">背景</h2>
+<p>为了保证各个年龄段祖国花朵的健康成长，我们在国内的流媒体平台上看到的影视资源都是经过美化的，都有着不亚于新闻联播的祥和画面。然，纵使风景这边独好，有的时候我们依然要带着批判的眼光，去看、去听、去感受外面世界的险恶与残酷，以便解救西方世界的人名群众于水火，实现人类大同的理想&hellip;&hellip;</p>
+<p>额咳咳，扯远了。总之，大部分人搭建 NAS 的初衷，可能都是更方便的管理影视剧资源。对于喜欢看动漫的人，可能还希望可以每周同步下载最新的番剧，因此，在这里介绍一套基于 Sonarr 等软件的影音资源管理系统，主要实现了以下功能：</p>
+<ol>
+<li>自动下载最新的番剧、电影、电视剧等资源</li>
+<li>影视资源的分类管理</li>
+<li>搜刮资源信息</li>
+<li>多端播放</li>
+</ol>
+<h2 id="整体架构">整体架构</h2>
+<h3 id="平台信息">平台信息</h3>
+<p>本人使用的是 Unraid 系统，因此接下来都以 Unraid 为例。所有的服务都是使用 Docker 容器的方式运行，对于支持 Docker 的系统，都可以参考本文的配置进行相应的修改。</p>
+<h3 id="系统组成">系统组成</h3>
+<ul>
+<li>Sonarr：番剧下载管理，支持动漫、电视剧的搜索和下载</li>
+<li>Radarr：电影下载管理，支持电影的搜索和下载</li>
+<li>Overseerr：媒体请求管理，更现代化的 Web 界面</li>
+<li>Jackett：资源搜刮，提供各种资源站点的搜索接口，Sonarr、Radarr 通过它来搜索资源</li>
+<li>（可选）FlareSolverr：解决 Cloudflare 验证问题，提高 Jackett 的资源搜刮成功率</li>
+<li>qBittorrent：下载器</li>
+<li>Plex：媒体服务器</li>
+<li>（可选）JProxy：Sonarr、Radarr 与 Jackett 之间的代理，优化资源匹配结果</li>
+</ul>
+<h2 id="安装配置">安装配置</h2>
+<h3 id="安装-docker">安装 Docker</h3>
+<p>Unraid 系统默认已经安装了 Docker。如果是其他系统或平台，可参考各自的官方文档进行安装，或者参考 <a href="https://docs.docker.com/engine/install/">Docker 官方文档</a> 进行手动安装。</p>
+<h3 id="目录准备">目录准备</h3>
+<p>为了实现各个服务之间的交互和数据共享，需要提前对可能使用的目录进行规划。以 Unraid 为例，使用到的目录如下：</p>
+<ul>
+<li>/mnt/user/appdata：Docker 容器的配置文件目录，各服务涉及到服务本身的配置，统一扔在这里</li>
+<li>/mnt/user/media/movies：电影媒体库目录
+<ul>
+<li>Radarr 使用此目录作为<strong>电影</strong>媒体库目录</li>
+</ul>
+</li>
+<li>/mnt/user/media/tv：电视剧媒体库目录
+<ul>
+<li>Sonarr 使用此目录作为<strong>影视剧</strong>媒体库目录</li>
+</ul>
+</li>
+<li>/mnt/user/media/anime：动漫媒体库目录
+<ul>
+<li>Sonarr 使用此目录作为<strong>动漫</strong>媒体库目录</li>
+</ul>
+</li>
+<li>/mnt/user/media/downloads：下载目录
+<ul>
+<li>qBittorrent 使用此目录作为下载目录</li>
+<li>Sonarr、Radarr 从此目录读取数据，并移动到相应的媒体库目录</li>
+</ul>
+</li>
+</ul>
+<p>如果创建 Docker 服务时以上目录没有自动创建，可以提前手工创建。</p>
+<h3 id="qbittorrent">qBittorrent</h3>
+<p>qBittorrent 作为下载器，不主动依赖与其他的服务，因此作为我们安装的起始。安装时，需要注意以下几点：</p>
+<ol>
+<li>如上述的目录规划，容器的 <code>/downloads</code> 目录需要映射到 <code>/mnt/user/media/downloads</code> 目录</li>
+<li>默认的端口可以不做修改，为了保证 P2P 下载效果，6881 端口需要在路由器侧配置端口转发</li>
+<li>默认的用户名为 <code>admin</code>，密码为 <code>adminadmin</code>，安装完成后，建议修改密码</li>
+<li>如果 qBittorrent 版本在 4.6.1.0 以上，默认密码不再是 <code>adminadmin</code>，而是一个随机生成的密码，在容器启动过程中会打印出来，需要注意保存</li>
+<li>强烈建议修改默认的用户名和密码，避免被他人利用</li>
+</ol>
+<p>启动服务后，还可以进行一些额外的配置</p>
+<ol>
+<li>为了提升下载速度，可以在配置中添加 Tracker 服务器，我使用的是 XIU2 提供的 <a href="https://github.com/XIU2/TrackersListCollection">TrackerListCollection</a></li>
+<li>根据网络设施的情况，可以在配置中开启 DHT、PEX、LSD 等功能，提升下载速度</li>
+<li>根据网络的使用时间，可以在配置中设置下载速度限制，避免影响其他网络使用者的体验</li>
+</ol>
+<h3 id="jackett">Jackett</h3>
+<p>Jackett 作为资源搜刮服务，负责搜索在 Sonarr 和 Radarr 上添加的媒体信息。由于需要在 Sonarr 和 Radarr 中配置 Jackett 的 API，因此可以优先安装 Jackett。</p>
+<p>安装时，将 <code>/downloads</code> 目录映射到 <code>/mnt/user/media/downloads</code> 即可，其余可使用默认配置。</p>
+<p><img src="jackett.png" alt="Jackett 页面"></p>
+<p>打开 Jackett 页面后，由三部分内容需要重点关注：</p>
+<ol>
+<li><strong>API Key</strong>：Jackett 的 API Key，后续需要在 Sonarr 和 Radarr 中配置</li>
+<li><strong>Torznab Feed</strong>：Jackett 的搜索接口，后续需要在 Sonarr 和 Radarr 中配置</li>
+<li><strong>Add Indexer</strong>：Jackett 支持的资源站点，可以根据自己的需求添加</li>
+</ol>
+<h3 id="可选flaresolverr">（可选）FlareSolverr</h3>
+<p>部分资源站使用 Cloudflare 进行验证，Jackett 无法直接在此类站点上搜索资源，此时就需要使用 FlareSolverr 是解决 Cloudflare 验证问题。</p>
+<p>安装过程比较简单，使用默认配置即可。安装完成后，需要在 Jackett 中配置 <code>FlareSolverr API URL</code> 为 FlareSolverr 的地址。</p>
+<h3 id="sonarr-和-radarr">Sonarr 和 Radarr</h3>
+<p>Sonarr 和 Radarr 的配置过程基本一致，因此一起进行说明。</p>
+<p>安装过程重点需要注意路径映射：</p>
+<ul>
+<li>Sonarr
+<ul>
+<li><code>/downloads</code>：Sonarr 的下载目录，映射到 <code>/mnt/user/media/downloads</code></li>
+<li><code>/media</code>：Sonarr 的总媒体库目录，映射到 <code>/mnt/user/media</code></li>
+<li><code>/tv</code>：Sonarr 的影视剧媒体库目录，映射到 <code>/mnt/user/media/tv</code></li>
+</ul>
+</li>
+<li>Radarr
+<ul>
+<li><code>/downloads</code>：Radarr 的下载目录，映射到 <code>/mnt/user/media/downloads</code></li>
+<li><code>/movies</code>：Radarr 的电影媒体库目录，映射到 <code>/mnt/user/media/movies</code></li>
+</ul>
+</li>
+</ul>
+<p>服务启动后，需要为 Sonarr 和 Radarr 配置搜刮器（Indexer）和下载器（Download Client），这里以 Sonarr 为例。</p>
+<h4 id="配置搜刮器">配置搜刮器</h4>
+<p>Sonarr 支持多种搜刮器，包括 RSS、Torznab、Usenet 等，这里以 Torznab 为例。</p>
+<p>在 Settings -&gt; Indexers 中，点击 <code>+</code> 添加一个新的搜刮器，选择 Torznab，输入以下信息：</p>
+<ul>
+<li>Name：搜刮器名称，随意</li>
+<li>Enable RSS Sync：是否启用 RSS 搜刮</li>
+<li>Enable Search：是否启用搜索搜刮</li>
+<li>URL：Jackett 的 Torznab Feed，格式为 <code>http://&lt;Jackett IP&gt;:9117/api/v2.0/indexers/&lt;Jackett API Key&gt;/results/torznab/</code></li>
+<li>API Key：Jackett 的 API Key</li>
+<li>Categories：搜刮的资源类型，可以根据自己的需求进行配置</li>
+<li>Anime Categories：动漫的资源类型，可以根据自己的需求进行配置</li>
+<li>Tags：标签，可选。如果需要在 Sonarr 中对不同的搜刮器进行区分，可以在这里配置标签</li>
+</ul>
+<p>配置完成后，点击 <code>Test</code> 按钮，测试搜刮器是否配置成功。</p>
+<p><img src="sonarr-indexer.png" alt="Sonarr 搜刮器配置"></p>
+<h4 id="配置下载器">配置下载器</h4>
+<p>Sonarr 支持多种下载器，包括 Transmission、qBittorrent、Usenet 等，这里以我们安装好的 qBittorrent 为例。</p>
+<p>在 Settings -&gt; Download Client 中，点击 <code>+</code> 添加一个新的下载器，选择 qBittorrent，输入以下信息：</p>
+<ul>
+<li>Name：下载器名称，随意</li>
+<li>Enable：是否启用</li>
+<li>Host：qBittorrent 的 IP 地址</li>
+<li>Port：qBittorrent 的端口，如果是在本机上，可以直接使用 <code>8080</code></li>
+<li>Username：qBittorrent 的用户名，如果没有修改过，可以使用 <code>admin</code></li>
+<li>Password：qBittorrent 的密码</li>
+</ul>
+<p>配置完成后，点击 <code>Test</code> 按钮，测试下载器是否配置成功。</p>
+<p>Radarr 的下载器配置与 Sonarr 类似，这里不再赘述。</p>
+<p><img src="sonarr-download-client.png" alt="Sonarr 下载器配置"></p>
+<h4 id="配置媒体库">配置媒体库</h4>
+<p>我们想要管理影视剧、动漫、电影这三类资源，因此可以在 Sonarr 中配置三个媒体库，分别对应不同的目录。</p>
+<p>在 Settings -&gt; Media Management 中，修改 Root Folder 的值，点击 Add Root Folder 添加一个新的媒体库，输入以下信息：</p>
+<ul>
+<li><code>/media/tv</code>：影视剧媒体库目录</li>
+<li><code>/media/anime</code>：动漫媒体库目录</li>
+<li><code>/media/movies</code>：电影媒体库目录（<strong>注：此项在 Radarr 中配置</strong>）</li>
+</ul>
+<h4 id="配置-language-profile">配置 Language Profile</h4>
+<p>为了保证下载到的资源是中文的，还需要在 Sonarr 中配置 Language Profile。</p>
+<p>在 Settings -&gt; Profiles 中，点击 <code>+</code> 添加一个新的 Language Profile，输入以下信息：</p>
+<ul>
+<li>Name：自定义名称，如 Chinese</li>
+<li>Language：勾选 Chinese 即可</li>
+</ul>
+<p>如果有其他语言的需求，可以根据自己的需求进行配置。</p>
+<h4 id="使用说明">使用说明</h4>
+<p>至此，Sonarr 和 Radarr 的基本配置已经完成，可以开始添加媒体信息了。</p>
+<p>点击顶部搜索栏，直接输入剧集名字添加即可，Sonarr 和 Radarr 会自动搜索资源并下载。</p>
+<p><img src="sonarr-usage.png" alt="Sonarr 使用"></p>
+<h3 id="plex-media-server">Plex Media Server</h3>
+<p>Plex Media Server 作为媒体服务器，负责将下载好的资源进行分类管理，并提供多端播放的功能。</p>
+<p>安装过程中，需要配置如下路径映射：</p>
+<ol>
+<li><code>/transcode</code>：Plex 的转码目录，映射到 <code>/mnt/user/appdata/plex/transcode</code></li>
+<li><code>/media</code>：Plex 的媒体库目录，映射到 <code>/mnt/user/media</code></li>
+</ol>
+<p>Plex 默认的端口为 <code>32400</code>。</p>
+<p>为了实现影视资源的分类管理，我们需要配置如下三个资料库：</p>
+<ol>
+<li>Movies：电影媒体库
+<ol>
+<li>添加资料库时，选择 <code>电影</code> 类型</li>
+<li>添加文件夹，找到 <code>/media/movies</code> 目录</li>
+</ol>
+</li>
+<li>TV：电视剧媒体库
+<ol>
+<li>添加资料库时，选择 <code>电视节目</code> 类型</li>
+<li>添加文件夹，找到 <code>/media/tv</code> 目录</li>
+</ol>
+</li>
+<li>Anime：动漫媒体库
+<ol>
+<li>添加资料库时，选择 <code>电视节目</code> 类型</li>
+<li>添加文件夹，找到 <code>/media/anime</code> 目录</li>
+</ol>
+</li>
+</ol>
+<p>完成后，Plex 会自动扫描目录，将媒体信息添加到资料库中。</p>
+<p>Plex 会自动抓取媒体信息，包括海报、简介等，如果抓取的信息不满意，可以手动修改。至此，一个漂亮的海报墙就展示在了我们的面前。</p>
+<h3 id="可选jproxy">（可选）JProxy</h3>
+<p>这里要简单说一下 Sonarr 和 Radarr 的运行原理。Sonarr 和 Radarr 会使用本地影视剧的名字，到搜刮器中搜索资源，如果搜刮器中有匹配的资源，就会将资源添加到下载器中进行下载。然后，有时剧集的名字包含一些特殊字符，或者翻译名字和原名不一致，甚至资源站中发布的名字与原名有误，这些都会导致 Sonarr 和 Radarr 搜刮不到资源。Sonarr 和 Radarr 也不支持别名的功能，导致很多时候，明明在资源站中存在的资源，却无法被 Sonarr 和 Radarr 搜刮到。</p>
+<p>为了提升搜刮的成功率，我们可以使用 JProxy 作为 Sonarr 和 Radarr 与 Jackett 之间的代理，JProxy 会对 Sonarr 和 Radarr 发送的请求进行处理，将特殊字符进行转义，然后再发送给 Jackett 进行搜索。</p>
+<p>在 JProxy 的 <a href="https://github.com/LuckyPuppy514/jproxy">Github</a> 仓库中，有其详细的使用说明，这里不做赘述。</p>
+<p>由于 Unraid 的镜像仓库中没有 JProxy 的镜像，因此需要手动启动，在这里贴作者给出启动命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run --name jproxy <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --restart unless-stopped <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -e <span class="nv">PUID</span><span class="o">=</span><span class="m">1000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -e <span class="nv">PGID</span><span class="o">=</span><span class="m">1000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -e <span class="nv">TZ</span><span class="o">=</span>Asia/Shanghai <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -e <span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;-Xms512m -Xmx512m&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -p 8117:8117 <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -v /docker/jproxy/database:/app/database <span class="se">\
+</span></span></span><span class="line"><span class="cl">    -d luckypuppy514/jproxy:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>亲测使用 JProxy 后，搜刮的成功率确实有明显提升，强烈建议使用，并去作者的仓库中进行 star。</p>
+<h3 id="可选overseerr">（可选）Overseerr</h3>
+<p>有了 Sonarr 和 Radarr 后，可以方便的下载影视剧信息，但是对于不同类型的资源，需要在两个平台分别进行管理。为了解决这个问题，可以通过 Overseerr 来统一管理。</p>
+<p>PS：Overseerr 也提供了更现代化的 Web 界面，颜值党不可错过。</p>
+<p>配置上没有什么需要注意的。</p>
+<p>安装好后，使用 Plex 登录，在 Settings -&gt; Media Servers 中，添加 Sonarr 和 Radarr 的 API 即可。</p>
+<p><img src="overseerr.png" alt="Overseerr Dashboard"></p>
+<h2 id="总结">总结</h2>
+<p>至此，我们的影音下载系统就搭建完成了。然而由于 BT 下载本身的特殊性，并非所有的资源都可以下载到，想要拥有完善的资源库，依然需要付出足够的努力。</p>
+<p>同时，此系统中还有一些问题尚待解决，比如：</p>
+<ol>
+<li>如何实现自动下载字幕</li>
+<li>如何下载同一个字幕组的资源</li>
+<li>能否借助 AI 的能力，实现更高级的功能：
+<ol>
+<li>高清化视频</li>
+<li>自动生成字幕</li>
+</ol>
+</li>
+</ol>
+<p>这些问题就留给后续的更新中去解决了。</p>
+<h2 id="额外的吐槽">额外的吐槽</h2>
+<p>折腾 NAS 确实是很有趣的事情，然而看到 NAS 里面几个 TB 的资源，很多下载了后却从未打开，仿佛跟书架上那些买了但是没看的书、Steam 库里下都没下过的游戏一起，谴责着对资源的浪费，以及没有足够多个人时间的悲哀。</p>
+
+    </div>
+
+    <footer class="post-footer">
+        
+        <div class="post-tags">
+            Tags:
+            
+            <a href="/tags/nas">#nas</a>
+            
+        </div>
+        
+    </footer>
+</article>
+
+        </main>
+
+        
+      </div>
+
+      <footer class="site-footer">
+    <p>&copy; 2026 Linsama&#39;s Blog. All rights reserved.</p>
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="#">Wabi-Sabi</a></p>
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62448&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家庭网络改造 1： 路由器系统 | Linsama&#39;s Blog</title>
+    <meta name="description" content="基于 PVE 安装的 OpenWrt 路由器系统">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+    
+</head>
+
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+    <div class="logo">
+        <a href="http://localhost:62448/">Linsama&#39;s Blog</a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/archives/">Archives</a></li>
+            
+            <li><a href="/search/">Search</a></li>
+            
+            <li><a href="/links/">Links</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+      <div class="main-container single-column">
+        <main class="content">
+          
+<article class="post-single">
+    <header class="post-header">
+        <h1 class="post-title">家庭网络改造 1： 路由器系统</h1>
+        <div class="post-meta">
+            <span>Nov 20, 2023</span>
+            
+                <span class="category">in <a href="/categories/%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%94%B9%E9%80%A0">家庭网络改造</a> </span>
+            
+            <span> | 165 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        <h2 id="0-引言">0. 引言</h2>
+<p>在日常的工作和生活之中，总有一些网络上的需求和问题需要解决。比如：</p>
+<ul>
+<li>如何访问 GitHub？</li>
+<li>如何在联机游戏中获得稳定的环境？</li>
+<li>不在家中如何访问 Nas 中的资源？</li>
+</ul>
+<p>解决这些问题的一个简单途径，既是在家中搭建一个功能丰富的软路由系统，实现各种高级的网络功能，同时也是后续置办 Nas，搭建私有云的基础。</p>
+<h2 id="1-网络环境概述">1. 网络环境概述</h2>
+<h3 id="11-总体架构">1.1. 总体架构</h3>
+<p><img src="architecture.png" alt="home-network-architecture"></p>
+<h3 id="12-设备清单">1.2. 设备清单</h3>
+<ol>
+<li>光猫：使用运营商提供的光猫，包含了 WiFi 的功能，保障软路由即使挂掉，依然有网络可以访问</li>
+<li>软路由：一台 x86 或者 arm 的机器，文中使用的是 N5105</li>
+<li>AP 节点：用于扩展网络信号</li>
+</ol>
+<h3 id="13-方案选择">1.3. 方案选择</h3>
+<p>将 OpenWrt 直接安装在软路由上，无疑可以获得最好的性能，但是此方案也存在一些弊端。如果在折腾 OpenWrt 系统的过程中出现某些异常，OpenWrt 无法访问，将影响全局的网络访问</p>
+<p>为了可以随时折腾家中的网络，同时保证家人的网络访问不受影响，我们选择在 PVE 上安装 OpenWrt 系统</p>
+<h2 id="2-pve-的安装与配置">2. PVE 的安装与配置</h2>
+<h3 id="21-pve-系统安装">2.1. PVE 系统安装</h3>
+<p>PVE 的安装可以参考 <a href="https://pve.proxmox.com/wiki/Installation">PVE 官方文档</a></p>
+<h3 id="22-pve-开启硬件直通">2.2. PVE 开启硬件直通</h3>
+<p>为了获得更好的性能，可以在安装完成 PVE 后，开启硬件直通功能，将网卡直通给 OpenWrt 使用</p>
+<p><strong>1. 启用 IOMMU</strong></p>
+<p>在主机 BIOS 设置中启用 <code>VT-d</code>（对于Intel处理器）或 <code>AMD-Vi</code>（对于AMD处理器）功能。</p>
+<p>修改GRUB配置文件（通常是 <code>/etc/default/grub</code>），添加或修改以下条目：</p>
+<p>Intel 处理器添加以下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&#34;quiet intel_iommu=on&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>AMD 处理器添加以下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&#34;quiet intel_iommu=on&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>2. 更新 GRUB 配置</strong></p>
+<p>运行 update-grub 命令来更新GRUB配置。</p>
+<p><strong>3. 重启系统</strong></p>
+<p>重启您的 PVE 系统以应用更改。使用以下命令可检查 IOMMU 是否激活：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">dmesg <span class="p">|</span> grep -e DMAR -e IOMMU
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-openwrt-的安装与配置">3. OpenWrt 的安装与配置</h2>
+<h3 id="31-openwrt-镜像选择">3.1. OpenWrt 镜像选择</h3>
+<p>OpenWrt 官方提供了构建好的镜像，可以直接用来安装。也可以选择一些第三方的镜像，通常这类镜像已经内置了很多常用的软件包，可以减少后续的配置工作。这里使用的是 <a href="https://github.com/stupidloud/nanopi-openwrt/releases">https://github.com/stupidloud/nanopi-openwrt/releases</a> 。</p>
+<h3 id="32-openwrt-安装">3.2. OpenWrt 安装</h3>
+<p>在 PVE 上安装 OpenWrt 有以下几个步骤：</p>
+<p><strong>1. 上传镜像</strong></p>
+<p>上传镜像到 PVE 的本地存储，依次选择的 local(pve) -&gt; ISO 镜像 -&gt; 上传</p>
+<p><strong>2. 创建虚拟机</strong></p>
+<p>选择刚刚上传的镜像，设置虚拟机的 CPU、内存、硬盘等参数。一般的机器性能都是过剩的，由于我并不打算在软路由中实现更多的功能，因此我使用的是 1C2G 的组合</p>
+<h3 id="33-网络接口配置">3.3. 网络接口配置</h3>
+<p><strong>1. WAN 口配置</strong></p>
+<p>将软路由器与光猫连接的接口设为 WAN 口，为了方便访问，可以将 WAN 口设置为静态 IP，如 <code>192.168.1.10</code>。</p>
+<p><strong>2. LAN 口配置</strong></p>
+<p>将软路由器上其他的接口使用桥接模式，设置为 LAN 口，作为内网的网关，使用静态 IP 模式，设置为 <code>192.168.10.1</code>。配置完成后，将 AP 节点接入 LAN，即可实现网络访问</p>
+<h3 id="33-其他功能">3.3. 其他功能</h3>
+<p>可以根据自己的需求和使用的 OpenWrt 版本，自行安装或启用其他的高级功能，如广告过滤、游戏加速等等</p>
+
+    </div>
+
+    <footer class="post-footer">
+        
+        <div class="post-tags">
+            Tags:
+            
+            <a href="/tags/home">#home</a>
+            
+            <a href="/tags/nas">#nas</a>
+            
+        </div>
+        
+    </footer>
+</article>
+
+        </main>
+
+        
+      </div>
+
+      <footer class="site-footer">
+    <p>&copy; 2026 Linsama&#39;s Blog. All rights reserved.</p>
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="#">Wabi-Sabi</a></p>
+</footer>
+
+    </div>
+  </body>
+</html>

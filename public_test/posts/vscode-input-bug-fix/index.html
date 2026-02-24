@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62448&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修复 VSCode、Cursor 输入中文时字符颤抖问题 | Linsama&#39;s Blog</title>
+    <meta name="description" content="解决 VSCode 与 Cursor 输入中文时 editor 文字颤抖问题">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+    
+</head>
+
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+    <div class="logo">
+        <a href="http://localhost:62448/">Linsama&#39;s Blog</a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/archives/">Archives</a></li>
+            
+            <li><a href="/search/">Search</a></li>
+            
+            <li><a href="/links/">Links</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+      <div class="main-container single-column">
+        <main class="content">
+          
+<article class="post-single">
+    <header class="post-header">
+        <h1 class="post-title">修复 VSCode、Cursor 输入中文时字符颤抖问题</h1>
+        <div class="post-meta">
+            <span>Nov 16, 2024</span>
+            
+                <span class="category">in <a href="/categories/dev-tools">dev tools</a> </span>
+            
+            <span> | 128 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        <h2 id="1-引言">1. 引言</h2>
+<p>讲一个最近遇到的问题。在 VSCode 和 Cursor 输入中文时，editor 的文字一直在颤抖。日常写注释时影响不大，但是在写 Blog 的时候，大量的中文输入，而文字一直颤抖，体感很差。</p>
+<h2 id="2-解决">2. 解决</h2>
+<p>搜了一些资料以及尝试后，发现问题出现在 Vim 插件上，卸载或禁用 Vim 插件后，问题不再复现。</p>
+<p>参考：<a href="https://github.com/microsoft/vscode/issues/184666">VSCode 输入中文时 editor 文字颤抖</a></p>
+<p>但是对于 Vim 星人来说，不使用 Vim 几乎不会打字了，那么介绍两种另外的解决办法。</p>
+<h3 id="21-方案一修改-vscode-配置">2.1. 方案一：修改 VSCode 配置</h3>
+<p>上述 Issue 中给出了解决方案，在 VSCode 配置中添加以下配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;editor.experimentalEditContextEnabled&#34;</span><span class="err">:</span> <span class="kc">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重启后即可生效。</p>
+<p>但是 Cursor 中没有这个配置，因此我们继续探索另外的解决办法。</p>
+<h3 id="22-方案二使用-neovim-插件">2.2. 方案二：使用 NeoVim 插件</h3>
+<p>对于 Vim，我更多的需求是使用 Vim 的键位，那么找一个能够提供 Vim 键位的插件即可，这里我选择的是 <a href="https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim">NeoVim</a>。</p>
+<p>除了插件外，还需要安装 NeoVim 客户端，可以使用 Homebrew 安装：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install neovim
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样重启后生效。</p>
+<h2 id="3-其他的问题无法连续移动光标">3. 其他的问题：无法连续移动光标</h2>
+<p>安装好 NeoVim 后，发现了另一个问题，按住 <code>hjkl</code> 时，无法持续移动光标，效率很差。</p>
+<p>这里涉及到一个 MacOS 的问题。MacOS 中有一个默认的按键重复限制，对于特定按键来说，按住时会显示字符选择框。可以在终端中针对特定的应用禁用。</p>
+<p>VSCode 禁用方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool <span class="nb">false</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的 <code>com.microsoft.VSCode</code> 是 VSCode 的 Bundle ID。</p>
+<p>Cursor 的 Bundle ID 不像 VSCode 这么统一，可以使用以下命令查询：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">osascript -e <span class="s1">&#39;id of app &#34;Cursor&#34;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我显示的 Bundle ID 是 <code>com.todesktop.230313mzl4w4u92</code>，因此禁用命令为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">defaults write com.todesktop.230313mzl4w4u92 ApplePressAndHoldEnabled -bool <span class="nb">false</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要强制退出 VSCode 和 Cursor 后生效，<code>⌘ + Q</code> 一下吧。</p>
+<p>至此，VSCode 与 Cursor 的输入问题解决，继续开心的码代码吧～</p>
+
+    </div>
+
+    <footer class="post-footer">
+        
+        <div class="post-tags">
+            Tags:
+            
+            <a href="/tags/dev-tools">#dev tools</a>
+            
+        </div>
+        
+    </footer>
+</article>
+
+        </main>
+
+        
+      </div>
+
+      <footer class="site-footer">
+    <p>&copy; 2026 Linsama&#39;s Blog. All rights reserved.</p>
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="#">Wabi-Sabi</a></p>
+</footer>
+
+    </div>
+  </body>
+</html>

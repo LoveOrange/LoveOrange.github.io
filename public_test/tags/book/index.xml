@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Book on Linsama&#39;s Blog</title>
+    <link>http://localhost:62448/tags/book/</link>
+    <description>Recent content in Book on Linsama&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Apr 2025 20:06:01 +0800</lastBuildDate>
+    <atom:link href="http://localhost:62448/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《构建第二大脑》读后感</title>
+      <link>http://localhost:62448/posts/building-a-second-brain/</link>
+      <pubDate>Thu, 03 Apr 2025 20:06:01 +0800</pubDate>
+      <guid>http://localhost:62448/posts/building-a-second-brain/</guid>
+      <description>&lt;h2 id=&#34;1-我面临的问题&#34;&gt;1. 我面临的问题&lt;/h2&gt;&#xA;&lt;h3 id=&#34;11-信息过载&#34;&gt;1.1. 信息过载&lt;/h3&gt;&#xA;&lt;p&gt;当今社会，每个人需要处理的信息远大于以往任何时代。&lt;/p&gt;&#xA;&lt;p&gt;对我而言，工作内容、个人兴趣、知识积累、生活琐事，还有无处不在的广告，每一项都会产生大量信息，也都会占用大量的时间。&lt;/p&gt;&#xA;&lt;p&gt;这些信息挤占了我的日常生活，消耗了我大量的时间，可以说信息过载，让我失去对生活掌控感的罪魁祸首。&lt;/p&gt;&#xA;&lt;h3 id=&#34;12-知识管理&#34;&gt;1.2. 知识管理&lt;/h3&gt;&#xA;&lt;p&gt;作为一个程序员，需要不断地学习大量的新知识，才能跟得上技术迭代的步伐。&lt;/p&gt;&#xA;&lt;p&gt;然而，也不得不承认，随着年龄的增长，记忆力也在逐渐减退。笔记成了我最重要的辅助工具之一。&lt;/p&gt;&#xA;&lt;p&gt;笔记的积累也会带来新的问题：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;当我想要捡起某个知识点时，我如何能够快速的找到它？&lt;/li&gt;&#xA;&lt;li&gt;这些知识点是我真正掌握了的，还是仅仅被我记录了？&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;13-时间管理&#34;&gt;1.3. 时间管理&lt;/h3&gt;&#xA;&lt;p&gt;最后一个问题，就是时间管理。&lt;/p&gt;&#xA;&lt;p&gt;正如信息过载所说的，面对如此繁复的信息，处理他们就占据了我很大的时间。而时间的总量是有限的，我在工作上分配了更多的时间，那我在个人爱好上投入的时间就会减少。&lt;/p&gt;&#xA;&lt;p&gt;除此之外，短视频、信息流，所有的现代 APP 都想从我所剩无几的时间表里分一杯羹，它们的沉迷机制也确实征服了我。每天我在这些 APP 上花费的时间，也总比我预期的要多得多。&lt;/p&gt;&#xA;&lt;h2 id=&#34;2-构建第二大脑&#34;&gt;2. 构建第二大脑&lt;/h2&gt;&#xA;&lt;p&gt;当我困扰在以上问题时，我刷到了 Ali Abdaal 的视频 &lt;a href=&#34;https://www.youtube.com/watch?v=K-ssUVyfn5g&#34;&gt;How to Organise your Life - Building a Second Brain&lt;/a&gt;，讲到了《构建第二大脑》这本书，也确实给了我很多启发。&lt;/p&gt;&#xA;&lt;p&gt;书中列举了大量的例子，换个角度讲就是废话很多。去除掉这些例子，给我最大启发的是书中的两个概念「CODE 框架」和「PARA 系统」，分别对应了信息处理流程与信息管理方法。&lt;/p&gt;&#xA;&lt;h3 id=&#34;21-code-框架&#34;&gt;2.1. CODE 框架&lt;/h3&gt;&#xA;&lt;p&gt;一个很重要的观点：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;信息要以使用为目的而收集&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;为此，作者提到了名为 「CODE」 的信息处理流程：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;C: Capture 抓取&lt;/li&gt;&#xA;&lt;li&gt;O: Organize 组织&lt;/li&gt;&#xA;&lt;li&gt;D: Distill 提炼&lt;/li&gt;&#xA;&lt;li&gt;E: Express 表达&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;我认为最重要的就是 &lt;strong&gt;Express 表达&lt;/strong&gt; 这一步。而广义上，表达的方式也是多种多样的：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;个人博客，也就是我现在做的事情&lt;/li&gt;&#xA;&lt;li&gt;社交媒体，比如小红书，微博，知识星球等&lt;/li&gt;&#xA;&lt;li&gt;视频平台，后续可能回去尝试&lt;/li&gt;&#xA;&lt;li&gt;讲故事，比如我不厌其烦地给我爱人讲如何构建第二大脑，分布式系统的 CAP 原理等等&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;回归到我个人的话，还是会在博客和我的 &lt;a href=&#34;https://coding101.linsama.com&#34;&gt;Coding101&lt;/a&gt; 上分享我的学习心得和知识积累。至于我能看到什么风景，就要等我积累的足够高了之后再说了，想想还有一点小期待。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

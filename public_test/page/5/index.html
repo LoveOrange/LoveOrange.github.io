@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+	<meta name="generator" content="Hugo 0.155.3"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62448&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linsama&#39;s Blog</title>
+    <meta name="description" content="">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+    
+</head>
+
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+    <div class="logo">
+        <a href="http://localhost:62448/">Linsama&#39;s Blog</a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/archives/">Archives</a></li>
+            
+            <li><a href="/search/">Search</a></li>
+            
+            <li><a href="/links/">Links</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+      <div class="main-container ">
+        <main class="content">
+          
+<div class="post-list">
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/nas/nas-auto-download-media/">NAS 影音下载系统配置</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Dec 9, 2023</span>
+            
+                <span class="category">in <a href="/categories/nas">NAS</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="背景">背景</h2>
+<p>为了保证各个年龄段祖国花朵的健康成长，我们在国内的流媒体平台上看到的影视资源都是经过美化的，都有着不亚于新闻联播的祥和画面。然，纵使风景这边独好，有的时候我们依然要带着批判的眼光，去看、去听、去感受外面世界的险恶与残酷，以便解救西方世界的人名群众于水火，实现人类大同的理想&hellip;&hellip;</p>
+<p>额咳咳，扯远了。总之，大部分人搭建 NAS 的初衷，可能都是更方便的管理影视剧资源。对于喜欢看动漫的人，可能还希望可以每周同步下载最新的番剧，因此，在这里介绍一套基于 Sonarr 等软件的影音资源管理系统，主要实现了以下功能：</p>
+<ol>
+<li>自动下载最新的番剧、电影、电视剧等资源</li>
+<li>影视资源的分类管理</li>
+<li>搜刮资源信息</li>
+<li>多端播放</li>
+</ol>
+<h2 id="整体架构">整体架构</h2>
+<h3 id="平台信息">平台信息</h3>
+<p>本人使用的是 Unraid 系统，因此接下来都以 Unraid 为例。所有的服务都是使用 Docker 容器的方式运行，对于支持 Docker 的系统，都可以参考本文的配置进行相应的修改。</p>
+<h3 id="系统组成">系统组成</h3>
+<ul>
+<li>Sonarr：番剧下载管理，支持动漫、电视剧的搜索和下载</li>
+<li>Radarr：电影下载管理，支持电影的搜索和下载</li>
+<li>Overseerr：媒体请求管理，更现代化的 Web 界面</li>
+<li>Jackett：资源搜刮，提供各种资源站点的搜索接口，Sonarr、Radarr 通过它来搜索资源</li>
+<li>（可选）FlareSolverr：解决 Cloudflare 验证问题，提高 Jackett 的资源搜刮成功率</li>
+<li>qBittorrent：下载器</li>
+<li>Plex：媒体服务器</li>
+<li>（可选）JProxy：Sonarr、Radarr 与 Jackett 之间的代理，优化资源匹配结果</li>
+</ul>
+<h2 id="安装配置">安装配置</h2>
+<h3 id="安装-docker">安装 Docker</h3>
+<p>Unraid 系统默认已经安装了 Docker。如果是其他系统或平台，可参考各自的官方文档进行安装，或者参考 <a href="https://docs.docker.com/engine/install/">Docker 官方文档</a> 进行手动安装。</p>
+<h3 id="目录准备">目录准备</h3>
+<p>为了实现各个服务之间的交互和数据共享，需要提前对可能使用的目录进行规划。以 Unraid 为例，使用到的目录如下：</p>
+<ul>
+<li>/mnt/user/appdata：Docker 容器的配置文件目录，各服务涉及到服务本身的配置，统一扔在这里</li>
+<li>/mnt/user/media/movies：电影媒体库目录
+<ul>
+<li>Radarr 使用此目录作为<strong>电影</strong>媒体库目录</li>
+</ul>
+</li>
+<li>/mnt/user/media/tv：电视剧媒体库目录
+<ul>
+<li>Sonarr 使用此目录作为<strong>影视剧</strong>媒体库目录</li>
+</ul>
+</li>
+<li>/mnt/user/media/anime：动漫媒体库目录
+<ul>
+<li>Sonarr 使用此目录作为<strong>动漫</strong>媒体库目录</li>
+</ul>
+</li>
+<li>/mnt/user/media/downloads：下载目录
+<ul>
+<li>qBittorrent 使用此目录作为下载目录</li>
+<li>Sonarr、Radarr 从此目录读取数据，并移动到相应的媒体库目录</li>
+</ul>
+</li>
+</ul>
+<p>如果创建 Docker 服务时以上目录没有自动创建，可以提前手工创建。</p>
+        </div>
+        <a href="/posts/nas/nas-auto-download-media/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/posts/nas/home-server/">家庭网络改造 1： 路由器系统</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Nov 20, 2023</span>
+            
+                <span class="category">in <a href="/categories/%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%94%B9%E9%80%A0">家庭网络改造</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <h2 id="0-引言">0. 引言</h2>
+<p>在日常的工作和生活之中，总有一些网络上的需求和问题需要解决。比如：</p>
+<ul>
+<li>如何访问 GitHub？</li>
+<li>如何在联机游戏中获得稳定的环境？</li>
+<li>不在家中如何访问 Nas 中的资源？</li>
+</ul>
+<p>解决这些问题的一个简单途径，既是在家中搭建一个功能丰富的软路由系统，实现各种高级的网络功能，同时也是后续置办 Nas，搭建私有云的基础。</p>
+<h2 id="1-网络环境概述">1. 网络环境概述</h2>
+<h3 id="11-总体架构">1.1. 总体架构</h3>
+<p><img src="architecture.png" alt="home-network-architecture"></p>
+<h3 id="12-设备清单">1.2. 设备清单</h3>
+<ol>
+<li>光猫：使用运营商提供的光猫，包含了 WiFi 的功能，保障软路由即使挂掉，依然有网络可以访问</li>
+<li>软路由：一台 x86 或者 arm 的机器，文中使用的是 N5105</li>
+<li>AP 节点：用于扩展网络信号</li>
+</ol>
+<h3 id="13-方案选择">1.3. 方案选择</h3>
+<p>将 OpenWrt 直接安装在软路由上，无疑可以获得最好的性能，但是此方案也存在一些弊端。如果在折腾 OpenWrt 系统的过程中出现某些异常，OpenWrt 无法访问，将影响全局的网络访问</p>
+<p>为了可以随时折腾家中的网络，同时保证家人的网络访问不受影响，我们选择在 PVE 上安装 OpenWrt 系统</p>
+<h2 id="2-pve-的安装与配置">2. PVE 的安装与配置</h2>
+<h3 id="21-pve-系统安装">2.1. PVE 系统安装</h3>
+<p>PVE 的安装可以参考 <a href="https://pve.proxmox.com/wiki/Installation">PVE 官方文档</a></p>
+<h3 id="22-pve-开启硬件直通">2.2. PVE 开启硬件直通</h3>
+<p>为了获得更好的性能，可以在安装完成 PVE 后，开启硬件直通功能，将网卡直通给 OpenWrt 使用</p>
+<p><strong>1. 启用 IOMMU</strong></p>
+<p>在主机 BIOS 设置中启用 <code>VT-d</code>（对于Intel处理器）或 <code>AMD-Vi</code>（对于AMD处理器）功能。</p>
+<p>修改GRUB配置文件（通常是 <code>/etc/default/grub</code>），添加或修改以下条目：</p>
+<p>Intel 处理器添加以下内容：</p>
+        </div>
+        <a href="/posts/nas/home-server/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/backup/markdown-syntax/">Markdown Syntax Guide</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Sep 7, 2023</span>
+            
+                <span class="category">in <a href="/categories/themes">themes</a> <a href="/categories/syntax">syntax</a> </span>
+            
+        </div>
+        <div class="post-summary">
+            <p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.</p>
+        </div>
+        <a href="/backup/markdown-syntax/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/backup/image-gallery/">Image gallery</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Aug 26, 2023</span>
+            
+        </div>
+        <div class="post-summary">
+            <p>Hugo theme Stack supports the creation of interactive image galleries using Markdown. It&rsquo;s powered by <a href="https://photoswipe.com/">PhotoSwipe</a> and its syntax was inspired by <a href="https://typlog.com/">Typlog</a>.</p>
+<p>To use this feature, the image must be in the same directory as the Markdown file, as it uses Hugo&rsquo;s page bundle feature to read the dimensions of the image. <strong>External images are not supported.</strong></p>
+<h2 id="syntax">Syntax</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">![<span class="nt">Image 1</span>](<span class="na">1.jpg</span>) ![<span class="nt">Image 2</span>](<span class="na">2.jpg</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="result">Result</h2>
+<p><img src="1.jpg" alt="Image 1"> <img src="2.jpg" alt="Image 2"></p>
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@mymind">mymind</a> and <a href="https://unsplash.com/@lukechesser">Luke Chesser</a> on <a href="https://unsplash.com/">Unsplash</a></p>
+        </div>
+        <a href="/backup/image-gallery/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+    <article class="post-card">
+        <header>
+            <h2 class="post-title"><a href="/backup/shortcodes/">Shortcodes</a></h2>
+        </header>
+        <div class="post-meta">
+            <span>Aug 25, 2023</span>
+            
+        </div>
+        <div class="post-summary">
+            <p>For more details, check out the <a href="https://stack.jimmycai.com/writing/shortcodes">documentation</a>.</p>
+<h2 id="bilibili-video">Bilibili video</h2>
+<div class="bilibili-video">
+    <p>Bilibili Video Placeholder (ID: BV1d4411N7zD)</p>
+</div>
+
+<h2 id="tencent-video">Tencent video</h2>
+<div class="tencent-video">
+    <p>Tencent Video Placeholder (ID: g0014r3khdw)</p>
+</div>
+
+<h2 id="youtube-video">YouTube video</h2>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/0qwALOOvUik?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+
+<h2 id="generic-video-file">Generic video file</h2>
+<video controls width="100%">
+    <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<h2 id="gist">Gist</h2>
+<script src="https://gist.github.com/CaiJimmy/e2751a943de10b2a5b3a8a6c2120cb86.js"></script>
+
+<h2 id="gitlab">GitLab</h2>
+<div class="gitlab-snippet">
+    <p>GitLab Snippet Placeholder (ID: 2589724)</p>
+</div>
+
+<h2 id="quote">Quote</h2>
+<blockquote>
+    
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+    <footer>
+        <cite>— <a href="https://en.wikipedia.org/wiki/Book" target="_blank">A famous person</a></cite>
+    </footer>
+</blockquote>
+
+<hr>
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@codioful">Codioful</a> on <a href="https://unsplash.com/photos/WDSN62Qdxuk">Unsplash</a></p>
+        </div>
+        <a href="/backup/shortcodes/" class="read-more">Read More &rarr;</a>
+    </article>
+    
+
+    
+<a href="/page/4/" class="page-link">&larr; Newer Posts</a>
+
+
+<a href="/page/6/" class="page-link">Older Posts &rarr;</a>
+
+
+</div>
+
+        </main>
+
+        
+        <aside class="sidebar">
+    <div class="widget">
+        <h3 class="widget-title">About</h3>
+        <div class="widget-content">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Recent Posts</h3>
+        <ul class="recent-posts">
+            
+            <li><a href="/backup/hello-world/">Hello World</a></li>
+            
+            <li><a href="/posts/wabi-sabi-test/">Wabi-Sabi Theme Logic</a></li>
+            
+            <li><a href="/posts/how-to-change-google-play-location/">如何修改 Google Play 的所属国家</a></li>
+            
+            <li><a href="/posts/efficiency/xray-installer/">Xray 自动安装脚本</a></li>
+            
+            <li><a href="/posts/ai/index/">How to Use Claude</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Categories</h3>
+        <ul class="categories-list">
+            
+            <li><a href="/categories/design-pattern">design-pattern</a> (1)</li>
+            
+            <li><a href="/categories/dev-tools">dev tools</a> (2)</li>
+            
+            <li><a href="/categories/digital-nomad">digital nomad</a> (1)</li>
+            
+            <li><a href="/categories/efficiency">efficiency</a> (3)</li>
+            
+            <li><a href="/categories/example-category">example category</a> (1)</li>
+            
+            <li><a href="/categories/finance">finance</a> (2)</li>
+            
+            <li><a href="/categories/leetcode">leetcode</a> (5)</li>
+            
+            <li><a href="/categories/life">life</a> (1)</li>
+            
+            <li><a href="/categories/nas">nas</a> (1)</li>
+            
+            <li><a href="/categories/network">network</a> (1)</li>
+            
+            <li><a href="/categories/reviews">reviews</a> (1)</li>
+            
+            <li><a href="/categories/sales">sales</a> (1)</li>
+            
+            <li><a href="/categories/spring-boot">spring-boot</a> (2)</li>
+            
+            <li><a href="/categories/syntax">syntax</a> (1)</li>
+            
+            <li><a href="/categories/test">test</a> (1)</li>
+            
+            <li><a href="/categories/themes">themes</a> (1)</li>
+            
+            <li><a href="/categories/thoughts">thoughts</a> (1)</li>
+            
+            <li><a href="/categories/%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E6%94%B9%E9%80%A0">家庭网络改造</a> (1)</li>
+            
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Tags</h3>
+        <div class="tag-cloud">
+            
+            <a href="/tags/bank">bank</a>
+            
+            <a href="/tags/book">book</a>
+            
+            <a href="/tags/card">card</a>
+            
+            <a href="/tags/css">css</a>
+            
+            <a href="/tags/design-pattern">design-pattern</a>
+            
+            <a href="/tags/dev-tools">dev tools</a>
+            
+            <a href="/tags/digital-nomad">digital nomad</a>
+            
+            <a href="/tags/efficiency">efficiency</a>
+            
+            <a href="/tags/example-tag">example tag</a>
+            
+            <a href="/tags/finance">finance</a>
+            
+            <a href="/tags/google-one">google one</a>
+            
+            <a href="/tags/home">home</a>
+            
+            <a href="/tags/html">html</a>
+            
+            <a href="/tags/leetcode">leetcode</a>
+            
+            <a href="/tags/life">life</a>
+            
+            <a href="/tags/markdown">markdown</a>
+            
+            <a href="/tags/math">math</a>
+            
+            <a href="/tags/nas">nas</a>
+            
+            <a href="/tags/network">network</a>
+            
+            <a href="/tags/oa">oa</a>
+            
+            <a href="/tags/priority-queue">priority-queue</a>
+            
+            <a href="/tags/reviews">reviews</a>
+            
+            <a href="/tags/sliding-window">sliding-window</a>
+            
+            <a href="/tags/spring-boot">spring-boot</a>
+            
+            <a href="/tags/themes">themes</a>
+            
+            <a href="/tags/thoughts">thoughts</a>
+            
+            <a href="/tags/tv-series">tv series</a>
+            
+            <a href="/tags/wabi-sabi">wabi-sabi</a>
+            
+        </div>
+    </div>
+</aside>
+
+        
+      </div>
+
+      <footer class="site-footer">
+    <p>&copy; 2026 Linsama&#39;s Blog. All rights reserved.</p>
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="#">Wabi-Sabi</a></p>
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62448&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在 Spring Boot 中使用抽象工厂和工厂方法模式 | Linsama&#39;s Blog</title>
+    <meta name="description" content="1. 引言
+1.1. 需求
+最近在开发一个基于 Spring Boot 框架的制品管理平台，使用了领域驱动设计的思想进行了业务模型的设计。
+开发过程中遇到了一个常见的需求：创建不同类型的制品（Artifact）。需求概括如下：
+
+不同的构建任务会生成不同类型的制品，如 Jar 包、Dockers 镜像等；
+所有类型的制品具备一些公共的属性，如名称、描述、创建时间等；
+不同类型的制品存在一些独有的属性，如存储位置、是否关联图片等；
+制品的独有属性用于创建后，触发下游的其他任务。
+
+对于 CRUD Boys 来说，是一个十分常见的需求，最简单的实现方式就是使用贫血模型。
+1.2. 贫血模型
+贫血模型由 Martin Fowler 在 2003 年提出，是一种将数据和行为分离的设计模式。
+在贫血模型中，Controller 层接受不同类型制品的创建请求（DTO），Service 层负责将请求映射为持久化对象（PO），DAO 层负责将持久化对象存储到数据库中。
+对于大多数 CRUD 请求来说，贫血模型可以说是一套“万能公式”，支撑起了无数的 Java 服务。但是，贫血模型也有着一些明显的缺点：
+
+模型不能反馈业务逻辑，开发人员无法深入地理解业务；
+大部分的 CRUD 逻辑存在相似性，代码复用性较差；
+一旦新增了业务逻辑，此处为制品类型，需要新增接口和表结构，维护成本较高。
+现有流程增加业务逻辑时，需要修改所有的流程，重复工作量较大。
+
+1.3. 基于可复用性的设计
+**DRY 原则（Don&rsquo;t Repeat Yourself）**是软件工程中的一条重要原则，它要求系统减少重复，提高代码的可复用性。
+为了做到这一点，首先需要的是对已有的需求进行更高层次的抽象，既要将相似的业务逻辑进行整合，也要让每种类型能够管理自己的特殊属性。其次，适当的引入设计模型也可以简化代码的复杂度，提高代码的可维护性。
+2. 需求分析
+2.1. 需求建模
+让我们回顾一下需求，找到其中的共性和差异性：
+
+共性
+
+所有类型的制品都有名称、描述、创建时间等属性；
+制品可以使用相同的逻辑进行处理、存储；
+制品的独有属性都是用于触发下游任务。
+
+
+差异性
+
+不同类型的制品有着不同的特殊属性。
+
+
+
+因此，我们首先对创建请求进行抽象，对于 Jar 包和 Docker 镜像类制品，可以创建如下 DTO 类：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+
+
+public abstract class ArtifactDTO {
+    protected String name;
+    protected String description;
+    protected Date createTime;
+
+    public abstract ArtifactType getType();
+}
+
+public enum ArtifactType {
+    JAR,
+    DOCKER;
+}
+
+public class JarArtifactDTO extends ArtifactDTO {
+    private String groupId;
+    private String artifactId;
+    private String version;
+
+    @Override
+    public ArtifactType getType() {
+        return ArtifactType.JAR;
+    }
+}
+
+public class DockerArtifactDTO extends ArtifactDTO {
+    private String tag;
+
+    @Override
+    public ArtifactType getType() {
+        return ArtifactType.DOCKER;
+    }
+}
+
+
+DTO 对象如下图所示：">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+    
+</head>
+
+  <body>
+    <div class="site-container">
+      <header class="site-header">
+    <div class="logo">
+        <a href="http://localhost:62448/">Linsama&#39;s Blog</a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/archives/">Archives</a></li>
+            
+            <li><a href="/search/">Search</a></li>
+            
+            <li><a href="/links/">Links</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+      <div class="main-container single-column">
+        <main class="content">
+          
+<article class="post-single">
+    <header class="post-header">
+        <h1 class="post-title">在 Spring Boot 中使用抽象工厂和工厂方法模式</h1>
+        <div class="post-meta">
+            <span>Feb 20, 2024</span>
+            
+                <span class="category">in <a href="/categories/spring-boot">spring-boot</a> <a href="/categories/design-pattern">design-pattern</a> </span>
+            
+            <span> | 799 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        <h2 id="1-引言">1. 引言</h2>
+<h3 id="11-需求">1.1. 需求</h3>
+<p>最近在开发一个基于 Spring Boot 框架的制品管理平台，使用了<strong>领域驱动设计</strong>的思想进行了业务模型的设计。</p>
+<p>开发过程中遇到了一个常见的需求：<strong>创建不同类型的制品（Artifact）</strong>。需求概括如下：</p>
+<ol>
+<li>不同的构建任务会生成不同类型的制品，如 Jar 包、Dockers 镜像等；</li>
+<li>所有类型的制品具备一些公共的属性，如名称、描述、创建时间等；</li>
+<li>不同类型的制品存在一些独有的属性，如存储位置、是否关联图片等；</li>
+<li>制品的独有属性用于创建后，触发下游的其他任务。</li>
+</ol>
+<p>对于 CRUD Boys 来说，是一个十分常见的需求，最简单的实现方式就是使用贫血模型。</p>
+<h3 id="12-贫血模型">1.2. 贫血模型</h3>
+<p>贫血模型由 Martin Fowler 在 2003 年提出，是一种将数据和行为分离的设计模式。</p>
+<p>在贫血模型中，Controller 层接受不同类型制品的创建请求（DTO），Service 层负责将请求映射为持久化对象（PO），DAO 层负责将持久化对象存储到数据库中。</p>
+<p>对于大多数 CRUD 请求来说，贫血模型可以说是一套“万能公式”，支撑起了无数的 Java 服务。但是，贫血模型也有着一些明显的缺点：</p>
+<ol>
+<li>模型不能反馈业务逻辑，开发人员无法深入地理解业务；</li>
+<li>大部分的 CRUD 逻辑存在相似性，代码复用性较差；</li>
+<li>一旦新增了业务逻辑，此处为制品类型，需要新增接口和表结构，维护成本较高。</li>
+<li>现有流程增加业务逻辑时，需要修改所有的流程，重复工作量较大。</li>
+</ol>
+<h3 id="13-基于可复用性的设计">1.3. 基于可复用性的设计</h3>
+<p>**DRY 原则（Don&rsquo;t Repeat Yourself）**是软件工程中的一条重要原则，它要求系统减少重复，提高代码的可复用性。</p>
+<p>为了做到这一点，首先需要的是对已有的需求进行更高层次的抽象，既要将相似的业务逻辑进行整合，也要让每种类型能够管理自己的特殊属性。其次，适当的引入设计模型也可以简化代码的复杂度，提高代码的可维护性。</p>
+<h2 id="2-需求分析">2. 需求分析</h2>
+<h3 id="21-需求建模">2.1. 需求建模</h3>
+<p>让我们回顾一下需求，找到其中的共性和差异性：</p>
+<ol>
+<li>共性
+<ol>
+<li>所有类型的制品都有名称、描述、创建时间等属性；</li>
+<li>制品可以使用相同的逻辑进行处理、存储；</li>
+<li>制品的独有属性都是用于触发下游任务。</li>
+</ol>
+</li>
+<li>差异性
+<ol>
+<li>不同类型的制品有着不同的特殊属性。</li>
+</ol>
+</li>
+</ol>
+<p>因此，我们首先对创建请求进行抽象，对于 Jar 包和 Docker 镜像类制品，可以创建如下 DTO 类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ArtifactDTO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">createTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">JAR</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">DOCKER</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JarArtifactDTO</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">groupId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">artifactId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">version</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ArtifactType</span><span class="p">.</span><span class="na">JAR</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DockerArtifactDTO</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ArtifactType</span><span class="p">.</span><span class="na">DOCKER</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>DTO 对象如下图所示：</p>
+<p><img src="springboot-factory_pattern-dto.png" alt="ArtifactDTO"></p>
+<p>考虑使用 DDD 的设计思想，我们还需要对领域对象进行建模，首先是父类 <code>Artifact</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Artifact</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">createTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 保存特殊属性，用于触发下游任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">specialProperties</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>其次，针对每一个特殊的制品类型，创建一个子类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JarArtifact</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">groupId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">artifactId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">version</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ArtifactType</span><span class="p">.</span><span class="na">JAR</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DockerArtifact</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ArtifactType</span><span class="p">.</span><span class="na">DOCKER</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>领域对象如下图所示：</p>
+<p><img src="springboot-factory_pattern-entity.png" alt="Artifact"></p>
+<h3 id="22-需求简化">2.2. 需求简化</h3>
+<p>对 DTO 和 Entity 建模后，可以发现制品的创建过程可以被简化为：</p>
+<ol>
+<li>根据 DTO 的类型创建对应的 Entity；</li>
+<li>填充 DTO 的共有属性；</li>
+<li>处理不同类型 DTO 的独有属性。</li>
+</ol>
+<h3 id="23-模式选择">2.3. 模式选择</h3>
+<p>在我们的项目中，使用 <code>DTO</code> 表示前端传递的数据，使用 <code>Entity</code> 表示领域模型。每个请求都会经过下述的流程：</p>
+<ol>
+<li>Controller 层接收 DTO；</li>
+<li>Service 层根据 DTO 的内容创建 Entity；</li>
+<li>处理业务逻辑。</li>
+</ol>
+<p>对于这种情况，我们可以使用<strong>工厂方法模式</strong>和<strong>抽象工厂模式</strong>来实现。工厂方法模式用于根据 DTO 的类型不同，实现不同种类 Entity 的初始化逻辑；抽象工厂用于根据 DTO 的类型不同，选择不同的工厂方法。</p>
+<p>如果对象的初始化较为复杂，还可以使用<strong>构建器模式</strong>来构建对象。</p>
+<h2 id="3-代码实现">3. 代码实现</h2>
+<h3 id="31-工厂方法">3.1. 工厂方法</h3>
+<p>首先，我们需要定义一个工厂接口，用于创建不同类型的制品：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">ArtifactFactory</span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ArtifactDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 获取工厂对应的制品类型，用于抽象工厂的选择
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 制品类型
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ArtifactType</span><span class="w"> </span><span class="nf">getArtifactType</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 根据 DTO 类型创建对应的制品
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param dto 创建制品 DTO
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 制品
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Artifact</span><span class="w"> </span><span class="nf">createEmptyArtifact</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 获取制品的特殊属性
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param dto 创建制品 DTO
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 特殊属性
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSpecialProperties</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">dto</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 创建制品
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param dto 创建制品 DTO
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 制品
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">default</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="nf">createSubArtifact</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">dto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Artifact</span><span class="w"> </span><span class="n">artifact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createEmptyArtifact</span><span class="p">(</span><span class="n">dto</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">artifact</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">artifact</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="na">getDescription</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">artifact</span><span class="p">.</span><span class="na">setCreateTime</span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="na">getCreateTime</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">artifact</span><span class="p">.</span><span class="na">setSpecialProperties</span><span class="p">(</span><span class="n">getSpecialProperties</span><span class="p">(</span><span class="n">dto</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">artifact</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">default</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="nf">createArtifact</span><span class="p">(</span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="n">dto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="na">getType</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">getArtifactType</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;Unsupported artifact type: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dto</span><span class="p">.</span><span class="na">getType</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">createSubArtifact</span><span class="p">((</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="n">dto</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在工厂方法中，有以下几点需要注意：</p>
+<ol>
+<li>为了简化代码，我们提供了一个默认实现 <code>createSubArtifact</code> 方法，用于创建制品、填充共有属性和处理特殊属性；</li>
+<li>我们希望 DTO 到 Entity 的代码可以复用，因此用泛型 <code>T</code> 表示 DTO 类型；</li>
+<li>由于 Java 的泛型擦除机制，我们需要在 <code>createArtifact</code> 方法中进行类型转换，同时在此方法中进行了类型检查。</li>
+</ol>
+<p>然后，我们需要为每种类型的制品创建一个具体的工厂类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JarArtifactFactory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">ArtifactFactory</span><span class="o">&lt;</span><span class="n">JarArtifactDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="nf">createEmptyArtifact</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JarArtifact</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSpecialProperties</span><span class="p">(</span><span class="n">JarArtifactDTO</span><span class="w"> </span><span class="n">dto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">specialProperties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">specialProperties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;groupId&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">dto</span><span class="p">.</span><span class="na">getGroupId</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">specialProperties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;artifactId&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">dto</span><span class="p">.</span><span class="na">getArtifactId</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">specialProperties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;version&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">dto</span><span class="p">.</span><span class="na">getVersion</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">specialProperties</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DockerArtifactFactory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">ArtifactFactory</span><span class="o">&lt;</span><span class="n">DockerArtifact</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="nf">createEmptyArtifact</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DockerArtifact</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSpecialProperties</span><span class="p">(</span><span class="n">DockerArtifact</span><span class="w"> </span><span class="n">dto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">specialProperties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">specialProperties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;tag&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">dto</span><span class="p">.</span><span class="na">getTag</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">specialProperties</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>将每一个工厂类标记为 <code>@Component</code>，可以让 Spring Boot 自动扫描并注册到容器中。</p>
+<h3 id="32-抽象工厂">3.2. 抽象工厂</h3>
+<p>工厂方法创建好后，我们还期望可以根据 DTO 的类型自动选择对应的工厂。</p>
+<p>考虑在 Spring 中可以使用 <code>@Autowired</code> 注解来自动注入所有的工厂 Bean，我们可以提供制品类型到工厂的映射：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ArtifactFactoryRegistry</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">ArtifactType</span><span class="p">,</span><span class="w"> </span><span class="n">ArtifactFactory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">factoryMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 构造函数，使用 Spring 自动注入所有的工厂列表
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param factories 工厂列表
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ArtifactFactoryRegistry</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">ArtifactFactory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">factories</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factoryMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factories</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toMap</span><span class="p">(</span><span class="n">ArtifactFactory</span><span class="p">::</span><span class="n">getArtifactType</span><span class="p">,</span><span class="w"> </span><span class="n">Function</span><span class="p">.</span><span class="na">identity</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 根据 DTO 类型创建对应的制品
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param dto 创建制品 DTO
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 制品
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Artifact</span><span class="w"> </span><span class="nf">createArtifact</span><span class="p">(</span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="n">dto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ArtifactFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factoryMap</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="na">getType</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">factory</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;Unsupported artifact type: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dto</span><span class="p">.</span><span class="na">getType</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">createArtifact</span><span class="p">(</span><span class="n">dto</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="33-使用">3.3. 使用</h3>
+<p>在 Service 层中，我们可以直接使用 <code>ArtifactFactoryRegistry</code> 来创建制品：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ArtifactService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ArtifactFactoryRegistry</span><span class="w"> </span><span class="n">factoryRegistry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ArtifactService</span><span class="p">(</span><span class="n">ArtifactFactoryRegistry</span><span class="w"> </span><span class="n">factoryRegistry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">factoryRegistry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factoryRegistry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">createArtifact</span><span class="p">(</span><span class="n">ArtifactDTO</span><span class="w"> </span><span class="n">dto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Artifact</span><span class="w"> </span><span class="n">artifact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factoryRegistry</span><span class="p">.</span><span class="na">createArtifact</span><span class="p">(</span><span class="n">dto</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// ... 省略其他业务逻辑</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-优势">4. 优势</h2>
+<p>通过引入抽象工厂和工厂方法模式，我们可以获得以下优势：</p>
+<ol>
+<li>易扩展：新增一个制品类型，只需要新增一个工厂类，Service 层的代码完全不需要修改；</li>
+<li>好维护：不同类型的制品使用不同的工厂，代码逻辑清晰，易于维护。</li>
+</ol>
+<h2 id="5-后续优化">5. 后续优化</h2>
+<h3 id="51-接口可以合并">5.1. 接口可以合并</h3>
+<p>在示例代码中仅提供了 Service 的使用，在我们目前的视线中，Controller 层还是为一个类型的制品单独提供了创建的接口，后续计划使用 Jackson 的反序列化特性，将所有的制品类型统一为一个接口。</p>
+<h2 id="6-结论">6. 结论</h2>
+<p>DRY 原则是软件工程中的一条重要原则，它要求系统减少重复，提高代码的可复用性。</p>
+<p>通过对需求深度分析，提供更高阶别的抽象，可以帮助找到系统中的共性和差异，提升代码的复用性。</p>
+<p>通过引入设计模式，可以进一步简化代码的复杂度，提高代码的可维护性，有助于后续的扩展。</p>
+<p>将复杂的问题化繁为简，在一层层的抽丝剥茧后，找到最简洁的设计并予以实现，这正是软件开发的乐趣所在。</p>
+<h2 id="7-参考">7. 参考</h2>
+<ol>
+<li><a href="https://martinfowler.com/bliki/AnemicDomainModel.html">Martin Fowler: AnemicDomainModel</a></li>
+<li><a href="https://refactoring.guru/design-patterns/abstract-factory">Abstract Factory Pattern</a></li>
+<li><a href="https://refactoring.guru/design-patterns/factory-method">Factory Method Pattern</a></li>
+</ol>
+
+    </div>
+
+    <footer class="post-footer">
+        
+        <div class="post-tags">
+            Tags:
+            
+            <a href="/tags/spring-boot">#spring-boot</a>
+            
+            <a href="/tags/design-pattern">#design-pattern</a>
+            
+        </div>
+        
+    </footer>
+</article>
+
+        </main>
+
+        
+      </div>
+
+      <footer class="site-footer">
+    <p>&copy; 2026 Linsama&#39;s Blog. All rights reserved.</p>
+    <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="#">Wabi-Sabi</a></p>
+</footer>
+
+    </div>
+  </body>
+</html>

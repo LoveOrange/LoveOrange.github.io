@@ -1,0 +1,24 @@
+{{- if .Param "authorbox" }}
+<div class="authorbox clearfix">
+	{{- if and (not site.Params.author.avatar) (not site.Params.author.name) (not site.Params.author.bio) }}
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+	{{- end }}
+	{{- with site.Params.author.avatar }}
+	<figure class="authorbox__avatar">
+		<img alt="{{ site.Params.author.name }} avatar" src="{{ site.Params.author.avatar | relURL }}" class="avatar" height="90" width="90">
+	</figure>
+	{{- end }}
+	{{- with site.Params.author.name }}
+	<div class="authorbox__header">
+		<span class="authorbox__name">{{ T "authorbox_name" (dict "Name" .) }}</span>
+	</div>
+	{{- end }}
+	{{- with site.Params.author.bio }}
+	<div class="authorbox__description">
+		{{ . | markdownify }}
+	</div>
+	{{- end }}
+</div>
+{{- end }}

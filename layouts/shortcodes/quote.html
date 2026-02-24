@@ -1,0 +1,6 @@
+<blockquote>
+    {{ .Inner }}
+    <footer>
+        <cite>— {{ if .Get "url" }}<a href="{{ .Get "url" }}" target="_blank">{{ .Get "author" }}</a>{{ else }}{{ .Get "author" }}{{ end }}</cite>
+    </footer>
+</blockquote>
