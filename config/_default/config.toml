@@ -5,7 +5,7 @@ pagination.pagerSize = 5
 title = "Linsama's Blog"
 subtitle = "Nice to meet you"
 theme = "mainroad"
-summaryLength = 30
+summaryLength = 100
 
 # Theme i18n support
 # Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
