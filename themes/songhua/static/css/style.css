@@ -1,0 +1,334 @@
+/* Songhua Theme Stylesheet (Inspired by the Songhua River and Wu Song) */
+
+:root {
+    --bg-color: #f9f7f2;
+    --text-color: #4a4a4a;
+    --link-color: #8c705f;
+    --accent-color: #7c8c6c;
+    --border-color: #e0e0da;
+    --header-font: 'Lora', serif;
+    --body-font: 'Lato', 'Noto Sans SC', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--body-font);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Layout */
+.site-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.site-header {
+    text-align: center;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+.site-header .logo a {
+    font-family: var(--header-font);
+    font-size: 2.5em;
+    color: var(--text-color);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.main-nav a {
+    font-family: var(--header-font);
+    font-size: 1.1em;
+    color: var(--text-color);
+    letter-spacing: 0.05em;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 60px;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.main-container.single-column {
+    grid-template-columns: 1fr;
+    max-width: 800px; /* Narrower for reading focus */
+    margin: 0 auto; /* Center the column */
+}
+
+/* Posts */
+.post-list .post-card {
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.post-title {
+    font-family: var(--header-font);
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-weight: 400;
+    text-align: center; /* Center post titles in list */
+}
+
+.post-title a {
+    color: #2c2c2c;
+}
+
+.post-meta {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 15px;
+    font-family: 'Cinzel', serif;
+    text-align: center; /* Center metadata */
+    display: block; /* Ensure block display for centering */
+    width: 100%;
+}
+
+.post-summary {
+    margin-bottom: 20px;
+    text-align: justify; /* Justify summary for clean look */
+}
+
+.read-more {
+    font-family: var(--header-font);
+    font-size: 0.9em;
+    border-bottom: 1px solid var(--link-color);
+    display: block;
+    text-align: center;
+    width: fit-content;
+    margin: 20px auto 0;
+}
+
+/* Single Post */
+.post-single {
+    width: 100%;
+}
+
+.post-header {
+    text-align: left; /* Left align for better reading flow */
+    margin-bottom: 2rem;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color); /* Add separator */
+    padding-bottom: 20px;
+}
+
+.post-single .post-title {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    text-align: left; /* Left align single post title */
+    text-transform: none; /* Remove uppercase */
+    width: 100%;
+    display: block;
+}
+
+.post-content {
+    font-size: 1.1em;
+    margin-bottom: 40px;
+    padding: 20px 0; /* Vertical padding only */
+}
+
+.post-content h2, .post-content h3 {
+    font-family: var(--header-font);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    text-transform: none; /* Remove uppercase */
+}
+
+.post-content p {
+    margin-bottom: 1.5em;
+    text-align: justify; /* Justify paragraph text */
+}
+
+.post-content a {
+    color: #a67c52; /* Darker brown for better contrast */
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.post-content a:hover {
+    color: var(--accent-color);
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 30px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Subtle shadow for depth */
+}
+
+.post-content blockquote {
+    border-left: 3px solid var(--accent-color);
+    margin: 20px 0;
+    padding-left: 20px;
+    font-style: italic;
+    color: #666;
+    background: #f4f2ed; /* Subtle background for quotes */
+    padding: 15px 20px;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Code Block Styling */
+.post-content code {
+    background: #e8e6df; /* Slightly darker background for inline code */
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #5d4037;
+}
+
+.post-content pre {
+    background: #f0efe7;
+    padding: 15px;
+    overflow-x: auto;
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+    margin: 20px 0;
+}
+
+/* Fix for Chroma Syntax Highlighting Grid */
+.chroma {
+    background-color: transparent !important;
+    width: 100%;
+    display: block;
+}
+
+.chroma table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.chroma td {
+    padding: 0;
+    border: none;
+}
+
+.chroma .lntd:first-child { /* Line numbers column */
+    width: 40px;
+    user-select: none;
+    vertical-align: top;
+    background-color: rgba(0,0,0,0.03); /* Subtle background for line numbers */
+    padding: 5px 0;
+    text-align: right;
+    border-right: 1px solid var(--border-color);
+}
+
+.chroma .lntd:last-child { /* Code column */
+    vertical-align: top;
+    padding: 5px 10px;
+    background-color: transparent;
+}
+
+.chroma .lnt { /* Line numbers text */
+    color: #a0a0a0;
+    font-family: monospace;
+    font-size: 0.9em;
+    padding-right: 5px;
+}
+
+.chroma code {
+    background-color: transparent !important; /* Override inline code bg */
+    color: inherit;
+    padding: 0;
+    border: none;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+/* Sidebar */
+.sidebar .widget {
+    margin-bottom: 40px;
+}
+
+.widget-title {
+    font-family: var(--header-font);
+    font-size: 1.2em;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 5px;
+}
+
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-cloud a {
+    background: #f0efe7;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-size: 0.9em;
+    border: 1px solid transparent;
+}
+
+.tag-cloud a:hover {
+    border-color: var(--accent-color);
+    background: #fff;
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 60px;
+    font-size: 0.9em;
+    color: #888;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-link {
+    font-family: var(--header-font);
+}

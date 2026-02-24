@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="archive-list">
+    <h1 class="archive-title">{{ .Title }}</h1>
+    <ul>
+        {{ range .Paginator.Pages }}
+        <li>
+            <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+        {{ end }}
+    </ul>
+    {{ partial "pagination.html" . }}
+</div>
+{{ end }}

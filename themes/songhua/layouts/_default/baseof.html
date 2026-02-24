@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
+  {{ partial "head.html" . }}
+  <body>
+    <div class="site-container">
+      {{ partial "header.html" . }}
+
+      <div class="main-container {{ if .IsPage }}single-column{{ end }}">
+        <main class="content">
+          {{ block "main" . }}{{ end }}
+        </main>
+
+        {{ if not .IsPage }}
+        {{ partial "sidebar.html" . }}
+        {{ end }}
+      </div>
+
+      {{ partial "footer.html" . }}
+    </div>
+  </body>
+</html>

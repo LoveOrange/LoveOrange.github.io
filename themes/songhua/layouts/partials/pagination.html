@@ -1,0 +1,6 @@
+{{ if .Paginator.HasPrev }}
+<a href="{{ .Paginator.Prev.URL }}" class="page-link">&larr; Newer Posts</a>
+{{ end }}
+{{ if .Paginator.HasNext }}
+<a href="{{ .Paginator.Next.URL }}" class="page-link">Older Posts &rarr;</a>
+{{ end }}

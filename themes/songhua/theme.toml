@@ -1,0 +1,12 @@
+name = "Songhua"
+license = "MIT"
+licenselink = "https://github.com/yourusername/hugo-theme-songhua/blob/master/LICENSE"
+description = "A minimalist Hugo theme inspired by the Songhua River, white snow, and the beautiful Wu Song of Jilin."
+homepage = "https://github.com/yourusername/hugo-theme-songhua"
+tags = ["minimalist", "blog", "clean", "responsive", "math", "syntax-highlighting"]
+features = ["mathjax", "code-highlighting", "responsive"]
+min_version = "0.41.0"
+
+[author]
+  name = "Linsama"
+  homepage = "https://loveorange.github.io"

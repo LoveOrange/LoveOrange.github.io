@@ -1,0 +1,35 @@
+<aside class="sidebar">
+    <div class="widget">
+        <h3 class="widget-title">About</h3>
+        <div class="widget-content">
+            <p>{{ .Site.Params.subtitle }}</p>
+        </div>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Recent Posts</h3>
+        <ul class="recent-posts">
+            {{ range first 5 .Site.RegularPages }}
+            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{ end }}
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Categories</h3>
+        <ul class="categories-list">
+            {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+            <li><a href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}">{{ $name }}</a> ({{ $taxonomy.Count }})</li>
+            {{ end }}
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3 class="widget-title">Tags</h3>
+        <div class="tag-cloud">
+            {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+            <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}">{{ $name }}</a>
+            {{ end }}
+        </div>
+    </div>
+</aside>
