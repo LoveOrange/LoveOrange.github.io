@@ -32,3 +32,9 @@
     margin: 0.75rem 0 0.5rem 0;
     line-height: 1.4;
 }
+
+/* 5. Move List Thumbnails to the Right */
+.list__thumbnail {
+    float: right;
+    margin: 0 0 10px 20px;
+}
