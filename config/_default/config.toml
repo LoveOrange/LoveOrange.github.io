@@ -31,6 +31,6 @@ disqusShortname = "hugo-theme-stack"
 [markup]
   [markup.highlight]
     style = "github"
-    lineNos = false
-    lineNumbersInTable = false
-    noClasses = true
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false

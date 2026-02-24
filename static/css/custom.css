@@ -39,43 +39,56 @@
     margin: 0 0 10px 20px;
 }
 
-/* 6. Fix Code Block Overflow */
-.content code,
-.list__excerpt code {
-    word-break: break-all;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-}
-
-.content pre {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-
-/* 7. GitHub Style Code Blocks */
+/* 6. Code Block Scrollbars and Layout */
 .content pre, .list__excerpt pre {
-    background-color: #f6f8fa;
-    border: 1px solid #d0d7de;
-    border-radius: 6px;
-    padding: 16px;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    overflow-x: auto; /* Enable horizontal scrolling */
 }
-.content pre code, .list__excerpt pre code {
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    font-size: 85%;
-    background: transparent;
-    border: none;
-    padding: 0;
-    color: inherit;
+
+.content code, .list__excerpt code {
+    white-space: pre !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
 }
+
+/* 7. Fix Chroma Syntax Highlight Table Layout */
+.highlight table {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.highlight .lntd:first-child {
+    /* Line number column */
+    width: 45px;
+    vertical-align: top;
+    padding-right: 10px;
+    border-right: 1px solid #e5e5e5;
+    background-color: #fafafa;
+    user-select: none; /* Prevent line numbers from being copied */
+}
+
+.highlight .lntd:last-child {
+    /* Code column */
+    width: calc(100% - 45px);
+    vertical-align: top;
+    padding-left: 15px;
+    overflow-x: auto;
+}
+
+/* Restore minimal inline code style */
 .content code, .list__excerpt code {
     background-color: rgba(175, 184, 193, 0.2);
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 0.2em 0.4em;
     font-size: 85%;
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    color: #24292f;
     border: none;
+}
+.highlight pre {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
