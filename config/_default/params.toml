@@ -1,4 +1,5 @@
 description = "Linsama's Personal blog"
+customCSS = ["css/custom.css"]
 opengraph = true
 twitter_cards = false
 readmore = false
