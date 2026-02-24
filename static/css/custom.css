@@ -28,7 +28,7 @@
 .list__excerpt h4,
 .list__excerpt h5,
 .list__excerpt h6 {
-    font-size: 1rem;
-    margin: 0.5rem 0;
+    font-size: 1.15rem;
+    margin: 0.75rem 0 0.5rem 0;
     line-height: 1.4;
 }
