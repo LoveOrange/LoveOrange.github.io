@@ -54,3 +54,28 @@
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+
+/* 7. GitHub Style Code Blocks */
+.content pre, .list__excerpt pre {
+    background-color: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 16px;
+}
+.content pre code, .list__excerpt pre code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 85%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+.content code, .list__excerpt code {
+    background-color: rgba(175, 184, 193, 0.2);
+    border-radius: 6px;
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    color: #24292f;
+    border: none;
+}

@@ -27,3 +27,10 @@ disqusShortname = "hugo-theme-stack"
   name = "Linsama"
   bio = "Nice to meet you"
   avatar = "img/avatar.png"
+
+[markup]
+  [markup.highlight]
+    style = "github"
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = true
