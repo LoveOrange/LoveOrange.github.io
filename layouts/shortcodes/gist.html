@@ -1,0 +1,4 @@
+{{- $username := .Get 0 -}}
+{{- $id := .Get 1 -}}
+{{- $file := .Get 2 -}}
+<script src="https://gist.github.com/{{ $username }}/{{ $id }}.js{{ if $file }}?file={{ $file }}{{ end }}"></script>
