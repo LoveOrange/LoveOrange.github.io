@@ -1,0 +1,11 @@
+{{- $url := .Destination -}}
+{{- $isLinkLocal := not (or (strings.HasPrefix $url "http://") (strings.HasPrefix $url "https://") (strings.HasPrefix $url "//") (strings.HasPrefix $url "/")) -}}
+{{- if $isLinkLocal -}}
+  {{- with .Page.Resources.GetMatch $url -}}
+    {{- $url = .RelPermalink -}}
+  {{- else -}}
+	{{- /* Fallback to absolute URL generation based on Page's RelPermalink */ -}}
+    {{- $url = printf "%s%s" .Page.RelPermalink $url -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $url | safeURL }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }} />

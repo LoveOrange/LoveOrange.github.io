@@ -22,3 +22,7 @@ mainSections = ["posts", "post"]
 
 [thumbnail]
   visibility = ["list", "post"]
+
+[style]
+  [style.vars]
+    fontFamilyPrimary = "system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
