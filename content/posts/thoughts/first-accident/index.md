@@ -4,7 +4,7 @@ slug: first-accident
 description: 今天发生了开车以来的第一次交通事故，情绪十分复杂。也许我想过了无数种发生事故时，与对方争吵的场景。唯独没有想过，即使对方全责，但是我的感觉，竟然是──难过。
 date: 2025-05-30T20:44:50+08:00
 draft: true
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

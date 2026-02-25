@@ -4,7 +4,7 @@ slug: springboot-factory-pattern
 description:
 date: 2024-02-20T18:04:59+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

@@ -4,7 +4,7 @@ slug: frog-jump
 description:
 date: 2024-03-14T20:55:41+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

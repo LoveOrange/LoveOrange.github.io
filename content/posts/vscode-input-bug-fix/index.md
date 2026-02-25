@@ -4,7 +4,7 @@ slug: vscode-input-bug-fix
 description: 解决 VSCode 与 Cursor 输入中文时 editor 文字颤抖问题
 date: 2024-11-16T07:34:33+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

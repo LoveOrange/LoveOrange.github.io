@@ -4,7 +4,7 @@ slug: xray-installer
 description: 感谢 Claude 的大力支持。
 date: 2025-12-28T09:04:01+08:00
 draft: false
-image: xray-install-head.png
+featuredImage: xray-install-head.png
 math: false
 hidden: false
 categories:

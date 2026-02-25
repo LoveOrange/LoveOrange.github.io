@@ -4,7 +4,7 @@ slug: how-to-change-google-play-location
 description:
 date: 2026-01-25T17:05:40+08:00
 draft: false
-image: google-one.png
+featuredImage: google-one.png
 thumbnail: google-one.png
 math: false
 hidden: false

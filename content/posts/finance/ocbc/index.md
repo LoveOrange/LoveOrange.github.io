@@ -4,7 +4,7 @@ slug: ocbc
 description: 最新消息，OCBC 不再支持大陆用户申请，本文信息可能不再适用，请大家根据自身情况谨慎参考。
 date: 2024-12-02T13:57:45+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

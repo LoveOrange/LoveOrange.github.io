@@ -4,7 +4,7 @@ slug: regular-expression-matching
 description:
 date: 2024-03-18T22:12:04+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

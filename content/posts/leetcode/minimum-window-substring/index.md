@@ -4,7 +4,7 @@ slug: lc-76-minimum-window-substring
 description:
 date: 2024-03-12T21:53:01+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

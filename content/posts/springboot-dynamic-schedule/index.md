@@ -4,7 +4,7 @@ slug: spring-dynamic-schedule
 description:
 date: 2024-02-23T14:13:36+08:00
 draft: true
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

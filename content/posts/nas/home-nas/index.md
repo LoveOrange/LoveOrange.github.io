@@ -4,7 +4,7 @@ slug: nas-auto-download-media
 description: 使用 Sonarr，Radarr，Jackett，qBittorrent，Plex 等软件实现媒体资源的自动下载和管理
 date: 2023-12-09T23:16:35+08:00
 draft: false
-image:
+featuredImage:
 math: false
 hidden: false
 categories:

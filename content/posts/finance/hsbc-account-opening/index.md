@@ -4,7 +4,7 @@ slug: hsbc-account-opening
 description: 香港开户第一篇，汇丰银行开户指南
 date: 2025-02-19T20:06:01+08:00
 draft: false
-image: central_market.jpg
+featuredImage: central_market.jpg
 math: false
 hidden: false
 categories:
