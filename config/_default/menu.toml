@@ -1,11 +1,36 @@
 # Configure main menu and social menu
-#[[main]]
-#identifier = "home"
-#name = "Home"
-#url = "/"
-#[main.params]
-#icon = "home"
-#newtab = true
+
+[[main]]
+  identifier = "home"
+  name = "Home"
+  url = "/"
+  weight = 1
+  [main.params]
+    icon = "fa-solid fa-home"
+
+[[main]]
+  identifier = "categories"
+  name = "Categories"
+  url = "/categories/"
+  weight = 2
+  [main.params]
+    icon = "fa-solid fa-folder-tree"
+
+[[main]]
+  identifier = "tags"
+  name = "Tags"
+  url = "/tags/"
+  weight = 3
+  [main.params]
+    icon = "fa-solid fa-tags"
+
+[[main]]
+  identifier = "links"
+  name = "Links"
+  url = "/links/"
+  weight = 4
+  [main.params]
+    icon = "fa-solid fa-link"
 
 [[social]]
 identifier = "github"
@@ -22,11 +47,3 @@ url = "https://leetcode.cn/u/linsama/"
 
 [social.params]
 icon = "brand-leetcode"
-
-# [[social]]
-# identifier = "twitter"
-# name = "Twitter"
-# url = "https://twitter.com"
-
-# [social.params]
-# icon = "brand-twitter"
