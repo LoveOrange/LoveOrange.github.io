@@ -1,5 +1,5 @@
 description = "Linsama's Personal blog"
-customCSS = ["css/custom.css"]
+customCSS = ["css/syntax.css", "css/custom.css"]
 customJS = ["js/copy-button.js"]
 opengraph = true
 twitter_cards = false

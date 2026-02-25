@@ -79,3 +79,65 @@
     background-color: #d4d4d4;
     color: #333;
 }
+
+/* 8. Fix Code Block Visual Gaps and Layout */
+.highlight {
+    background-color: #f8f9fa; /* Unified Light Background */
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.content table.lntable, .list__excerpt table.lntable {
+    table-layout: fixed !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+
+.highlight table td, .highlight table th {
+    padding: 0 !important;
+    border: none !important;
+}
+
+.content table.lntable td.lntd:first-child, .list__excerpt table.lntable td.lntd:first-child {
+    width: 45px !important;
+    padding: 16px 10px 16px 5px !important;
+    vertical-align: top !important;
+    user-select: none !important;
+    border-right: 1px solid #e1e4e8 !important;
+    background-color: #f6f8fa !important;
+    text-align: right;
+    color: #b3b3b3;
+}
+
+.content table.lntable td.lntd:last-child, .list__excerpt table.lntable td.lntd:last-child {
+    width: calc(100% - 45px) !important;
+    vertical-align: top !important;
+}
+
+/* Remove default pre styling inside highlight tables to merge the backgrounds */
+.highlight pre {
+    margin: 0 !important;
+    padding: 16px 16px 16px 16px !important;
+    background-color: transparent !important;
+    border: none !important;
+    overflow-x: auto !important;
+    white-space: pre !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    color: inherit;
+}
+
+/* Ensure inline code blocks look cohesive */
+p code, li code, td code, .list__excerpt code {
+    white-space: pre-wrap !important;
+    background-color: rgba(175, 184, 193, 0.2);
+    border-radius: 4px;
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+    color: #c33; /* Mainroad red font color */
+    border: none;
+}

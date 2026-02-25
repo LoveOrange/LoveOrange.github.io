@@ -1,27 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Find all <pre> tags (which contain the code blocks)
-    var preElements = document.querySelectorAll("pre");
+    var highlights = document.querySelectorAll(".highlight");
 
-    preElements.forEach(function(pre) {
-        // Create a wrapper div to accurately position the absolute button
-        var wrapper = document.createElement("div");
-        wrapper.className = "copy-code-wrapper";
-
-        // Insert the wrapper before the <pre> tag, then move the <pre> inside it
-        pre.parentNode.insertBefore(wrapper, pre);
-        wrapper.appendChild(pre);
-
+    highlights.forEach(function(highlight) {
         // Create the copy button
         var button = document.createElement("button");
         button.className = "copy-code-btn";
         button.innerText = "Copy";
-        wrapper.appendChild(button);
+        highlight.appendChild(button);
 
         // Add the click event to copy text to clipboard
         button.addEventListener("click", function() {
-            // Find the <code> tag inside the <pre> tag, or fallback to <pre> itself
-            var code = pre.querySelector("code");
-            var textToCopy = code ? code.innerText : pre.innerText;
+            // If it's a Chroma table layout, the code is in the last td
+            var codeContainer = highlight.querySelector("td.lntd:last-child pre code");
+
+            // If not a table, fallback to standard pre > code
+            if (!codeContainer) {
+                codeContainer = highlight.querySelector("pre code") || highlight.querySelector("pre");
+            }
+
+            var textToCopy = codeContainer ? codeContainer.innerText : highlight.innerText;
 
             navigator.clipboard.writeText(textToCopy).then(
                 function() {
