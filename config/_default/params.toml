@@ -3,6 +3,7 @@ defaultTheme = "auto"
 dateFormat = "2006-01-02"
 title = "Linsama's Blog"
 description = "Linsama's Personal blog"
+customCSS = ["css/custom.scss"]
 
 [author]
   name = "Linsama"
