@@ -1,30 +1,31 @@
+# FixIt theme general parameters
+defaultTheme = "auto"
+dateFormat = "2006-01-02"
+title = "Linsama's Blog"
 description = "Linsama's Personal blog"
-customCSS = ["css/syntax.css", "css/custom.css"]
-customJS = ["js/copy-button.js"]
-opengraph = true
-twitter_cards = false
-readmore = false
-authorbox = true
-pager = true
-post_meta = ["date", "categories"]
-mainSections = ["posts", "post"]
 
-[logo]
-  subtitle = "Nice to meet you 😊"
+[author]
+  name = "Linsama"
+  avatar = "/img/avatar.png"
 
-[sidebar]
-  home = "right"
-  list = "right"
-  single = "right"
-  widgets = ["search", "recent", "categories", "taglist"]
+[header]
+  desktopMode = "fixed"
+  mobileMode = "auto"
+  [header.title]
+    name = "Linsama"
 
-[widgets]
-  recent_num = 5
-  tags_counter = true
+[footer]
+  enable = true
+  [footer.hugo]
+    enable = true
+  [footer.theme]
+    enable = true
 
-[thumbnail]
-  visibility = ["list", "post"]
-
-[style]
-  [style.vars]
-    fontFamilyPrimary = "system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+[page]
+  twemoji = true
+  lightgallery = true
+  [page.toc]
+    enable = true
+  [page.code]
+    copy = true
+    maxShownLines = 50

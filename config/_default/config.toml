@@ -4,7 +4,7 @@ languageCode = "en-us"
 pagination.pagerSize = 5
 title = "Linsama's Blog"
 subtitle = "Nice to meet you"
-theme = "mainroad"
+theme = "FixIt"
 summaryLength = 200
 
 # Theme i18n support
