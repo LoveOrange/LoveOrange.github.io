@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linsama's Blog</title><link>https://loveorange.github.io/</link><description>Linsama's Personal blog</description><generator>Hugo 0.156.0 &amp; FixIt v0.4.3-20260130042349-e23a50d7</generator><language>en-us</language><lastBuildDate>Sun, 25 Jan 2026 17:05:40 +0800</lastBuildDate><atom:link href="https://loveorange.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>如何修改 Google Play 的所属国家</title><link>https://loveorange.github.io/posts/how-to-change-google-play-location/</link><pubDate>Sun, 25 Jan 2026 17:05:40 +0800</pubDate><guid>https://loveorange.github.io/posts/how-to-change-google-play-location/</guid><category domain="https://loveorange.github.io/categories/efficiency/">Efficiency</category><category domain="https://loveorange.github.io/categories/sales/">Sales</category><description>&lt;img src="https://loveorange.github.io/posts/how-to-change-google-play-location/google-one.png" alt="featured image" referrerpolicy="no-referrer"&gt;&lt;h2 class="heading-element" id="1-google-one-优惠"&gt;&lt;span&gt;1. Google One 优惠&lt;/span&gt;
+ &lt;a href="#1-google-one-%e4%bc%98%e6%83%a0" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;年末发现了 Google One 的优惠活动，$99 可以购买原价 $239 的 AI Pro 一年会员，不但能使用 Google AI 的全家桶，还能与最多五个家庭成员共享，如果恰好有六个人凑齐赛博家庭，那么每人每月只需要 10 块钱。Google 的活动堪称慈善行为了。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;可惜，截止到发文时间，这个活动貌似没有了&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;能买到这个优惠的朋友，基本上都已经解决了访问 Google 的网络问题。成为赛博家人的唯一限制，就是 &lt;strong&gt;家庭成员必须在同一个国家或者地区&lt;/strong&gt;，否则无法加入家庭。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-google-one-家庭成员地区限制"&gt;&lt;span&gt;2. Google One 家庭成员地区限制&lt;/span&gt;
+ &lt;a href="#2-google-one-%e5%ae%b6%e5%ba%ad%e6%88%90%e5%91%98%e5%9c%b0%e5%8c%ba%e9%99%90%e5%88%b6" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Google 的账号体系下，不同场景对于国家与地区的检测是不一样的。&lt;/p&gt;
+&lt;p&gt;对于 Google One 家庭共享，主要检测 Google Play 的国家与地区。&lt;/p&gt;
+&lt;p&gt;这里我主要介绍一下在网页上怎么操作（因为我手上没有安卓设备）。另外，特别需要注意的是，Google 家庭组检测的是你 &lt;strong&gt;Google Play&lt;/strong&gt; 的地区，而不是你 Google 账号的地区。&lt;/p&gt;
+&lt;h3 class="heading-element" id="21-查看当前的-google-play-地区"&gt;&lt;span&gt;2.1. 查看当前的 Google Play 地区&lt;/span&gt;
+ &lt;a href="#21-%e6%9f%a5%e7%9c%8b%e5%bd%93%e5%89%8d%e7%9a%84-google-play-%e5%9c%b0%e5%8c%ba" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;想看自己当前的地区，随便打开一个 Google Play 页面（比如 &lt;a href="https://play.google.com/store/paymentmethods" target="_blank" rel="external nofollow noopener noreferrer"&gt;付款和订阅&lt;/a&gt;），拉到最底下就看到了。比如我的就显示是「美国」。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/how-to-change-google-play-location/google-play-location.png" alt="Google Play 地区查看" /&gt;
+&lt;/p&gt;
+&lt;h3 class="heading-element" id="22-修改-google-play-地区"&gt;&lt;span&gt;2.2. 修改 Google Play 地区&lt;/span&gt;
+ &lt;a href="#22-%e4%bf%ae%e6%94%b9-google-play-%e5%9c%b0%e5%8c%ba" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;Google Play 的地区是跟着付款方式走的。所以，想改地区，就得添加一个新地区的付款方式。比如我要修改到「美国」，那么新添加的付款方式里，地址就要选择美国的地址（建议使用地址生成器选择免税州的地址）。&lt;/p&gt;
+&lt;p&gt;添加完新的付款方式后，再去看 Google Play 页面底部，地区应该就变成新的了。&lt;/p&gt;
+&lt;h3 class="heading-element" id="23-可选关闭付款方式"&gt;&lt;span&gt;2.3. （可选）关闭付款方式&lt;/span&gt;
+ &lt;a href="#23-%e5%8f%af%e9%80%89%e5%85%b3%e9%97%ad%e4%bb%98%e6%ac%be%e6%96%b9%e5%bc%8f" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;如果加了新的付款方式还不行，可以试试把旧的付款方式关掉。关闭之后，Google Play 就会自动改用剩下那个付款方式的地区了。&lt;/p&gt;
+&lt;p&gt;关闭付款方式的链接为 &lt;a href="https://payments.google.com/gp/w/home/settings" target="_blank" rel="external nofollow noopener noreferrer"&gt;管理付款方式&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;注：我没有尝试过将所有付款资料都关闭后，其地区是否会取决于代理 IP 所在的地区。&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-google-one-共享"&gt;&lt;span&gt;3. Google One 共享&lt;/span&gt;
+ &lt;a href="#3-google-one-%e5%85%b1%e4%ba%ab" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;请注意，仅发送家庭邀请是不够的。邀请人还需手动开启「与家庭成员共享 Google One」的选项，家庭成员才能使用 Gemini 等 AI 服务。&lt;/p&gt;
+&lt;h2 class="heading-element" id="4-关于-google-ai-的额外想法"&gt;&lt;span&gt;4. 关于 Google AI 的额外想法&lt;/span&gt;
+ &lt;a href="#4-%e5%85%b3%e4%ba%8e-google-ai-%e7%9a%84%e9%a2%9d%e5%a4%96%e6%83%b3%e6%b3%95" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;虽然看到 Google One 的优惠才上的车，但是经过几天的使用，必须得说我的生活已经离不开 Gemini。尤其是写作类的内容，比 OpenAI 家的竞品好用太多了（ChatGPT：“所以爱会消失对吗？”）。除了 Gemini 外，NotebookLM 更是用了就离不开的工具。&lt;/p&gt;
+&lt;p&gt;AI 超越人类不再是值得讨论的问题了，目前值得期待的，是 AI 最终会变成什么样子。在 AI 带来的便利面前，在 AI 带来的冲击面前，我只想到这样一句话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;这是最好的时代，这是最坏的时代。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item><item><title>Xray 自动安装脚本</title><link>https://loveorange.github.io/posts/efficiency/xray-installer/</link><pubDate>Sun, 28 Dec 2025 09:04:01 +0800</pubDate><guid>https://loveorange.github.io/posts/efficiency/xray-installer/</guid><category domain="https://loveorange.github.io/categories/efficiency/">Efficiency</category><category domain="https://loveorange.github.io/categories/network/">Network</category><description>&lt;img src="https://loveorange.github.io/posts/efficiency/xray-installer/xray-install-head.png" alt="featured image" referrerpolicy="no-referrer"&gt;&lt;h2 class="heading-element" id="1-前言"&gt;&lt;span&gt;1. 前言&lt;/span&gt;
+ &lt;a href="#1-%e5%89%8d%e8%a8%80" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;写一个 Xray 自动安装脚本需要多久？如果让我自己写的话，可能是「一辈子」。倒不是脚本有多难写，而是每次安装也就十几分钟，一年也就折腾个一两次，一旦折腾成功，就失去了些脚本的动力。&lt;/p&gt;
+&lt;p&gt;好在有我最好的朋友 Claude，如果不是它的话，我估计这辈子我也写不完这个脚本，而且再看看人家的脚本质量，啧啧，我下辈子也写不出来。&lt;/p&gt;
+&lt;p&gt;仓库地址在：&lt;a href="https://github.com/loveorange/xray-installer" target="_blank" rel="external nofollow noopener noreferrer"&gt;xray-installer&lt;/a&gt;，有一定技术积累的朋友们可以直接读 readme。基本上可以在 Linux 系统安装 git 就可以顺利的使用脚本了。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-术语"&gt;&lt;span&gt;2. 术语&lt;/span&gt;
+ &lt;a href="#2-%e6%9c%af%e8%af%ad" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;这个脚本希望可以让没有技术知识的普通用户也可以快速搭建起自己的服务器，因此在安装流程上做了很多优化，但是依然有一些术语需要了解一下，避免看到后面仍然一头雾水。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Shadowsocks，V2Ray，Xray，Hysteria 2：这些都是常见的科学上网工具，不需要了解太多细节，只需要知道它们可以让我们看到更大的世界。&lt;/li&gt;
+&lt;li&gt;GitHub，Git：GitHub 是世界上最大的代码托管平台，会有很多人的代码上传到平台上。代码是区分版本的，而 Git 就是常用来管理代码版本的工具。GitHub 上的代码就是使用 Git 来管理的。&lt;/li&gt;
+&lt;li&gt;VPS(Virtual Private Server)：虚拟私人服务器，简单来说就是租用的一台远程服务器，可以用来搭建各种服务。&lt;/li&gt;
+&lt;li&gt;IP 地址：互联网协议地址，每台连接到互联网的设备都会有一个唯一的 IP 地址，用来在互联网上找到指定的 IP。&lt;/li&gt;
+&lt;li&gt;Domain 域名：IP 地址不具备可读性，通过将域名绑定到 IP 上，可以让用户更容易记住和访问网站。&lt;/li&gt;
+&lt;li&gt;DNS：域名系统，用于记录域名与 IP 的对应关系。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 class="heading-element" id="3-方案选型"&gt;&lt;span&gt;3. 方案选型&lt;/span&gt;
+ &lt;a href="#3-%e6%96%b9%e6%a1%88%e9%80%89%e5%9e%8b" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;我的折腾路线基本上是 Shadowsocks -&amp;gt; V2Ray -&amp;gt; Xray -&amp;gt; Hysteria 2 -&amp;gt; Xray。从搭建上来看，Hysteria 2 是最简单的，但是之前的 Hysteria 2 服务器断联的十分频繁，不确定是 Hysteria 2 的问题还是机器的问题，同样的机器跑 Xray 就稳定了不少，因此最终还是用回了 Xray。&lt;/p&gt;
+&lt;p&gt;当然 Xray 的配置会更麻烦一些，尤其是按照官方的「&lt;a href=""&gt;小小白话文&lt;/a&gt;」中的流程，手慢的话估计要配置个半个小时，这也是考虑自己写自动化脚本的初衷了。&lt;/p&gt;
+&lt;p&gt;本文的附录中也会提供一些我使用的 VPS 供应商和域名注册商，供大家参考。&lt;/p&gt;
+&lt;h2 class="heading-element" id="4-功能"&gt;&lt;span&gt;4. 功能&lt;/span&gt;
+ &lt;a href="#4-%e5%8a%9f%e8%83%bd" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1. 自动安装&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最基本的目标就是实现自动安装 Xray，除了一些必要的配置外，尽量减少用户的输入。最终目前来看，必须输入的内容基本就只有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;域名&lt;/li&gt;
+&lt;li&gt;用户邮箱，用于申请 TLS 证书&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;2. 绕开 AI 服务商限制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;很多 AI 网站都会限制用户的 IP，尤其是 Claude，基本上不允许使用 VPS IP 访问它们的网站，因此脚本需要实现绕开这些限制的功能。&lt;/p&gt;
+&lt;p&gt;当然想要绕开这些限制，除了 VPS 之外，还需要提供一个静态的 ISP 地址，后文会介绍如何获取这个地址。&lt;/p&gt;
+&lt;p&gt;这是个可选功能，如果启用的话，需要手工配置：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;静态 ISP 地址&lt;/li&gt;
+&lt;li&gt;端口&lt;/li&gt;
+&lt;li&gt;用户名&lt;/li&gt;
+&lt;li&gt;密码&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以上内容都由静态 ISP 提供商提供。&lt;/p&gt;
+&lt;h2 class="heading-element" id="5-前置条件"&gt;&lt;span&gt;5. 前置条件&lt;/span&gt;
+ &lt;a href="#5-%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;h3 class="heading-element" id="51-购买-vps"&gt;&lt;span&gt;5.1. 购买 VPS&lt;/span&gt;
+ &lt;a href="#51-%e8%b4%ad%e4%b9%b0-vps" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;科学上网本质通过一个「中间商」，将原本我们访问不了的网站，通过中间商来访问。在互联网中，这个「中间商」就是 VPS 服务器。&lt;/p&gt;
+&lt;p&gt;从上述的描述中也能看到，为了完成流量的中转，我们需要保证：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们可以访问到用来转发流量的 VPS&lt;/li&gt;
+&lt;li&gt;VPS 可以访问到我们想要访问的网站&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;基本上海外 VPS 都能满足第二点，我们只需要在购买的时候，使用 VPS 供应商提供的测试 IP，看看我们能否 &lt;code&gt;ping&lt;/code&gt; 通即可。在「终端」中执行以下命令进行测试：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ping 中间商提供的测试 IP&lt;/code&gt;&lt;/pre&gt;&lt;h3 class="heading-element" id="52-购买域名"&gt;&lt;span&gt;5.2. 购买域名&lt;/span&gt;
+ &lt;a href="#52-%e8%b4%ad%e4%b9%b0%e5%9f%9f%e5%90%8d" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;购买域名可以让我们更加方便地访问我们的 VPS，同时也可以通过搭建伪装网站的方式，来隐藏我们的科学上网服务。&lt;/p&gt;
+&lt;p&gt;脚本中会自动让我们的服务器反向代理到 Hacker News 网站，从而实现伪装。我们只需要考虑购买域名即可。&lt;/p&gt;
+&lt;p&gt;购买域名后，还需要将域名解析到 VPS 的 IP 地址上。一般的域名注册商也会提供 DNS 解析服务，我们只需要在域名管理后台中添加一条「A」记录，将域名指向 VPS 的 IP 地址即可。&lt;/p&gt;
+&lt;p&gt;不建议使用国内的域名注册商。&lt;/p&gt;
+&lt;h3 class="heading-element" id="53-获取静态-isp-地址可选"&gt;&lt;span&gt;5.3. 获取静态 ISP 地址（可选）&lt;/span&gt;
+ &lt;a href="#53-%e8%8e%b7%e5%8f%96%e9%9d%99%e6%80%81-isp-%e5%9c%b0%e5%9d%80%e5%8f%af%e9%80%89" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;如上所述，如果需要绕开 AI 服务商的 IP 限制，我们还需要一个静态的 ISP 地址。这个按需选择即可，如果不需要使用 AI 服务，其实可以不需要准备静态 ISP。&lt;/p&gt;
+&lt;p&gt;一部分 AI 也不会像 Claude 那么严格，大部分的 VPS 都直接可用。但是需要注意，香港的 VPS 无法访问 ChatGPT。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;但是这个年代谁会不需要 AI 呢？&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;除了解锁 AI 服务外，静态 ISP 也可以解锁流媒体服务，比如 Netflix，Hulu 等等。当前版本的脚本还没有集成这些功能，后续可能会考虑加入。&lt;/p&gt;
+&lt;h2 class="heading-element" id="6-搭建-xray-服务"&gt;&lt;span&gt;6. 搭建 Xray 服务&lt;/span&gt;
+ &lt;a href="#6-%e6%90%ad%e5%bb%ba-xray-%e6%9c%8d%e5%8a%a1" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;h3 class="heading-element" id="61-登录机器"&gt;&lt;span&gt;6.1. 登录机器&lt;/span&gt;
+ &lt;a href="#61-%e7%99%bb%e5%bd%95%e6%9c%ba%e5%99%a8" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;购买了 VPS 后，VPS 供应商会提供给我们以下信息：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;IP 地址，格式为 xxx.xxx.xxx.xxx，后文我们以 123.45.678.90 为例&lt;/li&gt;
+&lt;li&gt;用户名，一般为 root&lt;/li&gt;
+&lt;li&gt;密码，一串复杂的字符串&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们在本地机器上打开「终端」应用，先通过 &lt;code&gt;ping&lt;/code&gt; 命令测试一下能否连通 VPS。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ping 123.45.678.90&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果显示类似：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;64 bytes from 123.45.678.90: icmp_seq=1 ttl=54 time=23.4 ms&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;就表示我们本地的网络可以访问到 VPS。不同的操作系统显示的可能不一样，但是有 time 字段基本上就表示可以连通。&lt;/p&gt;
+&lt;p&gt;之后，我们通过 &lt;code&gt;ssh&lt;/code&gt; 命令登录到 VPS：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh root@123.45.678.90&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;系统会提示我们输入密码，输入密码后就可以登录到 VPS 上了。&lt;/p&gt;
+&lt;p&gt;不论我们敲多少字符，终端上都不会显示任何内容，这是一个安全特性，输入完成后直接按回车即可（也可以直接复制）。&lt;/p&gt;
+&lt;p&gt;第一次登录时，系统会提示我们是否继续连接，输入 &lt;code&gt;yes&lt;/code&gt; 并回车即可。&lt;/p&gt;
+&lt;h3 class="heading-element" id="62-更新系统并且安装-git"&gt;&lt;span&gt;6.2. 更新系统并且安装 Git&lt;/span&gt;
+ &lt;a href="#62-%e6%9b%b4%e6%96%b0%e7%b3%bb%e7%bb%9f%e5%b9%b6%e4%b8%94%e5%ae%89%e8%a3%85-git" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;因为我们的脚本是从 GitHub 上拉取下来的，因此需要先安装 Git 工具。&lt;/p&gt;
+&lt;p&gt;登录到 VPS 后，首先我们需要更新一下系统，并且安装 Git。复制以下命令并回车执行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade -y
+apt install git -y&lt;/code&gt;&lt;/pre&gt;&lt;h3 class="heading-element" id="63-拉取脚本并且执行"&gt;&lt;span&gt;6.3. 拉取脚本并且执行&lt;/span&gt;
+ &lt;a href="#63-%e6%8b%89%e5%8f%96%e8%84%9a%e6%9c%ac%e5%b9%b6%e4%b8%94%e6%89%a7%e8%a1%8c" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;接下来的内容与 GitHub 仓库中维护的基本一致。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/loveorange/xray-installer.git
+cd xray-installer
+sudo bash install.sh&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行过程中会提示我们输入一些必要的信息，按照提示输入即可。&lt;/p&gt;
+&lt;p&gt;如果提示信息中有被括号包围的内容，表示这是默认值，直接按回车即可使用默认值。&lt;/p&gt;
+&lt;p&gt;类似地，如果提示信息中有 &lt;code&gt;[y/N]&lt;/code&gt;，表示这是一个 Yes/No 选项，输入 &lt;code&gt;y&lt;/code&gt; 并回车表示选择 Yes，输入 &lt;code&gt;n&lt;/code&gt; 并回车表示选择 No。大写的字母表示默认值，直接按回车即可。&lt;/p&gt;
+&lt;p&gt;需要注意的是，在执行脚本时，必须先绑定域名到 VPS 的 IP 地址，否则脚本会因为无法申请 TLS 证书而失败。&lt;/p&gt;
+&lt;h3 class="heading-element" id="64-完成安装"&gt;&lt;span&gt;6.4. 完成安装&lt;/span&gt;
+ &lt;a href="#64-%e5%ae%8c%e6%88%90%e5%ae%89%e8%a3%85" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;安装完成后，脚本会输出一些必要的信息：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;================================================================================
+ XRAY CLIENT CONFIGURATION
+ Generated: Sat Dec 27 04:56:29 AM PST 2025
+================================================================================
+
+=== Server Information ===
+Domain: your-domain.com
+Server IP: 123.45.678.90
+Port: 443
+Protocol: VLESS
+Security: TLS
+Network: TCP
+
+=== VLESS Settings ===
+UUID: asdf1234-asdf-1234-asdf-1234asdf1234
+Flow: xtls-rprx-vision
+Encryption: none
+
+=== TLS Settings ===
+SNI: your-domain.com
+ALPN: http/1.1
+Allow Insecure: false
+
+=== Share Links ===
+
+--- v2rayN / v2rayNG / Nekoray ---
+vless://asdf1234-asdf-1234-asdf-1234asdf1234@your-domain.com:443?encryption=none&amp;amp;flow=xtls-rprx-vision&amp;amp;security=tls&amp;amp;sni=your-domain.com&amp;amp;alpn=http%2F1.1&amp;amp;type=tcp#Xray-TLS
+
+--- Clash Meta / Stash ---
+- name: &amp;#34;Xray-TLS&amp;#34;
+ type: vless
+ server: your-domain.com
+ port: 443
+ uuid: asdf1234-asdf-1234-asdf-1234asdf1234
+ network: tcp
+ udp: true
+ tls: true
+ flow: xtls-rprx-vision
+ servername: your-domain.com
+ client-fingerprint: chrome
+
+--- Shadowrocket (iOS) ---
+vless://asdf1234-asdf-1234-asdf-1234asdf1234@your-domain.com:443?encryption=none&amp;amp;security=tls&amp;amp;type=tcp&amp;amp;headerType=none&amp;amp;host=your-domain.com&amp;amp;sni=your-domain.com&amp;amp;flow=xtls-rprx-vision#Xray-TLS
+--- Quantumult X ---
+vless=your-domain.com:443, method=none, password=asdf1234-asdf-1234-asdf-1234asdf1234, obfs=over-tls, obfs-host=your-domain.com, tls-verification=true, fast-open=false, udp-relay=false, tag=Xray-TLS&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;关键的信息有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;域名，这个是我们用来访问 VPS 的域名&lt;/li&gt;
+&lt;li&gt;UUID，这个是用来验证身份的密钥&lt;/li&gt;
+&lt;li&gt;VLESS 协议的配置信息。脚本默认会使用 VLESS 协议，并且开启 TLS 加密，流控方式为 &lt;code&gt;xtls-rprx-vision&lt;/code&gt;，不同的客户端可能不一样，参考这个填写即可。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;除了基本信息之外，为了简化使用，也会生成一些可以直接导入到客户端的链接，直接复制到对应的客户端中即可使用。以上的链接信息都在 「Share Links」部分。&lt;/p&gt;
+&lt;h3 class="heading-element" id="65-配置静态-isp可选"&gt;&lt;span&gt;6.5. 配置静态 ISP（可选）&lt;/span&gt;
+ &lt;a href="#65-%e9%85%8d%e7%bd%ae%e9%9d%99%e6%80%81-isp%e5%8f%af%e9%80%89" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;如果开启了绕开 AI 限制的功能，脚本在安装过程中会提示我们输入静态 ISP 的相关信息：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;静态 ISP 地址&lt;/li&gt;
+&lt;li&gt;端口&lt;/li&gt;
+&lt;li&gt;用户名&lt;/li&gt;
+&lt;li&gt;密码。与登录时一样，不论输入多少字符，终端上都不会显示任何内容，输入完成后直接按回车即可。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;配置完成后，脚本会自动在配置文件中添加相应的配置项，不需要我们手动修改配置文件。&lt;/p&gt;
+&lt;h3 class="heading-element" id="66-验证安装结果"&gt;&lt;span&gt;6.6. 验证安装结果&lt;/span&gt;
+ &lt;a href="#66-%e9%aa%8c%e8%af%81%e5%ae%89%e8%a3%85%e7%bb%93%e6%9e%9c" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;安装成功后，会输出「6.4. 完成安装」中的信息，我们可以通过这些信息来验证安装结果。&lt;/p&gt;
+&lt;p&gt;也可以采用手工的方式验证：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl status xray&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果显示绿色的 &lt;code&gt;active (running)&lt;/code&gt;，就表示 Xray 服务已经成功启动。&lt;/p&gt;
+&lt;p&gt;如果有问题，可以咨询一些 AI 的服务，或者再 GitHub 仓库中提交 Issue 寻求帮助。&lt;/p&gt;
+&lt;h2 class="heading-element" id="7-结语"&gt;&lt;span&gt;7. 结语&lt;/span&gt;
+ &lt;a href="#7-%e7%bb%93%e8%af%ad" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;我自己的实测，使用以上脚本后，除开购买域名和 VPS 的时间，整个安装过程大概只需要 5 分钟左右，远远低于手工安装的时间。还是很方便的。&lt;/p&gt;
+&lt;p&gt;后续我也会考虑提供一个 Web 界面自动生成配置，并且提供一些更加多样化的配置选项，比如解锁流媒体服务等等，敬请期待吧。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;不过是什么时候能，或者又是一辈子了吧&amp;hellip;&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 class="heading-element" id="附录一些我在用的资源"&gt;&lt;span&gt;附录：一些我在用的资源&lt;/span&gt;
+ &lt;a href="#%e9%99%84%e5%bd%95%e4%b8%80%e4%ba%9b%e6%88%91%e5%9c%a8%e7%94%a8%e7%9a%84%e8%b5%84%e6%ba%90" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;VPS 供应商推荐
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://bandwagonhost.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;搬瓦工&lt;/a&gt;(&lt;a href="https://bandwagonhost.com/aff.php?aff=76049" target="_blank" rel="external nofollow noopener noreferrer"&gt;推广链接&lt;/a&gt;) - 贵，有的机房速度很快&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.vmiss.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;VMISS&lt;/a&gt;(&lt;a href="https://app.vmiss.com/aff.php?aff=3114" target="_blank" rel="external nofollow noopener noreferrer"&gt;推广链接&lt;/a&gt;) - 便宜，速度还行&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.vultr.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Vultr&lt;/a&gt;(&lt;a href="https://www.vultr.com/?ref=7126266" target="_blank" rel="external nofollow noopener noreferrer"&gt;推广链接&lt;/a&gt;) - 稳定，价格适中，推广链接需要 10 美金充值才有效果。可以在 &lt;a href="https://osk-jp-ping.vultr.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;测速页面&lt;/a&gt; 测试各个机房的访问效果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;域名注册商推荐
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.godaddy.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Godaddy&lt;/a&gt; - 老牌注册商，价格适中&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cloudflare.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Cloudflare&lt;/a&gt; - 服务多，除了域名之外还提供了很多高级玩法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;静态 ISP 提供商推荐
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://thordata.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Thordata&lt;/a&gt; - 忘了在哪里看到的了，能用，效果不错，能够正常使用 Claude，但是没有被 AI 推荐过&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一些小的 Tips：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;非高峰期 VPS 一般都会有不错的速度，但是高峰期（晚上下班之后）可能比较慢，如果 VPS 供应商有提供测速页面，可以在高峰期测试一下速度。&lt;/li&gt;
+&lt;li&gt;一般各种各样的厂商都会提供多种促销活动与优惠码，可以多留意一下。&lt;/li&gt;
+&lt;/ol&gt;</description></item><item><title>【剧评】短剧开始了</title><link>https://loveorange.github.io/posts/reviews/lifes-punchline/</link><pubDate>Mon, 09 Jun 2025 13:31:18 +0800</pubDate><guid>https://loveorange.github.io/posts/reviews/lifes-punchline/</guid><category domain="https://loveorange.github.io/categories/reviews/">Reviews</category><description>&lt;h2 class="heading-element" id="起子"&gt;&lt;span&gt;起子&lt;/span&gt;
+ &lt;a href="#%e8%b5%b7%e5%ad%90" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;《短剧开始了》是我一直想看的作品，最初了解是因为机核的播客。然而这次的起因是，是看了《花束般的恋爱》后，忽然想要继续看一下村花（有村架纯）的作品了，刚好 B 站又引进了这部作品。&lt;/p&gt;
+&lt;p&gt;一共只有 10 集，每集 40 分钟，补番的难度不大。&lt;/p&gt;
+&lt;p&gt;截止到 2025 年 6 月，可以说是我在 2025 年最喜欢的剧集了。&lt;/p&gt;
+&lt;h2 class="heading-element" id="告别然后重新启程"&gt;&lt;span&gt;告别，然后重新启程&lt;/span&gt;
+ &lt;a href="#%e5%91%8a%e5%88%ab%e7%84%b6%e5%90%8e%e9%87%8d%e6%96%b0%e5%90%af%e7%a8%8b" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;《短剧开始了》讲述了三个高中好友组成的搞笑组合——麦克白，在出道近十年后，依然不愠不火，因此决定解散的故事。在解散前夕，他们与身边的朋友：中滨姐妹、经纪人、老师等等，一面度过了悠闲的日常，一面又直面过去的成功与失败，与自己的过去郑重地告别。&lt;/p&gt;
+&lt;p&gt;一千个人眼里有一千个哈姆雷特。对我而言，《短剧开始了》最吸引我的，是它讲述了一个告别与重新开始的故事。&lt;/p&gt;
+&lt;p&gt;对麦克白三人而言，组合解散，他们告别了自己曾经选择的道路。十年的时间并不短暂，虽然从不后悔这十年的选择，但是正如老师所言，“18 到 28 岁这十年，与接下来的十年，难度是完全不同的”。十年的时间没有让他们成名，反而让他们去思考，未来的十年是否也能够这样的走下去。&lt;/p&gt;
+&lt;p&gt;虽然十年的时间很快乐，但是对他们而言，也是一种巨大的沉默成本。在一个领域投入十年，不见回报，甚至只靠这个领域，不能够继续养活自己，那么换一条赛道，其实是必然的选择。那么，不如与这十年努力的自己认真告别，然后潇洒回头，重新开始新的生活吧。&lt;/p&gt;</description></item><item><title>港卡开户 2 - 中银香港</title><link>https://loveorange.github.io/posts/finance/boc-account-opening/</link><pubDate>Wed, 05 Mar 2025 20:06:01 +0800</pubDate><guid>https://loveorange.github.io/posts/finance/boc-account-opening/</guid><category domain="https://loveorange.github.io/categories/finance/">Finance</category><description>&lt;img src="https://loveorange.github.io/posts/finance/boc-account-opening/victoria_harbour.jpg" alt="featured image" referrerpolicy="no-referrer"&gt;&lt;h2 class="heading-element" id="1-简介"&gt;&lt;span&gt;1. 简介&lt;/span&gt;
+ &lt;a href="#1-%e7%ae%80%e4%bb%8b" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;这次香港之行，除了 City Walk 与 Disney Land 之外，很重要的事情，是与世界 500 强企业（中银香港）的员工，聊了聊投资（出示投资记录），聊了聊创业（要不要在香港开公司），当然这一切的一切，都是为了开一个中银香港的账户（就是开户的问题啦）。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为什么要开中银香港的账户？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;申请中银香港账户的最终要目的，就是&lt;strong&gt;最小化资金出海的损耗&lt;/strong&gt;。在有中国银行账户的前提下，向中银香港账户转账可以做到&lt;strong&gt;免手续费&lt;/strong&gt;，而且速度相对也比较快。&lt;/p&gt;
+&lt;p&gt;同汇丰 One 账户一样，中银香港的账户也无管理费与最低存款要求，持有成本极低。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-开户方式"&gt;&lt;span&gt;2. 开户方式&lt;/span&gt;
+ &lt;a href="#2-%e5%bc%80%e6%88%b7%e6%96%b9%e5%bc%8f" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;中银香港只推荐&lt;strong&gt;线上预约开户&lt;/strong&gt;。微信搜索「中银香港微服务」服务号，选择「银行服务」→「我要预约」，选择合适的时间与分行即可。&lt;/p&gt;
+&lt;p&gt;某红书上有人尝试 Walk in 开户成功。但是我个人的经历，下午两点左右，在中环某分行，已经取不到开户的号了。&lt;/p&gt;
+&lt;p&gt;也可以尝试在 APP 中申请，但是上传证件过程中，备受相机对焦问题的折磨，并且尝试 N 久之后，还是得到了「开户失败」的结果，所以也不推荐。&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-开户流程"&gt;&lt;span&gt;3. 开户流程&lt;/span&gt;
+ &lt;a href="#3-%e5%bc%80%e6%88%b7%e6%b5%81%e7%a8%8b" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;h3 class="heading-element" id="31-预约开户"&gt;&lt;span&gt;3.1. 预约开户&lt;/span&gt;
+ &lt;a href="#31-%e9%a2%84%e7%ba%a6%e5%bc%80%e6%88%b7" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;最重要的一步&lt;/strong&gt;。微信搜索「中银香港微服务」服务号，选择「银行服务」→「我要预约」。&lt;/p&gt;
+&lt;p&gt;每日零点放出七个工作日后的号，放号后预约比较容易，在白天基本无号。&lt;/p&gt;
+&lt;p&gt;（也许是跨年预约的原因，我在预约的时候，没有严格提前七个工作日放出我想要的号，导致我多熬了一宿&amp;hellip;&amp;hellip;）&lt;/p&gt;
+&lt;h3 class="heading-element" id="32-抵达分行"&gt;&lt;span&gt;3.2. 抵达分行&lt;/span&gt;
+ &lt;a href="#32-%e6%8a%b5%e8%be%be%e5%88%86%e8%a1%8c" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;按时抵达分行，与银行人员确认预约信息后，在预约柜台开始开户。&lt;/p&gt;
+&lt;p&gt;我们此行预约了两个号，一个迟到了 5min，另一个早到了 25min，但是都没有排队。&lt;/p&gt;
+&lt;p&gt;这里还得吐槽一句，从东涌到屯门，那个公交换乘的路线是认真的吗，这真的是常规路线吗？&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/finance/boc-account-opening/wtf_road.jpg" alt="世界上本没有路，走的人多了，也就成了路" /&gt;
+&lt;/p&gt;
+&lt;h3 class="heading-element" id="33-填写信息"&gt;&lt;span&gt;3.3. 填写信息&lt;/span&gt;
+ &lt;a href="#33-%e5%a1%ab%e5%86%99%e4%bf%a1%e6%81%af" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;开户期间，银行人员会要求在 App 上填写个人信息，根据个人情况填写。&lt;/p&gt;
+&lt;p&gt;如果没有提前下载好 App，连接现场的 Wi-Fi 也可以下载，还会被推荐下载一个 BoC Pay 的 App，也许香港的银行朋友们也有指标要求吧&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;h3 class="heading-element" id="34-开户询问"&gt;&lt;span&gt;3.4. 开户询问&lt;/span&gt;
+ &lt;a href="#34-%e5%bc%80%e6%88%b7%e8%af%a2%e9%97%ae" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;银行人员会询问个人情况，比如开户目的、个人工作与收入情况等，如实回答即可。&lt;/p&gt;
+&lt;p&gt;比如我正在创（shi）业中，主要收入来源都是被动收入（0 - 5000 元挡位），也开户成功了。&lt;/p&gt;
+&lt;p&gt;（或许我该在我的每篇 blog 下面挂个收款码增加收入了&amp;hellip;&amp;hellip;）&lt;/p&gt;
+&lt;h3 class="heading-element" id="35-获取银行卡"&gt;&lt;span&gt;3.5. 获取银行卡&lt;/span&gt;
+ &lt;a href="#35-%e8%8e%b7%e5%8f%96%e9%93%b6%e8%a1%8c%e5%8d%a1" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;如果问及「是否要当场下卡」，果断选「是」。邮寄到内地有丢失风险。&lt;/p&gt;
+&lt;p&gt;至少半个月了，我的汇丰的卡片还没到&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;h3 class="heading-element" id="36-激活与入金"&gt;&lt;span&gt;3.6. 激活与入金&lt;/span&gt;
+ &lt;a href="#36-%e6%bf%80%e6%b4%bb%e4%b8%8e%e5%85%a5%e9%87%91" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;拿到卡片后，在 ATM 上存入一笔港币，完成激活与入金。如果卡片不识别，尝试稍等片刻重新插入。&lt;/p&gt;
+&lt;h2 class="heading-element" id="4-注意事项"&gt;&lt;span&gt;4. 注意事项&lt;/span&gt;
+ &lt;a href="#4-%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;提前预约是最终要的，至少我其他的途径都没有开户成功，导致我去了两次香港了&lt;/li&gt;
+&lt;li&gt;有说中银香港态度较差。我预约的是建荣街分行，Google Maps 上只有 1.8 分，但是工作人员的态度超好，这里要给个好评&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 class="heading-element" id="5-总结"&gt;&lt;span&gt;5. 总结&lt;/span&gt;
+ &lt;a href="#5-%e6%80%bb%e7%bb%93" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;同汇丰一样，强烈建议线下开户，只要预约成功，现场开户十分顺利，全程 30 min 左右。&lt;/p&gt;
+&lt;p&gt;祝大家开户顺利啦~&lt;/p&gt;
+&lt;h2 class="heading-element" id="6-额外多说一句"&gt;&lt;span&gt;6. 额外多说一句&lt;/span&gt;
+ &lt;a href="#6-%e9%a2%9d%e5%a4%96%e5%a4%9a%e8%af%b4%e4%b8%80%e5%8f%a5" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;作为一个伪·贝聿铭粉丝，提到香港就不得不提到的建筑就是中银大厦。建筑本身体现出了贝聿铭一贯的风格，背后的「风水大战」也十分有趣，感兴趣的小伙伴可以搜搜看。在香港这个风水宝地，「风水」确实是商战的重要一环了，不知道香港的建筑学专业是否有风水的选修课程。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/finance/boc-account-opening/boc_tower.jpg" alt="Big Bus 途中的中银大厦" /&gt;
+&lt;/p&gt;</description></item><item><title>港卡开户 1 - 汇丰银行</title><link>https://loveorange.github.io/posts/finance/hsbc-account-opening/</link><pubDate>Wed, 19 Feb 2025 20:06:01 +0800</pubDate><guid>https://loveorange.github.io/posts/finance/hsbc-account-opening/</guid><category domain="https://loveorange.github.io/categories/finance/">Finance</category><description>&lt;img src="https://loveorange.github.io/posts/finance/hsbc-account-opening/central_market.jpg" alt="featured image" referrerpolicy="no-referrer"&gt;&lt;h2 class="heading-element" id="1-简介"&gt;&lt;span&gt;1. 简介&lt;/span&gt;
+ &lt;a href="#1-%e7%ae%80%e4%bb%8b" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;自从新加坡华侨银行限制开户后，港卡成为了海外开户的首选。而港卡之中，最受大家推崇的就是汇丰银行、中银香港和众安银行。这三家各有优势和用途，恰好最近完成了三家银行的开户，因此分别记录一下开户的过程和注意事项。&lt;/p&gt;
+&lt;p&gt;本篇先更新汇丰银行。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为什么要开汇丰银行的账户？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;汇丰银行在很多国家都有分行，不同地区同名账户之间互转免费。既然资金已经出海了，说不定未来会去到更多的国家和地区，先开一个汇丰香港的账户以备不时之需。&lt;/p&gt;
+&lt;p&gt;而且汇丰银行的汇丰 One 账户，无管理费与最低存款要求，持有成本极低。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-开户方式"&gt;&lt;span&gt;2. 开户方式&lt;/span&gt;
+ &lt;a href="#2-%e5%bc%80%e6%88%b7%e6%96%b9%e5%bc%8f" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;汇丰银行虽然支持线上与线下两种开户途径，但是依然强烈推荐在&lt;strong&gt;线下开户&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 class="heading-element" id="21-线下-walk-in-开户推荐"&gt;&lt;span&gt;2.1. 线下 walk in 开户（推荐）&lt;/span&gt;
+ &lt;a href="#21-%e7%ba%bf%e4%b8%8b-walk-in-%e5%bc%80%e6%88%b7%e6%8e%a8%e8%8d%90" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;直接选择最近的分行，现场取号，通常等待 30min 到 1h 不等。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔔 注意事项&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;汇丰分行的叫号声音很小，随时关注排号进度，避免过号&lt;/li&gt;
+&lt;li&gt;如果问及开户目的，回答投资理财&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;✅ 优势&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;可以直接拿卡&lt;/li&gt;
+&lt;li&gt;可以面对面的咨询一些使用问题&lt;/li&gt;
+&lt;li&gt;HSBC HK App 问题较多，线下开户会省心很多&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 class="heading-element" id="22-hsbc-hk-app-申请香港激活"&gt;&lt;span&gt;2.2. HSBC HK App 申请，香港激活&lt;/span&gt;
+ &lt;a href="#22-hsbc-hk-app-%e7%94%b3%e8%af%b7%e9%a6%99%e6%b8%af%e6%bf%80%e6%b4%bb" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;需要在大陆完成的操作&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;下载 HSBC HK App 后，按照提示填写资料。通常申请汇丰 One 账户即可&lt;/li&gt;
+&lt;li&gt;如果资料没什么问题，可以直接申请通过。如果提示“抱歉，我们无法立即为您开立账户”，一般等待五个工作日也会收到审批通过的信息&lt;/li&gt;
+&lt;li&gt;审批通过后，会收到一条包含验证编码的短信，需要在 90 天内使用该验证编码在香港完成激活&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;需要在香港完成的操作&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 HSBC HK App 中，使用收到的参考编码与出入境记录，完成激活操作&lt;/li&gt;
+&lt;li&gt;激活成功后，会显示 HSBC HK 的账户号码，需要牢记，存款与转账时需要使用此账户号码&lt;/li&gt;
+&lt;li&gt;同样，激活成功后，会提示注册手机银行，直接点击注册，否则有概率 App 报错&lt;/li&gt;
+&lt;li&gt;找到最近的汇丰银行 ATM 入金。即使没有收到银行卡，使用激活后获得的账户号码，也可以在汇丰银行的 ATM 上存款&lt;/li&gt;
+&lt;li&gt;最后，等待卡片寄到通信地址&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔔 注意事项&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;某些口岸的出入境记录，HSBC HK App 上可能无法识别，导致激活失败。我在 2024 年 11 月遇到了港珠澳口岸无法识别的问题，后从香港国际机场入境激活成功&lt;/li&gt;
+&lt;li&gt;激活成功后，如果没有直接点击注册手机银行，可能会导致点击时 App 报错，并且再也无法找到注册手机银行的入口。需要找到分行的工作人员帮助处理&lt;/li&gt;
+&lt;li&gt;线上申请时，最长需要五个工作日，需要合理安排行程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;✅ 优势&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;大部分的申请操作都在大陆完成，如情况顺利，入境香港即可完成激活&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;❌ 劣势&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;HSBC HK App 操作时可能会遇到问题，部分情况仍需去分行处理&lt;/li&gt;
+&lt;li&gt;依然需要找到 HSBC 的 ATM 入金&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 class="heading-element" id="3-总结"&gt;&lt;span&gt;3. 总结&lt;/span&gt;
+ &lt;a href="#3-%e6%80%bb%e7%bb%93" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;强烈建议线下开户，等待的时间不会太长。开户过程中如遇到的问题，可以现场与银行人员沟通并解决，最重要的是可以当场下卡。&lt;/p&gt;
+&lt;p&gt;线上申请如情况顺利，入境香港即可激活成功。但是遇到报错的话，还是需要到分行去解决。&lt;/p&gt;</description></item><item><title>OCBC - 年轻人的第一张海外银行卡</title><link>https://loveorange.github.io/posts/finance/ocbc/</link><pubDate>Mon, 02 Dec 2024 13:57:45 +0800</pubDate><guid>https://loveorange.github.io/posts/finance/ocbc/</guid><category domain="https://loveorange.github.io/categories/digital-nomad/">Digital Nomad</category><description>&lt;h2 class="heading-element" id="0-2024-12-04-更新"&gt;&lt;span&gt;0. 2024-12-04 更新&lt;/span&gt;
+ &lt;a href="#0-2024-12-04-%e6%9b%b4%e6%96%b0" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;据不可靠消息（小红书、X），OCBC 目前不再支持大陆用户申请，因为我已经有账户了，所以没有尝试。&lt;/p&gt;
+&lt;p&gt;另外今天发现我的账户被限制入金了，理由是「没有使用同名账户入金」，确实我的入金都是通过券商账户走的。客服说我需要去新加坡线下申请解封，可能需要提供一些证明材料，证明我在新加坡工作或生活。只能期待未来有时间去一趟新加坡了&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;h2 class="heading-element" id="1-引子"&gt;&lt;span&gt;1. 引子&lt;/span&gt;
+ &lt;a href="#1-%e5%bc%95%e5%ad%90" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;在经历了 A 股常常韭韭的体验后，我内心渐渐萌生了去买卖美股的想法。另外前公司发的股票（港股）一直在账户中起起落落落落，不能提取出来的钱只是数字。最终，&lt;strong&gt;申请一张海外银行卡&lt;/strong&gt;的需求提上了日程。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-卡片选择"&gt;&lt;span&gt;2. 卡片选择&lt;/span&gt;
+ &lt;a href="#2-%e5%8d%a1%e7%89%87%e9%80%89%e6%8b%a9" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;对于大陆用户而言，内地汇款也好，海外投资也好，最理想的卡片一定是港卡。但是港卡开户有以下两个门槛（二选一）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内地开户：有一定的本金要求，50w 起步，不同银行略有区别&lt;/li&gt;
+&lt;li&gt;香港开户：不再有本金要求，但是需要人在香港&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;作为&lt;strong&gt;穷宅&lt;/strong&gt;，一没有钱，二不想出门，只能寻找其他要求更低的银行。最终找到了「&lt;strong&gt;新加坡华侨银行（OCBC）&lt;/strong&gt;」。&lt;/p&gt;
+&lt;p&gt;OCBC 的开户条件几乎只有一个，就是&lt;strong&gt;护照&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-开户"&gt;&lt;span&gt;3. 开户&lt;/span&gt;
+ &lt;a href="#3-%e5%bc%80%e6%88%b7" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;开户过程十分简单，在应用商店下载 OCBC 的 APP，按照要求填写资料、申请即可。等待几日的审核后，就会收到审核通过的通知。&lt;/p&gt;
+&lt;p&gt;默认会创建 &lt;strong&gt;Statement Savings Account（SSA）&lt;/strong&gt; 和 &lt;strong&gt;Global Savings Account（GSA）&lt;/strong&gt; 两个账户，SSA 是 &lt;strong&gt;SGD&lt;/strong&gt; 账户，而 GSA 可以储蓄更多的币种，比如 &lt;strong&gt;USD&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;除了这两个账户外，还可以在 APP 中申请一个 &lt;strong&gt;360 Account&lt;/strong&gt; 账户，申请通过后会寄送一张实体的 Visa 卡，可以满足更多的支付场景。&lt;/p&gt;
+&lt;p&gt;同时 OCBC 还支持名为「&lt;strong&gt;PayNow&lt;/strong&gt;」的类似支付宝的二维码支付方式。可以在 360 Account 的页面上，点击右上角的设置按钮「⚙️」-&amp;gt;「Manage PayNow」绑定 PayNow 账户，这样其他的 PayNow 用户可以通过搜索我们的手机号，直接向我们的账户转账。&lt;/p&gt;
+&lt;h2 class="heading-element" id="4-ibkr"&gt;&lt;span&gt;4. IBKR&lt;/span&gt;
+ &lt;a href="#4-ibkr" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;为了买卖港股、美股，还需要申请券商账号。可选择的券商有很多，我选择的是「&lt;strong&gt;盈透证券（IBKR）&lt;/strong&gt;」。IBKR 据说更符合传统的股票交易思维，有很多专业用户，对我而言使用的起来要比「雪球」复杂。「&lt;strong&gt;长桥证券&lt;/strong&gt;」也是一个比较好的选择，更符合国内用的使用思路，但是需要已经有其他海外的券商账户才能申请下来。&lt;/p&gt;
+&lt;p&gt;申请同样是按照需求填写资料，静待审核。&lt;/p&gt;
+&lt;h2 class="heading-element" id="5-wise"&gt;&lt;span&gt;5. Wise&lt;/span&gt;
+ &lt;a href="#5-wise" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;有了银行账户与券商账户，此时已经可以进行港股、美股的买卖了。为了出入金方便，我额外申请了一个 &lt;strong&gt;Wise&lt;/strong&gt; 账户。&lt;/p&gt;
+&lt;p&gt;Wise 是一个汇款工具，相比国际银行之间的转账，Wise 提供了更简单的转账方式，相当于不同国际银行账户之间的中介。对于 OCBC，支持通过 PayNow 的方式入金出金，极大地简化了银行与券商间的转账流程，&lt;strong&gt;强烈&lt;/strong&gt;建议申请一个，申请同样十分简单。&lt;/p&gt;
+&lt;h2 class="heading-element" id="6-ocbc-到-ibkr-入金出金"&gt;&lt;span&gt;6. OCBC 到 IBKR 入金出金&lt;/span&gt;
+ &lt;a href="#6-ocbc-%e5%88%b0-ibkr-%e5%85%a5%e9%87%91%e5%87%ba%e9%87%91" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;有了 Wise 后，我从 OCBC 向 IBKR 的入金路径就变成了：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OCBC -&amp;gt; Wise -&amp;gt; IBKR&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;OCBC -&amp;gt; Wise：使用 PayNow 扫码付款，可以在几秒内到账&lt;/li&gt;
+&lt;li&gt;Wise -&amp;gt; IBKR：在 IBKR 中可以选择使用 Wise 入金。关联 Wise 账户后，即可将 Wise 的余额快速转入 IBKR&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;出金的流程理论上类似，因为我还没有在 IBKR 上大富大贵，还没有尝试出金。&lt;/p&gt;
+&lt;p&gt;需要注意的是，第一次出金入金可能会有额外的验证，验证通过后，后续的出金入金就十分顺畅了。&lt;/p&gt;
+&lt;h2 class="heading-element" id="7-向海外转账"&gt;&lt;span&gt;7. 向海外转账&lt;/span&gt;
+ &lt;a href="#7-%e5%90%91%e6%b5%b7%e5%a4%96%e8%bd%ac%e8%b4%a6" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;介绍了从 OCBC 到 IBKR 的入金出金后，还有一个重要的流程，就是&lt;strong&gt;国内的钱如何转到OCBC&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;我在 OCBC 的第一笔存款是卖掉已有的港股的钱转存的，因此我没有从国内的银行向 OCBC 转过账。这里只贴一个理论上的路线，大家可以根据自己的银行自行搜索相关的教程。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;购汇：在岸人民币没有办法简单的向海外流通，因此我们要提前把人民币换成新加坡元，再转入 OCBC 中。银行的 APP 中一般都提供了购汇的选项，大家可自行查找。&lt;/li&gt;
+&lt;li&gt;转账：有了新加坡元后，就可以向海外的银行转账了。转账需要银行的名称、地址、SWIFT Code 等信息，可以在 &lt;a href="https://wise.com/gb/swift-codes/countries/singapore/ocbc-swift-code" target="_blank" rel="external nofollow noopener noreferrer"&gt;Wise&lt;/a&gt; 上查询到。这里也列一下 OCBC 的相关信息。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Bank name: OVERSEA-CHINESE BANKING CORPORATION LIMITED&lt;/li&gt;
+&lt;li&gt;SWIFT code: OCBCSGSGXXX&lt;/li&gt;
+&lt;li&gt;Bank address: 63 CHULIA STREET, FLOOR 10, OCBC CENTRE&lt;/li&gt;
+&lt;li&gt;City: Singapore&lt;/li&gt;
+&lt;li&gt;Country: Singapore&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 class="heading-element" id="8-总结"&gt;&lt;span&gt;8. 总结&lt;/span&gt;
+ &lt;a href="#8-%e6%80%bb%e7%bb%93" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;如果有配置海外资产的需求的话，申请一个 OCBC 的账户可能是最简单的起步了。在有护照的前提下，几乎可以做到足不出户即可申请。搭配 IBKR、Wise，可以轻松实现港股、美股的买卖。虽然向 OCBC 账户转账稍有麻烦，并且可能会产生额外的费用。但是考虑 OCBC 的申请难度，作为起步来说，还是个较为便捷的选择。当然如果有更大额或者更频繁的转账需求，申请一张港卡还是更好的选择。&lt;/p&gt;
+&lt;p&gt;最后，祝大家的财富能够稳健的增长，早日实现财务自由～&lt;/p&gt;</description></item><item><title>修复 VSCode、Cursor 输入中文时字符颤抖问题</title><link>https://loveorange.github.io/posts/vscode-input-bug-fix/</link><pubDate>Sat, 16 Nov 2024 07:34:33 +0800</pubDate><guid>https://loveorange.github.io/posts/vscode-input-bug-fix/</guid><category domain="https://loveorange.github.io/categories/dev-tools/">Dev Tools</category><description>&lt;h2 class="heading-element" id="1-引言"&gt;&lt;span&gt;1. 引言&lt;/span&gt;
+ &lt;a href="#1-%e5%bc%95%e8%a8%80" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;讲一个最近遇到的问题。在 VSCode 和 Cursor 输入中文时，editor 的文字一直在颤抖。日常写注释时影响不大，但是在写 Blog 的时候，大量的中文输入，而文字一直颤抖，体感很差。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-解决"&gt;&lt;span&gt;2. 解决&lt;/span&gt;
+ &lt;a href="#2-%e8%a7%a3%e5%86%b3" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;搜了一些资料以及尝试后，发现问题出现在 Vim 插件上，卸载或禁用 Vim 插件后，问题不再复现。&lt;/p&gt;
+&lt;p&gt;参考：&lt;a href="https://github.com/microsoft/vscode/issues/184666" target="_blank" rel="external nofollow noopener noreferrer"&gt;VSCode 输入中文时 editor 文字颤抖&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;但是对于 Vim 星人来说，不使用 Vim 几乎不会打字了，那么介绍两种另外的解决办法。&lt;/p&gt;
+&lt;h3 class="heading-element" id="21-方案一修改-vscode-配置"&gt;&lt;span&gt;2.1. 方案一：修改 VSCode 配置&lt;/span&gt;
+ &lt;a href="#21-%e6%96%b9%e6%a1%88%e4%b8%80%e4%bf%ae%e6%94%b9-vscode-%e9%85%8d%e7%bd%ae" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;上述 Issue 中给出了解决方案，在 VSCode 配置中添加以下配置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;#34;editor.experimentalEditContextEnabled&amp;#34;: true&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启后即可生效。&lt;/p&gt;
+&lt;p&gt;但是 Cursor 中没有这个配置，因此我们继续探索另外的解决办法。&lt;/p&gt;
+&lt;h3 class="heading-element" id="22-方案二使用-neovim-插件"&gt;&lt;span&gt;2.2. 方案二：使用 NeoVim 插件&lt;/span&gt;
+ &lt;a href="#22-%e6%96%b9%e6%a1%88%e4%ba%8c%e4%bd%bf%e7%94%a8-neovim-%e6%8f%92%e4%bb%b6" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;对于 Vim，我更多的需求是使用 Vim 的键位，那么找一个能够提供 Vim 键位的插件即可，这里我选择的是 &lt;a href="https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim" target="_blank" rel="external nofollow noopener noreferrer"&gt;NeoVim&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;除了插件外，还需要安装 NeoVim 客户端，可以使用 Homebrew 安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;brew install neovim&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;同样重启后生效。&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-其他的问题无法连续移动光标"&gt;&lt;span&gt;3. 其他的问题：无法连续移动光标&lt;/span&gt;
+ &lt;a href="#3-%e5%85%b6%e4%bb%96%e7%9a%84%e9%97%ae%e9%a2%98%e6%97%a0%e6%b3%95%e8%bf%9e%e7%bb%ad%e7%a7%bb%e5%8a%a8%e5%85%89%e6%a0%87" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;安装好 NeoVim 后，发现了另一个问题，按住 &lt;code&gt;hjkl&lt;/code&gt; 时，无法持续移动光标，效率很差。&lt;/p&gt;
+&lt;p&gt;这里涉及到一个 MacOS 的问题。MacOS 中有一个默认的按键重复限制，对于特定按键来说，按住时会显示字符选择框。可以在终端中针对特定的应用禁用。&lt;/p&gt;
+&lt;p&gt;VSCode 禁用方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的 &lt;code&gt;com.microsoft.VSCode&lt;/code&gt; 是 VSCode 的 Bundle ID。&lt;/p&gt;
+&lt;p&gt;Cursor 的 Bundle ID 不像 VSCode 这么统一，可以使用以下命令查询：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;osascript -e &amp;#39;id of app &amp;#34;Cursor&amp;#34;&amp;#39;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我显示的 Bundle ID 是 &lt;code&gt;com.todesktop.230313mzl4w4u92&lt;/code&gt;，因此禁用命令为：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;defaults write com.todesktop.230313mzl4w4u92 ApplePressAndHoldEnabled -bool false&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要强制退出 VSCode 和 Cursor 后生效，&lt;code&gt;⌘ + Q&lt;/code&gt; 一下吧。&lt;/p&gt;
+&lt;p&gt;至此，VSCode 与 Cursor 的输入问题解决，继续开心的码代码吧～&lt;/p&gt;</description></item><item><title>Zsh 极简终端美化</title><link>https://loveorange.github.io/posts/beautiful-terminal/</link><pubDate>Fri, 15 Nov 2024 10:15:41 +0800</pubDate><guid>https://loveorange.github.io/posts/beautiful-terminal/</guid><category domain="https://loveorange.github.io/categories/dev-tools/">Dev Tools</category><description>&lt;img src="https://loveorange.github.io/posts/beautiful-terminal/image.png" alt="featured image" referrerpolicy="no-referrer"&gt;&lt;h2 class="heading-element" id="1-引言"&gt;&lt;span&gt;1. 引言&lt;/span&gt;
+ &lt;a href="#1-%e5%bc%95%e8%a8%80" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;del&gt;人类的本质就是颜狗&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;美丽的事物可以提升生产力&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最近入手了新的 Mac Mini M4，新机新气象，初始化工作就从终端美化开始吧。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-总览"&gt;&lt;span&gt;2. 总览&lt;/span&gt;
+ &lt;a href="#2-%e6%80%bb%e8%a7%88" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;本次美化先从系统自带的 &lt;strong&gt;Terminal&lt;/strong&gt; 入手，其他的终端工具如 &lt;strong&gt;iTerm&lt;/strong&gt; 等优化方式差异不大。&lt;/p&gt;
+&lt;p&gt;主要使用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;zsh&lt;/strong&gt; 默认 shell&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;oh-my-zsh&lt;/strong&gt; zsh 的增强&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Powerlevel10k&lt;/strong&gt; 主题&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ayu&lt;/strong&gt; 配色&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cascadia Code NF&lt;/strong&gt; 字体&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最终效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://loveorange.github.io/posts/beautiful-terminal/terminal.png" alt="Terminal 效果" /&gt;
+&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-配置"&gt;&lt;span&gt;3. 配置&lt;/span&gt;
+ &lt;a href="#3-%e9%85%8d%e7%bd%ae" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;h3 class="heading-element" id="31-安装-zsh-与-oh-my-zsh"&gt;&lt;span&gt;3.1 安装 zsh 与 oh-my-zsh&lt;/span&gt;
+ &lt;a href="#31-%e5%ae%89%e8%a3%85-zsh-%e4%b8%8e-oh-my-zsh" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;此处假设已经安装了 &lt;a href="https://brew.sh/" target="_blank" rel="external nofollow noopener noreferrer"&gt;homebrew&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;安装 zsh 的命令十分简单，考虑还要安装 &lt;strong&gt;oh-my-zsh&lt;/strong&gt;，所以一起安装 &lt;strong&gt;Git&lt;/strong&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;brew install zsh git&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接下来从 &lt;a href="https://ohmyz.sh/" target="_blank" rel="external nofollow noopener noreferrer"&gt;oh-my-zsh&lt;/a&gt; 的官网获取安装命令。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sh -c &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;h3 class="heading-element" id="32-安装字体"&gt;&lt;span&gt;3.2 安装字体&lt;/span&gt;
+ &lt;a href="#32-%e5%ae%89%e8%a3%85%e5%ad%97%e4%bd%93" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;为了在 Terminal 提供丰富多彩的现实，建议安装 Nerd Font，否则特殊符号无法正常显示。可以在 &lt;a href="https://www.nerdfonts.com/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Nerd Fonts&lt;/a&gt; 中选择喜欢的字体。&lt;/p&gt;
+&lt;p&gt;作为微软信徒，我选择了微软提供的 &lt;a href="https://github.com/microsoft/cascadia-code" target="_blank" rel="external nofollow noopener noreferrer"&gt;Cascadia Code&lt;/a&gt;，刚好官方提供了 Nerd Font 版本。&lt;/p&gt;
+&lt;h3 class="heading-element" id="33-安装-powerlevel10k"&gt;&lt;span&gt;3.3 安装 Powerlevel10k&lt;/span&gt;
+ &lt;a href="#33-%e5%ae%89%e8%a3%85-powerlevel10k" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;默认的 oh-my-zsh 主题比较简陋，推荐使用 &lt;a href="https://github.com/romkatv/powerlevel10k" target="_blank" rel="external nofollow noopener noreferrer"&gt;Powerlevel10k&lt;/a&gt;，提供了基本的自定义功能，可以满足大部分需求。&lt;/p&gt;
+&lt;p&gt;安装命令如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改 &lt;code&gt;~/.zshrc&lt;/code&gt; 文件，将主题设置为 &lt;code&gt;Powerlevel10k&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ZSH_THEME=&amp;#34;powerlevel10k/powerlevel10k&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;h3 class="heading-element" id="34-安装配色"&gt;&lt;span&gt;3.4 安装配色&lt;/span&gt;
+ &lt;a href="#34-%e5%ae%89%e8%a3%85%e9%85%8d%e8%89%b2" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;在 &lt;a href="https://github.com/mbadolato/iTerm2-Color-Schemes" target="_blank" rel="external nofollow noopener noreferrer"&gt;iterm2-colors-solarized&lt;/a&gt; 中提供了丰富的配色方案。可以选择喜欢的配色单独下载，选择困难症也可以 clone 整个仓库慢慢纠结。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;terminal&lt;/code&gt; 目录下提供了 Terminal 的配色方案。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;schemes&lt;/code&gt; 目录下提供了 iTerm 的配色方案。&lt;/p&gt;
+&lt;p&gt;我选择的是 ayu 配色，调整了透明度为 80%，模糊度为 20%。&lt;/p&gt;
+&lt;h2 class="heading-element" id="4-总结"&gt;&lt;span&gt;4. 总结&lt;/span&gt;
+ &lt;a href="#4-%e6%80%bb%e7%bb%93" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;至此配置结束，整个过程不算复杂，基本上十分钟左右可以配置结束。&lt;/p&gt;
+&lt;p&gt;为了尽快能够让新电脑提供生产力，本次美化还是选择了最熟悉的方案，尽量保证原有的开发习惯。&lt;/p&gt;
+&lt;p&gt;近年也涌现出一批优秀有趣的终端工具，如 &lt;a href="https://wezfurlong.org/wezterm/" target="_blank" rel="external nofollow noopener noreferrer"&gt;WezTerm&lt;/a&gt;，&lt;a href="https://starship.rs/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Starship&lt;/a&gt;，&lt;a href="https://sw.kovidgoyal.net/kitty/" target="_blank" rel="external nofollow noopener noreferrer"&gt;Kitty&lt;/a&gt;，等有时间的话再慢慢尝试了。&lt;/p&gt;</description></item><item><title>LeetCode 10. 正则表达式匹配</title><link>https://loveorange.github.io/posts/leetcode/regular-expression-matching/</link><pubDate>Mon, 18 Mar 2024 22:12:04 +0800</pubDate><guid>https://loveorange.github.io/posts/leetcode/regular-expression-matching/</guid><category domain="https://loveorange.github.io/categories/leetcode/">Leetcode</category><description>&lt;h2 class="heading-element" id="1-题目介绍"&gt;&lt;span&gt;1. 题目介绍&lt;/span&gt;
+ &lt;a href="#1-%e9%a2%98%e7%9b%ae%e4%bb%8b%e7%bb%8d" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;原题链接：&lt;a href="https://leetcode.cn/problems/regular-expression-matching/" target="_blank" rel="external nofollow noopener noreferrer"&gt;10. 正则表达式匹配&lt;/a&gt;，难度：&lt;strong&gt;Hard&lt;/strong&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给你一个字符串  &lt;code&gt;s&lt;/code&gt;  和一个字符规律  &lt;code&gt;p&lt;/code&gt;，请你来实现一个支持  &lt;code&gt;'.'&lt;/code&gt;  和  &lt;code&gt;'*'&lt;/code&gt;  的正则表达式匹配。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;'.'&lt;/code&gt;  匹配任意单个字符&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;'*'&lt;/code&gt;  匹配零个或多个前面的那一个元素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所谓匹配，是要涵盖  &lt;strong&gt;整个&lt;/strong&gt;  字符串  &lt;code&gt;s&lt;/code&gt;的，而不是部分字符串。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;虽然是早期的 Hard，但是这道题的难度还是很高的，尤其以这道题的代码量来说。&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-问题分析"&gt;&lt;span&gt;2. 问题分析&lt;/span&gt;
+ &lt;a href="#2-%e9%97%ae%e9%a2%98%e5%88%86%e6%9e%90" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;首先需要分析问题的类型。如果说不存在 &lt;code&gt;'.'&lt;/code&gt; 和 &lt;code&gt;'*'&lt;/code&gt;，字符的话，那么只要 &lt;code&gt;equals()&lt;/code&gt; 即可了。当然这道题不会这么善良。&lt;/p&gt;
+&lt;p&gt;首先引入 &lt;code&gt;'.'&lt;/code&gt; 的概念，如果除了 &lt;code&gt;'.'&lt;/code&gt; 之外的字符与位置都一致，那么也可以简单的判断是否能够匹配。&lt;/p&gt;
+&lt;p&gt;最后引入 &lt;code&gt;'*'&lt;/code&gt; 的概念，它会将前一个的字符重复任意次数，也就是说，需要考虑前面的字符不会出现，以及出现多次，下述几种情况前面的字符串为 &lt;code&gt;s&lt;/code&gt;，后面的为 &lt;code&gt;p&lt;/code&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;acd&lt;/code&gt; 和 &lt;code&gt;ab*cd&lt;/code&gt;：&lt;code&gt;b&lt;/code&gt; 出现 0 次，可以匹配&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;abcd&lt;/code&gt; 和 &lt;code&gt;ab*cd&lt;/code&gt;：b 出现 1 次，可以匹配&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;abcd&lt;/code&gt; 和 &lt;code&gt;ab*bcd&lt;/code&gt;：&lt;code&gt;b*&lt;/code&gt; 实际没有使用，匹配的是 &lt;code&gt;p.charAt(3)&lt;/code&gt; 的字符 &lt;code&gt;b&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;需要记录类似例子 3 中 &lt;code&gt;b*&lt;/code&gt; 能够匹配的 &lt;code&gt;s&lt;/code&gt; 的位置，因此考虑这是个 dp 问题，需要记录截止到 &lt;code&gt;p&lt;/code&gt; 的第 &lt;code&gt;j&lt;/code&gt; 个字符为止，能够匹配 &lt;code&gt;s&lt;/code&gt; 的第 &lt;code&gt;i&lt;/code&gt; 个字符。&lt;/p&gt;
+&lt;p&gt;接下来考虑状态转移方程。对于没有 &lt;code&gt;'*'&lt;/code&gt; 的世界来说，仅需要判断两种情况：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;s.charAt(i) == p.charAt(j)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;p.chatAt(j) == '.'&lt;/code&gt;
+显然状态转移方程为 &lt;code&gt;dp[i][j] = dp[i - 1][j - 1] &amp;amp; {上述两种情况}&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;复杂性同样在引入了 &lt;code&gt;'*'&lt;/code&gt; 的世界里。还需要考虑以下三种情况：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果不使用 &lt;code&gt;'*'&lt;/code&gt; 以及它前面的字符，那么存在 &lt;code&gt;dp[i][j] = dp[i - 1][j - 2]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;如果使用 &lt;code&gt;'*'&lt;/code&gt; 以及它前面的字符，则有：
+&lt;ol&gt;
+&lt;li&gt;当 &lt;code&gt;s.charAt(i) == p.charAt(j - 1)&lt;/code&gt; 或者 &lt;code&gt;p.charAt(j - 1) == '.'&lt;/code&gt; 时，即 &lt;code&gt;s&lt;/code&gt; 的第 &lt;code&gt;i&lt;/code&gt; 个字符与 &lt;code&gt;p&lt;/code&gt; 的 &lt;code&gt;j - 1&lt;/code&gt;（&lt;code&gt;'*'&lt;/code&gt; 前的字符）一致时，&lt;code&gt;dp[i][j] = dp[i - 1][j]&lt;/code&gt;，与 &lt;code&gt;dp[i - 1][j]&lt;/code&gt; 比较的原因是，可以想象成 &lt;code&gt;dp[i - 1][j]&lt;/code&gt; 中的 &lt;code&gt;'*'&lt;/code&gt; 与其前置字符没有被使用&lt;/li&gt;
+&lt;li&gt;上述判断不成立，返回 &lt;code&gt;false&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为此，我们大概可以总结出了状态转移方程。&lt;/p&gt;
+&lt;p&gt;还需要考虑的特殊情况是，当 &lt;code&gt;s&lt;/code&gt; 或者 &lt;code&gt;p&lt;/code&gt; 为空串的场景，为了简化这种场景，我们初始化 &lt;code&gt;dp&lt;/code&gt; 数组时，使用 &lt;code&gt;boolean[][] dp = new boolean[s.length() + 1][p.length() + 1]&lt;/code&gt; 来初始化。考虑到 &lt;code&gt;p&lt;/code&gt; 的第一个字符不会是 &lt;code&gt;'*'&lt;/code&gt;，那么只要 &lt;code&gt;s&lt;/code&gt; 为空串时，除了 &lt;code&gt;p&lt;/code&gt; 也为空串的场景，都无法进行匹配。&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-代码实现"&gt;&lt;span&gt;3. 代码实现&lt;/span&gt;
+ &lt;a href="#3-%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;class Solution {
+ public boolean isMatch(String s, String p) {
+ int m = s.length();
+ int n = p.length();
+ // 因为使用 m &amp;#43; 1 与 n &amp;#43; 1 进行初始化，
+ // 后续使用 .charAt 时，需要将 i j 减 1
+ boolean[][] dp = new boolean[m &amp;#43; 1][n &amp;#43; 1];
+ // 空串可以互相匹配
+ dp[0][0] = true;
+ for (int i = 0; i &amp;lt; m &amp;#43; 1; i&amp;#43;&amp;#43;) {
+ for (int j = 1; j &amp;lt; n &amp;#43; 1; j&amp;#43;&amp;#43;) {
+ // 先考虑没有 &amp;#39;*&amp;#39; 的世界
+ if (p.charAt(j - 1) != &amp;#39;*&amp;#39;) {
+ dp[i][j] = isMatch(s, i, p, j) ? dp[i - 1][j - 1] : false;
+ } else {
+ // 引入 &amp;#39;*&amp;#39; 后，先考虑不使用 &amp;#39;*&amp;#39; 与前置字符
+ dp[i][j] = dp[i][j - 2];
+ // 如果 s.charAt(i - 1) == p.charAt(i - 2)
+ // 即当前遍历的 s 的字符，与 p 中 * 前的字符相同
+ if (isMatch(s, i, p, j - 1)) {
+ // 那么 s 直到 i - 1 与 p 直到 j - 1 能否匹配，
+ // 取决于 dp[i][j - 2] 与 dp[i - 1][j] 的结果
+ dp[i][j] = dp[i][j] || dp[i - 1][j];
+ }
+ }
+ }
+ }
+ return dp[m][n];
+ }
+
+ private boolean isMatch(String s, int si, String p, int pi) {
+ if (si == 0) {
+ return false;
+ }
+ if (p.charAt(pi - 1) == &amp;#39;.&amp;#39;) {
+ return true;
+ }
+ return s.charAt(si - 1) == p.charAt(pi - 1);
+ }
+}&lt;/code&gt;&lt;/pre&gt;&lt;h2 class="heading-element" id="4-一些总结"&gt;&lt;span&gt;4. 一些总结&lt;/span&gt;
+ &lt;a href="#4-%e4%b8%80%e4%ba%9b%e6%80%bb%e7%bb%93" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;这道题的难点我觉得有两个，第一个是想到动态规划的解法，我最开始想用回溯来做，发现需要考虑的场景很多，然后无情的看了答案；第二个是找出状态转移方程，需要考虑引入了 &lt;code&gt;*&lt;/code&gt; 之后，是否使用 &lt;code&gt;*&lt;/code&gt; 与前置字符，从而得出 &lt;code&gt;dp[i][j] = dp[i][j - 2] || dp[i - 1][j]&lt;/code&gt; 这一步。想到这两点后，额外需要注意的就是考虑空串的情况了。&lt;/p&gt;
+&lt;p&gt;总觉得几个月后再看这道题，还是会忘&amp;hellip;&amp;hellip;&lt;/p&gt;</description></item><item><title>LeetCode 403. 青蛙过河</title><link>https://loveorange.github.io/posts/leetcode/frog-jump/</link><pubDate>Thu, 14 Mar 2024 20:55:41 +0800</pubDate><guid>https://loveorange.github.io/posts/leetcode/frog-jump/</guid><category domain="https://loveorange.github.io/categories/leetcode/">Leetcode</category><description>&lt;h2 class="heading-element" id="1-题目介绍"&gt;&lt;span&gt;1. 题目介绍&lt;/span&gt;
+ &lt;a href="#1-%e9%a2%98%e7%9b%ae%e4%bb%8b%e7%bb%8d" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;原题链接：&lt;a href="https://leetcode.cn/problems/frog-jump/" target="_blank" rel="external nofollow noopener noreferrer"&gt;403. 青蛙过河&lt;/a&gt;，难度：&lt;strong&gt;Hard&lt;/strong&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一只青蛙想要过河。假定河流被等分为若干个单元格，并且在每一个单元格内都有可能放有一块石子（也有可能没有）。青蛙可以跳上石子，但是不可以跳入水中。&lt;/p&gt;
+&lt;p&gt;给你石子的位置列表  &lt;code&gt;stones&lt;/code&gt;（用单元格序号  &lt;strong&gt;升序&lt;/strong&gt;  表示），  请判定青蛙能否成功过河（即能否在最后一步跳至最后一块石子上）。开始时，  青蛙默认已站在第一块石子上，并可以假定它第一步只能跳跃  &lt;code&gt;1&lt;/code&gt;  个单位（即只能从单元格 1 跳至单元格 2 ）。&lt;/p&gt;
+&lt;p&gt;如果青蛙上一步跳跃了  &lt;code&gt;k&lt;/code&gt;  个单位，那么它接下来的跳跃距离只能选择为  &lt;code&gt;k - 1&lt;/code&gt;、&lt;code&gt;k&lt;/code&gt;  或  &lt;code&gt;k + 1&lt;/code&gt;  个单位。  另请注意，青蛙只能向前方（终点的方向）跳跃。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对我个人有很深意义的一道题，很久之前面试微软时遇到的题，结果时隔多年我忘记怎么做了&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;h2 class="heading-element" id="2-问题分析"&gt;&lt;span&gt;2. 问题分析&lt;/span&gt;
+ &lt;a href="#2-%e9%97%ae%e9%a2%98%e5%88%86%e6%9e%90" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;首先想到的是能不能通过穷举列出所有的可能性，然后发现穷举起来也挺麻烦的，难度可能不亚于想一个更靠谱的算法了，那么继续试试其他的路子。&lt;/p&gt;
+&lt;p&gt;能否跳到最终的石头，取决于能否跳到上一个石头的步数 &lt;code&gt;k&lt;/code&gt;，能否恰好在 &lt;code&gt;[k - 1, k + 1]&lt;/code&gt; 之间；那能否跳到上一个石头，取决于&amp;hellip;&amp;hellip;于是我们闻到了一丝动态规划的味道。&lt;/p&gt;
+&lt;p&gt;因为这是一只遗忘了游泳的青蛙，只能挑到石头上，并且每次跳只能是 &lt;code&gt;k&lt;/code&gt; 个单位，那我们从两个方向考虑：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;青蛙起跳时，如果上一次跳跃了 &lt;code&gt;k&lt;/code&gt; 个位置来到了当前位置 &lt;code&gt;i&lt;/code&gt; ，那么下一次跳跃只能跳到 &lt;code&gt;i + k - 1&lt;/code&gt;、&lt;code&gt;i + k&lt;/code&gt;、&lt;code&gt;i + k + 1&lt;/code&gt; 这三个位置，如果目的位置有石头的话，我们就可以晚一点想象这只可怜的青蛙溺水的样子。简单来说就是&lt;strong&gt;从当前位置，可以跳到哪里&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;青蛙跳到了某个石头 &lt;code&gt;i&lt;/code&gt; 时，如果知道了上次起跳的石头位置 &lt;code&gt;j&lt;/code&gt;，那么显然上次跳跃的距离为 &lt;code&gt;k = i - j&lt;/code&gt;。如果我们知道了所有能跳到当前石头 &lt;code&gt;i&lt;/code&gt; 的距离 &lt;code&gt;k&lt;/code&gt;，那么我们可以根据上一步酸楚青蛙能够跳到的下一个石头的位置。也就是&lt;strong&gt;从哪里能够跳到当前位置&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;结合这两点，我们发现需要维护一个重要的信息：&lt;strong&gt;从位置 &lt;code&gt;i&lt;/code&gt; 能否跳跃到 &lt;code&gt;j&lt;/code&gt;&lt;/strong&gt;。这也是这道题的关键，能否想到使用一个二维数组，通过 &lt;code&gt;dp[i][j]&lt;/code&gt; 的方式来表示能否从位置 &lt;code&gt;i&lt;/code&gt; 跳到 &lt;code&gt;j&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;有了 &lt;code&gt;dp[i][j]&lt;/code&gt; 之后，只需要遍历石头的位置，每次跳到位置 &lt;code&gt;j&lt;/code&gt; 时，找到所有能跳到 &lt;code&gt;j&lt;/code&gt; 的位置 &lt;code&gt;i&lt;/code&gt;，记录下跳跃的距离，再分别记录能跳跃到的目标位置 &lt;code&gt;j + k - 1&lt;/code&gt;、&lt;code&gt;j + k&lt;/code&gt;、&lt;code&gt;j + k + 1&lt;/code&gt; 是否有石头即可。&lt;/p&gt;
+&lt;p&gt;如果发现恰好能挑到最后一块石头，即可结束遍历。&lt;/p&gt;
+&lt;p&gt;有一些可以减少内存占用的优化。根据题目给出的数据范围，石块的位置可能远大于石块的数量， 可以使 &lt;code&gt;dp[i][j]&lt;/code&gt; 中的 &lt;code&gt;i&lt;/code&gt; 和 &lt;code&gt;j&lt;/code&gt; 分别表示石块在 &lt;code&gt;stones&lt;/code&gt; 的索引。另外只需要记录能否从 &lt;code&gt;i&lt;/code&gt; 跳到 &lt;code&gt;j&lt;/code&gt; 即可，&lt;code&gt;dp[i][j]&lt;/code&gt; 可以使用 &lt;code&gt;boolean&lt;/code&gt; 来表示。&lt;/p&gt;
+&lt;h2 class="heading-element" id="3-代码实现"&gt;&lt;span&gt;3. 代码实现&lt;/span&gt;
+ &lt;a href="#3-%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;class Solution {
+ public boolean canCross(int[] stones) {
+ int n = stones.length;
+ if (stones[1] != 1) {
+ return false;
+ }
+ Map&amp;lt;Integer, Integer&amp;gt; map = new HashMap&amp;lt;&amp;gt;();
+ for (int i = 0; i &amp;lt; n; i&amp;#43;&amp;#43;) {
+ map.put(stones[i], i);
+ }
+ boolean[][] dp = new boolean[n][n];
+ dp[0][1] = true;
+ for (int j = 0; j &amp;lt; n; j&amp;#43;&amp;#43;) {
+ for (int i = 0; i &amp;lt;= j; i&amp;#43;&amp;#43;) {
+ if (dp[i][j]) {
+ int k = stones[j] - stones[i];
+ int next = stones[j] &amp;#43; k - 1;
+ if (map.containsKey(next)) {
+ dp[j][map.get(next)] = true;
+ }
+ next&amp;#43;&amp;#43;;
+ if (map.containsKey(next)) {
+ dp[j][map.get(next)] = true;
+ }
+ next&amp;#43;&amp;#43;;
+ if (map.containsKey(next)) {
+ dp[j][map.get(next)] = true;
+ }
+ }
+ }
+ }
+ // 可以在上面的 for 循环中判断是否到达终点
+ // 但是我不想破坏上面整齐的结构
+ for (int i = 0; i &amp;lt; n; i&amp;#43;&amp;#43;) {
+ if (dp[i][n - 1]) {
+ return true;
+ }
+ }
+ return false;
+ }
+}&lt;/code&gt;&lt;/pre&gt;&lt;h2 class="heading-element" id="4-一点吐槽"&gt;&lt;span&gt;4. 一点吐槽&lt;/span&gt;
+ &lt;a href="#4-%e4%b8%80%e7%82%b9%e5%90%90%e6%a7%bd" class="heading-mark"&gt;
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"&gt;&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"&gt;&lt;/path&gt;&lt;/svg&gt;
+ &lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;这是青蛙唉，会游泳的，不管它跳不跳石头，它都能过河的撒。我觉得这道题的解就应该是：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class Solution {
+ public boolean canCross(int[] stones) {
+ // 如果青蛙过不去，那就只能说是它不想过去
+ return true;
+ }
+}&lt;/code&gt;&lt;/pre&gt;</description></item></channel></rss>
