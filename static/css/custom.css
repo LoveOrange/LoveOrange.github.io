@@ -124,7 +124,7 @@
 }
 
 /* Ensure inline code blocks look cohesive */
-p code, li code, td code, .list__excerpt code {
+.content p code, .content li code, .list__excerpt code, .content td:not(.lntd) code {
     white-space: pre-wrap !important;
     background-color: rgba(175, 184, 193, 0.2);
     border-radius: 4px;
